@@ -34,6 +34,7 @@ class GameScreen extends Component {
     //const rect = this.canvasRef.current.getBoundingClientRect();  use this when checking the map doesnt get out of bounds
     this.image.onload = () => {
       this.canvasRef.current.getContext("2d").clearRect(0, 0, 1125, 825);
+      this.checkOffset();
       ctx.setTransform(
         this.state.zoom,
         0,
@@ -53,7 +54,7 @@ class GameScreen extends Component {
         tiles[i].draw(ctx);
       }
     };
-    ctx.resetTransform();
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
     this.setState({ gameTiles: tiles });
   }
 
@@ -66,7 +67,7 @@ class GameScreen extends Component {
   }
 
   mouseClickDown = (e) => {
-    this.setState({ mouseX: e.screenX, mouseY: e.screenY, mouseDown: true });
+    this.setState({ mouseX: e.clientX, mouseY: e.clientY, mouseDown: true });
   };
 
   mouseClickUp = () => {
@@ -75,14 +76,21 @@ class GameScreen extends Component {
 
   mouseDrag = (e) => {
     if (this.state.mouseDown) {
+      const rect = this.canvasRef.current.getBoundingClientRect();
+
       let oldMouseX = this.state.mouseX;
       let oldMouseY = this.state.mouseY;
 
-      let newMouseX = e.screenX;
-      let newMouseY = e.screenY;
+      let newMouseX = e.clientX;
+      let newMouseY = e.clientY;
 
       let newOffsetX = this.state.offsetX + newMouseX - oldMouseX;
       let newOffsetY = this.state.offsetY + newMouseY - oldMouseY;
+
+      if (this.state.zoom === 1) {
+        newOffsetX = 0;
+        newOffsetY = 0;
+      }
 
       this.setState({
         mouseX: newMouseX,
@@ -93,14 +101,60 @@ class GameScreen extends Component {
     }
   };
 
+  checkOffset = () => {
+    let newOffsetX = this.state.offsetX;
+    let newOffsetY = this.state.offsetY;
+    const rect = this.canvasRef.current.getBoundingClientRect();
+    if (
+      // right side
+      rect.x + rect.width >
+      rect.x + newOffsetX + this.state.mapWidth * this.state.zoom
+    ) {
+      newOffsetX = rect.width - this.state.mapWidth * this.state.zoom;
+    }
+
+    if (
+      // left side
+      rect.x <
+      rect.x + newOffsetX
+    ) {
+      newOffsetX = 0;
+    }
+
+    if (
+      // bottom side
+      rect.y + rect.height >
+      rect.y + newOffsetY + this.state.mapHeight * this.state.zoom
+    ) {
+      newOffsetY = rect.height - this.state.mapHeight * this.state.zoom;
+    }
+
+    if (
+      // top side
+      rect.y <
+      rect.y + newOffsetY
+    ) {
+      newOffsetY = 0;
+    }
+
+    this.setState({ offsetX: newOffsetX, offsetY: newOffsetY });
+  };
+
   mouseWheel = (e) => {
-    console.log(e);
     let zoom = this.state.zoom;
 
     if (e.deltaY < 0) {
       zoom += 0.1;
     } else {
       zoom -= 0.1;
+    }
+
+    if (zoom < 1) {
+      zoom = 1;
+      this.setState({
+        offsetX: 0,
+        offsetY: 0
+      });
     }
 
     this.setState({ zoom: zoom });
