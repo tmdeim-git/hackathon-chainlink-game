@@ -3,6 +3,7 @@ export class GameTile {
   _y: number;
   _size: number;
   _id: number;
+  _selected: boolean = false;
 
   constructor(x: number, y: number, size: number, id: number) {
     this._x = x;
@@ -11,7 +12,9 @@ export class GameTile {
     this._id = id;
   }
   draw(ctx: CanvasRenderingContext2D): void {
+    if (this._selected) ctx.lineWidth = 5;
     ctx.strokeRect(this._x, this._y, this._size, this._size);
+    if (this._selected) ctx.lineWidth = 1;
   }
 
   // if we decide to change shape from rectangle to octogones use whats bellow (not 100% working)
