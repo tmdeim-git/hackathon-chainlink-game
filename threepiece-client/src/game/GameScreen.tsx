@@ -2,6 +2,7 @@ import React, { Component, RefObject, createRef } from "react";
 import map from "../assets/island2.png";
 import { GameTile } from "./GameTile";
 import { getGameTiles } from "./client";
+import "../style/gameScreen.css";
 
 class GameScreen extends Component {
   state = {
@@ -15,7 +16,7 @@ class GameScreen extends Component {
     mouseY: 0,
     mouseDown: false,
     zoom: 1,
-    gameTiles: []
+    gameTiles: [],
   };
 
   canvasRef: RefObject<HTMLCanvasElement>;
@@ -83,12 +84,30 @@ class GameScreen extends Component {
     this.setState({
       mouseX: e.clientX,
       mouseY: e.clientY,
-      mouseDown: true
+      mouseDown: true,
     });
   };
 
   mouseClickUp = () => {
     this.setState({ mouseDown: false });
+  };
+
+  mouseLeave = () => {
+    document.removeEventListener("wheel", this.preventDefault, false);
+  };
+
+  mouseEnter = () => {
+    document.addEventListener("wheel", this.preventDefault, {
+      passive: false,
+    });
+  };
+
+  preventDefault = (e: any) => {
+    e = e || window.event;
+    if (e.preventDefault) {
+      e.preventDefault();
+    }
+    e.returnValue = false;
   };
 
   mouseHover = (e) => {
@@ -139,7 +158,7 @@ class GameScreen extends Component {
         mouseX: newMouseX,
         mouseY: newMouseY,
         offsetX: newOffsetX,
-        offsetY: newOffsetY
+        offsetY: newOffsetY,
       });
     }
   };
@@ -186,53 +205,56 @@ class GameScreen extends Component {
     ) {
       this.setState({
         offsetX: newOffsetX,
-        offsetY: newOffsetY
+        offsetY: newOffsetY,
       });
     }
   };
 
   mouseWheel = (e) => {
     let { zoom, offsetX, offsetY } = this.state;
-  
+
     const rect = e.target.getBoundingClientRect();
     const mouseX = e.clientX - rect.left;
     const mouseY = e.clientY - rect.top;
-  
+
     const zoomFactor = 1.1;
-  
+
     let newZoom;
     if (e.deltaY < 0) {
       newZoom = zoom * zoomFactor;
     } else {
       newZoom = zoom / zoomFactor;
     }
-  
+
     newZoom = Math.min(Math.max(newZoom, 1), 2);
-  
+
     const zoomChange = newZoom / zoom;
-  
+
     offsetX = mouseX - zoomChange * (mouseX - offsetX);
     offsetY = mouseY - zoomChange * (mouseY - offsetY);
-  
+
     this.setState({
       zoom: newZoom,
       offsetX: offsetX,
       offsetY: offsetY,
     });
-  
+
     e.preventDefault();
   };
-  
+
   render = () => {
     return (
       <React.Fragment>
         <canvas
+          className="map"
           ref={this.canvasRef}
           onMouseDown={this.mouseClickDown}
           onWheel={this.mouseWheel}
           onMouseUp={this.mouseClickUp}
           onMouseLeave={this.mouseClickUp}
           onMouseMove={this.mouseDrag}
+          onMouseEnter={this.mouseEnter}
+          onMouseOut={this.mouseLeave}
           width={1125}
           height={825}
         />
