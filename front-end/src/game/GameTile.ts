@@ -4,6 +4,7 @@ export class GameTile {
   _size: number;
   _id: number;
   _selected: boolean = false;
+  _name: string = "asdfadsfsd";
 
   constructor(x: number, y: number, size: number, id: number) {
     this._x = x;

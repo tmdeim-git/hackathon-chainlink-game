@@ -1,9 +1,13 @@
 import React, { Component, RefObject, createRef } from "react";
 import map from "../assets/island2.png";
 import { GameTile } from "./GameTile";
-import { getGameTiles } from "./client";
 
-class GameScreen extends Component {
+type props = {
+  className: string;
+  gameTiles: GameTile[];
+};
+
+class GameScreen extends Component<props> {
   state = {
     mapX: 0,
     mapY: 0,
@@ -15,14 +19,13 @@ class GameScreen extends Component {
     mouseY: 0,
     mouseDown: false,
     zoom: 1,
-    gameTiles: []
   };
 
   canvasRef: RefObject<HTMLCanvasElement>;
   animationFrameId: number | null;
   image: HTMLImageElement;
 
-  constructor(props: {}) {
+  constructor(props: { className: string; gameTiles: GameTile[] }) {
     super(props);
     this.canvasRef = createRef<HTMLCanvasElement>();
     this.animationFrameId = null;
@@ -31,12 +34,11 @@ class GameScreen extends Component {
   }
 
   componentDidMount(): void {
-    let fisrtTimeTiles: GameTile[] = getGameTiles();
     let ctx = this.canvasRef.current?.getContext("2d");
     ctx.lineWidth = 1;
 
     const renderCanvas = () => {
-      let tiles = this.state.gameTiles;
+      let tiles = this.props.gameTiles;
       this.canvasRef.current.getContext("2d").clearRect(0, 0, 1125, 825);
       ctx.setTransform(
         this.state.zoom,
@@ -62,7 +64,6 @@ class GameScreen extends Component {
     };
 
     this.animationFrameId = requestAnimationFrame(renderCanvas);
-    this.setState({ gameTiles: fisrtTimeTiles });
   }
 
   componentDidUpdate(
@@ -83,7 +84,7 @@ class GameScreen extends Component {
     this.setState({
       mouseX: e.clientX,
       mouseY: e.clientY,
-      mouseDown: true
+      mouseDown: true,
     });
   };
 
@@ -94,7 +95,7 @@ class GameScreen extends Component {
   mouseHover = (e) => {
     let mouseX = e.clientX;
     let mouseY = e.clientY;
-    let tiles = this.state.gameTiles;
+    let tiles = this.props.gameTiles;
     const rect = this.canvasRef.current.getBoundingClientRect();
 
     for (let i = 0; i < tiles.length; i++) {
@@ -109,8 +110,6 @@ class GameScreen extends Component {
         mouseY > tileY &&
         mouseY < tileY + tileH
       ) {
-        console.log(tiles[i]._id);
-        console.log(tileW);
         tiles[i]._selected = true;
       } else {
         tiles[i]._selected = false;
@@ -139,7 +138,7 @@ class GameScreen extends Component {
         mouseX: newMouseX,
         mouseY: newMouseY,
         offsetX: newOffsetX,
-        offsetY: newOffsetY
+        offsetY: newOffsetY,
       });
     }
   };
@@ -186,7 +185,7 @@ class GameScreen extends Component {
     ) {
       this.setState({
         offsetX: newOffsetX,
-        offsetY: newOffsetY
+        offsetY: newOffsetY,
       });
     }
   };
@@ -206,7 +205,7 @@ class GameScreen extends Component {
       zoom = 1;
       this.setState({
         offsetX: 0,
-        offsetY: 0
+        offsetY: 0,
       });
     }
 
@@ -217,6 +216,7 @@ class GameScreen extends Component {
     return (
       <React.Fragment>
         <canvas
+          className={this.props.className}
           ref={this.canvasRef}
           onMouseDown={this.mouseClickDown}
           onWheel={this.mouseWheel}
