@@ -1,10 +1,14 @@
 import React, { Component, RefObject, createRef } from "react";
-import map from "../assets/island2.png";
+import map from "../assets/test2.png";
 import { GameTile } from "./GameTile";
 import { getGameTiles } from "./client";
 import "../style/gameScreen.css";
 
-class GameScreen extends Component {
+type props = {
+  tileSelected: Function;
+};
+
+class GameScreen extends Component<props> {
   state = {
     mapX: 0,
     mapY: 0,
@@ -16,14 +20,14 @@ class GameScreen extends Component {
     mouseY: 0,
     mouseDown: false,
     zoom: 1,
-    gameTiles: [],
+    gameTiles: []
   };
 
   canvasRef: RefObject<HTMLCanvasElement>;
   animationFrameId: number | null;
   image: HTMLImageElement;
 
-  constructor(props: {}) {
+  constructor(props: { tileSelected: Function }) {
     super(props);
     this.canvasRef = createRef<HTMLCanvasElement>();
     this.animationFrameId = null;
@@ -34,11 +38,22 @@ class GameScreen extends Component {
   componentDidMount(): void {
     let fisrtTimeTiles: GameTile[] = getGameTiles();
     let ctx = this.canvasRef.current?.getContext("2d");
+    let canvasSize: number = 0.55;
+    let canvasAspectRation = 11 / 15;
+    ctx.canvas.width = window.innerWidth * canvasSize;
+    ctx.canvas.height = window.innerWidth * canvasSize * canvasAspectRation;
     ctx.lineWidth = 1;
+
+    let tileSize: number = ctx.canvas.width / 75;
+    for (let i = 0; i < fisrtTimeTiles.length; i++) {
+      fisrtTimeTiles[i].changeSize(tileSize);
+    }
 
     const renderCanvas = () => {
       let tiles = this.state.gameTiles;
-      this.canvasRef.current.getContext("2d").clearRect(0, 0, 1125, 825);
+      this.canvasRef.current
+        .getContext("2d")
+        .clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
       ctx.setTransform(
         this.state.zoom,
         0,
@@ -51,8 +66,8 @@ class GameScreen extends Component {
         this.image,
         this.state.mapX,
         this.state.mapY,
-        this.state.mapWidth,
-        this.state.mapHeight
+        ctx.canvas.width,
+        ctx.canvas.height
       );
       for (let i = 0; i < tiles.length; i++) {
         tiles[i].draw(ctx);
@@ -63,7 +78,11 @@ class GameScreen extends Component {
     };
 
     this.animationFrameId = requestAnimationFrame(renderCanvas);
-    this.setState({ gameTiles: fisrtTimeTiles });
+    this.setState({
+      gameTiles: fisrtTimeTiles,
+      mapWidth: ctx.canvas.width,
+      mapHeight: ctx.canvas.height
+    });
   }
 
   componentDidUpdate(
@@ -81,10 +100,15 @@ class GameScreen extends Component {
   }
 
   mouseClickDown = (e) => {
+    for (let tile of this.state.gameTiles) {
+      if (tile._selected) {
+        this.props.tileSelected(tile);
+      }
+    }
     this.setState({
       mouseX: e.clientX,
       mouseY: e.clientY,
-      mouseDown: true,
+      mouseDown: true
     });
   };
 
@@ -98,7 +122,7 @@ class GameScreen extends Component {
 
   mouseEnter = () => {
     document.addEventListener("wheel", this.preventDefault, {
-      passive: false,
+      passive: false
     });
   };
 
@@ -128,8 +152,6 @@ class GameScreen extends Component {
         mouseY > tileY &&
         mouseY < tileY + tileH
       ) {
-        console.log(tiles[i]._id);
-        console.log(tileW);
         tiles[i]._selected = true;
       } else {
         tiles[i]._selected = false;
@@ -158,7 +180,7 @@ class GameScreen extends Component {
         mouseX: newMouseX,
         mouseY: newMouseY,
         offsetX: newOffsetX,
-        offsetY: newOffsetY,
+        offsetY: newOffsetY
       });
     }
   };
@@ -205,7 +227,7 @@ class GameScreen extends Component {
     ) {
       this.setState({
         offsetX: newOffsetX,
-        offsetY: newOffsetY,
+        offsetY: newOffsetY
       });
     }
   };
@@ -226,7 +248,7 @@ class GameScreen extends Component {
       newZoom = zoom / zoomFactor;
     }
 
-    newZoom = Math.min(Math.max(newZoom, 1), 2);
+    newZoom = Math.min(Math.max(newZoom, 1), 5);
 
     const zoomChange = newZoom / zoom;
 
@@ -236,29 +258,23 @@ class GameScreen extends Component {
     this.setState({
       zoom: newZoom,
       offsetX: offsetX,
-      offsetY: offsetY,
+      offsetY: offsetY
     });
-
-    e.preventDefault();
   };
 
   render = () => {
     return (
-      <React.Fragment>
-        <canvas
-          className="map"
-          ref={this.canvasRef}
-          onMouseDown={this.mouseClickDown}
-          onWheel={this.mouseWheel}
-          onMouseUp={this.mouseClickUp}
-          onMouseLeave={this.mouseClickUp}
-          onMouseMove={this.mouseDrag}
-          onMouseEnter={this.mouseEnter}
-          onMouseOut={this.mouseLeave}
-          width={1125}
-          height={825}
-        />
-      </React.Fragment>
+      <canvas
+        className="map"
+        ref={this.canvasRef}
+        onMouseDown={this.mouseClickDown}
+        onWheel={this.mouseWheel}
+        onMouseUp={this.mouseClickUp}
+        onMouseLeave={this.mouseClickUp}
+        onMouseMove={this.mouseDrag}
+        onMouseEnter={this.mouseEnter}
+        onMouseOut={this.mouseLeave}
+      />
     );
   };
 }
