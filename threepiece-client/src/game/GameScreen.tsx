@@ -4,7 +4,11 @@ import { GameTile } from "./GameTile";
 import { getGameTiles } from "./client";
 import "../style/gameScreen.css";
 
-class GameScreen extends Component {
+type props = {
+  tileSelected: Function;
+};
+
+class GameScreen extends Component<props> {
   state = {
     mapX: 0,
     mapY: 0,
@@ -23,7 +27,7 @@ class GameScreen extends Component {
   animationFrameId: number | null;
   image: HTMLImageElement;
 
-  constructor(props: {}) {
+  constructor(props: { tileSelected: Function }) {
     super(props);
     this.canvasRef = createRef<HTMLCanvasElement>();
     this.animationFrameId = null;
@@ -81,6 +85,11 @@ class GameScreen extends Component {
   }
 
   mouseClickDown = (e) => {
+    for (let tile of this.state.gameTiles) {
+      if (tile._selected) {
+        this.props.tileSelected(tile);
+      }
+    }
     this.setState({
       mouseX: e.clientX,
       mouseY: e.clientY,
@@ -128,8 +137,6 @@ class GameScreen extends Component {
         mouseY > tileY &&
         mouseY < tileY + tileH
       ) {
-        console.log(tiles[i]._id);
-        console.log(tileW);
         tiles[i]._selected = true;
       } else {
         tiles[i]._selected = false;
@@ -244,21 +251,19 @@ class GameScreen extends Component {
 
   render = () => {
     return (
-      <React.Fragment>
-        <canvas
-          className="map"
-          ref={this.canvasRef}
-          onMouseDown={this.mouseClickDown}
-          onWheel={this.mouseWheel}
-          onMouseUp={this.mouseClickUp}
-          onMouseLeave={this.mouseClickUp}
-          onMouseMove={this.mouseDrag}
-          onMouseEnter={this.mouseEnter}
-          onMouseOut={this.mouseLeave}
-          width={1125}
-          height={825}
-        />
-      </React.Fragment>
+      <canvas
+        className="map"
+        ref={this.canvasRef}
+        onMouseDown={this.mouseClickDown}
+        onWheel={this.mouseWheel}
+        onMouseUp={this.mouseClickUp}
+        onMouseLeave={this.mouseClickUp}
+        onMouseMove={this.mouseDrag}
+        onMouseEnter={this.mouseEnter}
+        onMouseOut={this.mouseLeave}
+        width={1125}
+        height={825}
+      />
     );
   };
 }

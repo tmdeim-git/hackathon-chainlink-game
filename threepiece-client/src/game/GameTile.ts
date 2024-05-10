@@ -3,7 +3,13 @@ export class GameTile {
   _y: number;
   _size: number;
   _id: number;
+  _name: string = "Tile name";
   _selected: boolean = false;
+  _ressource: string = "Wood";
+  _productionRate: number = 45;
+  _maximumCapacity: number = 2500;
+  _currentAmmount: number = 500;
+  _owner: string = " Joe Blow";
 
   constructor(x: number, y: number, size: number, id: number) {
     this._x = x;
