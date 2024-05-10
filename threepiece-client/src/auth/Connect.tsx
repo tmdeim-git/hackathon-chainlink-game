@@ -11,17 +11,14 @@ const wallets = [
   createWallet("walletConnect"),
 ];
 
-
-
 const client = createThirdwebClient({
   clientId: import.meta.env.VITE_CLIENT_ID,
 });
 
-
 function Connect() {
   return (
     <div>
-      <ConnectButton client={client} wallets={wallets} />
+      <ConnectButton client={client} wallets={wallets} connectButton={{label: "Play"}} />
     </div>
   );
 }
