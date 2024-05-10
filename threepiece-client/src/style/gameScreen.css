@@ -1,4 +1,6 @@
 .map {
+  margin: 40px;
   overscroll-behavior: contain;
   touch-action: none;
+  scroll-behavior: unset;
 }

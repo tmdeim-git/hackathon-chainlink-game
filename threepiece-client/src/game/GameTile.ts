@@ -1,6 +1,8 @@
 export class GameTile {
   _x: number;
   _y: number;
+  _i: number;
+  _j: number;
   _size: number;
   _id: number;
   _name: string = "Tile name";
@@ -11,17 +13,25 @@ export class GameTile {
   _currentAmmount: number = 500;
   _owner: string = " Joe Blow";
 
-  constructor(x: number, y: number, size: number, id: number) {
-    this._x = x;
-    this._y = y;
+  constructor(i: number, j: number, size: number, id: number) {
+    this._x = j * size;
+    this._y = i * size;
+    this._i = i;
+    this._j = j;
     this._size = size;
     this._id = id;
   }
   draw(ctx: CanvasRenderingContext2D): void {
-    if (this._selected) ctx.lineWidth = 5;
+    if (this._selected) ctx.lineWidth = 3;
     ctx.strokeRect(this._x, this._y, this._size, this._size);
     if (this._selected) ctx.lineWidth = 1;
   }
+
+  changeSize = (size: number) => {
+    this._size = size;
+    this._x = this._j * size;
+    this._y = this._i * size;
+  };
 
   // if we decide to change shape from rectangle to octogones use whats bellow (not 100% working)
 

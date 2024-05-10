@@ -5,7 +5,7 @@ import "../style/game.css";
 
 class Game extends Component {
   state = {
-    selectedTile: null,
+    selectedTile: null
   };
 
   handleSelectedTile = (tile: GameTile) => {
