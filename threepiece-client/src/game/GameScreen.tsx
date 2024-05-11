@@ -1,5 +1,5 @@
 import React, { Component, RefObject, createRef } from "react";
-import map from "../assets/test2.png";
+import map from "../assets/threepiecesvg.svg";
 import { GameTile } from "./GameTile";
 import { getGameTiles } from "./client";
 import "../style/gameScreen.css";
