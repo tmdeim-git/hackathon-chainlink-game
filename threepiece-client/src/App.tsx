@@ -1,6 +1,6 @@
 import "./App.css";
 import Game from "./game/Game";
-import Connect from "./auth/Connect";
+import Connect from "./thirdweb/auth/Connect";
 
 function App() {
   return (
