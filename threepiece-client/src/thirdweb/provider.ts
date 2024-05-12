@@ -3,7 +3,7 @@ import { sepolia } from "thirdweb/chains";
 import { inAppWallet, createWallet, Wallet } from "thirdweb/wallets";
 import { } from "./11155111/0x3268a076ec2723d3ee842f670839bf3920dc27fb";
 import { getNFTs } from "thirdweb/extensions/erc721";
-import { Land, Owner, isResource } from "./types";
+import { Land, Owner, Resource } from "./types";
 
 export const wallets = [
     inAppWallet(),
@@ -25,21 +25,25 @@ export const landContract = getContract({
 });
 
 // NOTE: This part should usually be protected in an API
-export const lands = await getNFTs({ contract: landContract, includeOwners: true });
+export const lands = await getLands();
 
-export const getUserLands = async (owner: Owner): Promise<Land[]> => {
-    const ownedNFTs = lands.filter(nft => nft.owner == owner.address);
-
-    return nftsToLands(ownedNFTs, owner);
+export async function getUserLands(owner: Owner) {
+    const ownedLands = lands.filter(land => land.ownerAddress == owner.address);
+    return ownedLands;
 }
 
-const nftsToLands = (nfts: NFT[], owner: Owner): Land[] => {
+async function getLands() {
+    const nfts = await getNFTs({ contract: landContract, includeOwners: true });
+    return nftsToLands(nfts);
+}
+
+function nftsToLands(nfts: NFT[]) {
     const lands: Land[] = [];
 
     for (const nft of nfts) {
         const attributes = nft.metadata.attributes as any;
         lands.push({
-            owner: owner,
+            ownerAddress: nft.owner,
             id: Number(attributes[0].value),
             resources: attributes[1].value.split(',').map(resource => {
                 if (isResource(resource)) {
@@ -51,10 +55,13 @@ const nftsToLands = (nfts: NFT[], owner: Owner): Land[] => {
         })
     }
 
-    console.log(lands[0])
-
     return lands;
 }
+
+function isResource(value: string): value is Resource {
+    return Object.values(Resource).includes(value as Resource);
+}
+
 
 
 

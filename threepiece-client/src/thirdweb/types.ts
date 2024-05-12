@@ -1,6 +1,6 @@
 export interface Land {
     id: number
-    owner: Owner
+    ownerAddress: string
     resources: Resource[]
 }
 
@@ -18,8 +18,4 @@ export enum Resource {
     Water = 'water',
     Wood = 'wood',
     Soil = 'soil',
-}
-
-export function isResource(value: string): value is Resource {
-    return Object.values(Resource).includes(value as Resource);
 }
