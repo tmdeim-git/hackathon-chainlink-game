@@ -1,7 +1,6 @@
 import { NFT, createThirdwebClient, getContract } from "thirdweb";
 import { sepolia } from "thirdweb/chains";
-import { inAppWallet, createWallet, Wallet } from "thirdweb/wallets";
-import { } from "./11155111/0x3268a076ec2723d3ee842f670839bf3920dc27fb";
+import { inAppWallet, createWallet } from "thirdweb/wallets";
 import { getNFTs } from "thirdweb/extensions/erc721";
 import { Land, Owner, Resource } from "./types";
 
