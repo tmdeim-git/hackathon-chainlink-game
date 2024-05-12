@@ -1,7 +1,7 @@
 import { NFT, createThirdwebClient, getContract } from "thirdweb";
 import { sepolia } from "thirdweb/chains";
 import { inAppWallet, createWallet } from "thirdweb/wallets";
-import { getNFTs } from "thirdweb/extensions/erc721";
+import { getNFTs } from "thirdweb/extensions/erc1155";
 import { Land, Owner, Resource } from "./types";
 
 export const wallets = [
@@ -32,7 +32,7 @@ export async function getUserLands(owner: Owner) {
 }
 
 async function getLands() {
-    const nfts = await getNFTs({ contract: landContract, includeOwners: true });
+    const nfts = await getNFTs({ contract: landContract });
     return nftsToLands(nfts);
 }
 
@@ -40,7 +40,8 @@ function nftsToLands(nfts: NFT[]) {
     const lands: Land[] = [];
 
     for (const nft of nfts) {
-        const attributes = nft.metadata.attributes as any;
+        const attributes = nft.metadata.attributes as Record<string, MetadataAttributes>;
+        console.log(nft)
         lands.push({
             ownerAddress: nft.owner,
             id: Number(attributes[0].value),
@@ -55,6 +56,11 @@ function nftsToLands(nfts: NFT[]) {
     }
 
     return lands;
+}
+
+interface MetadataAttributes {
+    trait_type: string
+    value: string
 }
 
 function isResource(value: string): value is Resource {

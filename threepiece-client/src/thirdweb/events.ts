@@ -1,5 +1,5 @@
 import { watchContractEvents } from "thirdweb";
-import { tokensLazyMintedEvent, batchMetadataUpdateEvent, transferEvent } from "./11155111/0x3268a076ec2723d3ee842f670839bf3920dc27fb";
+import { tokensLazyMintedEvent, batchMetadataUpdateEvent, transferSingleEvent } from "./11155111/0xb9d3464f18c8c8dff01daa1980e605ebed195787";
 import { landContract } from "./provider";
 
 const unwatchTokenCreated = watchContractEvents({
@@ -25,14 +25,9 @@ const unwatchMetadataUpdate = watchContractEvents({
 const unwatchTransfer = watchContractEvents({
     onEvents(events) {
         const event = events[0];
-        if (event.args.from == "0x0000000000000000000000000000000000000000") {
-            console.log("Token claimed", event)
-        } else if (event.args.to == "0x0000000000000000000000000000000000000000") {
-            console.log("Token burned", event)
-        } else {
-            console.log("Token transfered", event)
-        }
+        const { id, from, to } = event.args;
+        console.log(`Token ${id} transfered from ${from} to ${to}`)
     },
-    events: [transferEvent()],
+    events: [transferSingleEvent()],
     contract: landContract
 })
