@@ -40,7 +40,8 @@ function nftsToLands(nfts: NFT[]) {
     const lands: Land[] = [];
 
     for (const nft of nfts) {
-        const attributes = nft.metadata.attributes as any;
+        const attributes = nft.metadata.attributes as Record<string, MetadataAttributes>;
+
         lands.push({
             ownerAddress: nft.owner,
             id: Number(attributes[0].value),
@@ -55,6 +56,11 @@ function nftsToLands(nfts: NFT[]) {
     }
 
     return lands;
+}
+
+interface MetadataAttributes {
+    trait_type: string
+    value: string
 }
 
 function isResource(value: string): value is Resource {
