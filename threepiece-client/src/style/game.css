@@ -1,17 +1,34 @@
 .tile-info-rect {
   font-family: "Comic Sans MS";
-  width: 300px;
+  width: 400px;
   height: 600px;
   background-image: linear-gradient(
     to bottom right,
     rgb(26, 63, 131),
     rgb(1, 122, 28)
   );
-  margin: 20px 40px 40px 40px;
 }
 
 .game-page {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 20px 40px 40px 40px;
+}
+
+.event-history {
+  padding-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+.event-name {
+  background-color: rgb(100 116 139);
+  min-width: 400px;
+}
+.event-history-table {
+  max-width: 400px;
+  max-height: 600px;
+  background-color: rgb(148 163 184);
+  overflow-y: auto;
 }
