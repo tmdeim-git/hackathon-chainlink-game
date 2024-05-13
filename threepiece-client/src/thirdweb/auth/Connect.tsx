@@ -1,6 +1,5 @@
 import { ConnectButton } from "thirdweb/react";
 import { client, getUserLands, wallets } from "../provider";
-import { Owner } from "../types";
 import { sepolia } from "thirdweb/chains";
 
 function Connect() {
@@ -12,8 +11,7 @@ function Connect() {
       onConnect={async (wallet) => {
         const address = wallet.getAccount().address;
         wallet.switchChain(sepolia);
-        const owner: Owner = { address };
-        await getUserLands(owner);
+        await getUserLands(address);
         console.log("TODO: Redirect to game...")
       }} />
   );

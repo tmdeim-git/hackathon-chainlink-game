@@ -1,8 +1,10 @@
-import { NFT, createThirdwebClient, getContract } from "thirdweb";
+import { NFT, createThirdwebClient, getContract, sendAndConfirmTransaction, sendTransaction } from "thirdweb";
 import { sepolia } from "thirdweb/chains";
 import { inAppWallet, createWallet } from "thirdweb/wallets";
-import { getNFTs } from "thirdweb/extensions/erc721";
+import { claimTo, getNFTs } from "thirdweb/extensions/erc721";
 import { Land, Owner, Resource } from "./types";
+import { ethers } from "ethers";
+import { ethers6Adapter } from "thirdweb/adapters/ethers6";
 
 export const wallets = [
     inAppWallet(),
@@ -26,8 +28,9 @@ export const landContract = getContract({
 // NOTE: This part should usually be protected in an API
 export const lands = await getLands();
 
-export async function getUserLands(owner: Owner) {
-    const ownedLands = lands.filter(land => land.ownerAddress == owner.address);
+export async function getUserLands(ownerAddress: string) {
+    const ownedLands = lands.filter(land => land.ownerAddress == ownerAddress);
+    console.log(ownedLands);
     return ownedLands;
 }
 
@@ -36,13 +39,32 @@ async function getLands() {
     return nftsToLands(nfts);
 }
 
+export async function claimLand(address: string, landId: number) {
+    const account = await getAdminAccount();
+
+    // prepare NFT transfer transaction from admin to user
+
+    // prepare gas bill to user
+
+    // if gas is paid, send and confirm nft transfer transaction
+
+}
+
+async function getAdminAccount() {
+    const metamask = new ethers.InfuraProvider("sepolia");
+    const signer: ethers.Signer = new ethers.Wallet(import.meta.env.VITE_METAMASK_ADMIN_PRIVATE_KEY, metamask);
+
+    return await ethers6Adapter.signer.fromEthers({
+        signer,
+    });
+}
 
 function nftsToLands(nfts: NFT[]) {
     const lands: Land[] = [];
 
     for (const nft of nfts) {
         const attributes = nft.metadata.attributes as Record<string, MetadataAttributes>;
-        console.log(nft)
+
         lands.push({
             ownerAddress: nft.owner,
             id: Number(attributes[0].value),
