@@ -248,7 +248,7 @@ class GameScreen extends Component<props> {
       newZoom = zoom / zoomFactor;
     }
 
-    const maxZoom = 20;
+    const maxZoom = 8;
     newZoom = Math.min(Math.max(newZoom, 1), maxZoom);
 
     const zoomChange = newZoom / zoom;
