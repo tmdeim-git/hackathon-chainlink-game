@@ -1,8 +1,14 @@
 import { watchContractEvents } from "thirdweb";
-import { tokensLazyMintedEvent, batchMetadataUpdateEvent, transferSingleEvent } from "./11155111/0xb9d3464f18c8c8dff01daa1980e605ebed195787";
+import { tokensLazyMintedEvent, batchMetadataUpdateEvent, transferEvent } from "./11155111/erc721";
 import { landContract } from "./provider";
 
-const unwatchTokenCreated = watchContractEvents({
+export function startEvent() {
+    startTokenCreatedEvent();
+    startMetadataUpdateEvent();
+    startTransferEvent();
+}
+
+const startTokenCreatedEvent = () => watchContractEvents({
     onEvents(events) {
         const event = events[0];
         const id = event.args.startTokenId;
@@ -12,7 +18,7 @@ const unwatchTokenCreated = watchContractEvents({
     contract: landContract
 })
 
-const unwatchMetadataUpdate = watchContractEvents({
+const startMetadataUpdateEvent = () => watchContractEvents({
     onEvents(events) {
         const event = events[0];
         const id = event.args._fromTokenId;
@@ -22,12 +28,17 @@ const unwatchMetadataUpdate = watchContractEvents({
     contract: landContract
 })
 
-const unwatchTransfer = watchContractEvents({
+const startTransferEvent = () => watchContractEvents({
     onEvents(events) {
         const event = events[0];
-        const { id, from, to } = event.args;
-        console.log(`Token ${id} transfered from ${from} to ${to}`)
+        if (event.args.from == "0x0000000000000000000000000000000000000000") {
+            console.log("Token claimed", event)
+        } else if (event.args.to == "0x0000000000000000000000000000000000000000") {
+            console.log("Token burned", event)
+        } else {
+            console.log("Token transfered", event)
+        }
     },
-    events: [transferSingleEvent()],
+    events: [transferEvent()],
     contract: landContract
 })
