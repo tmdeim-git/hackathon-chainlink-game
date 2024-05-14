@@ -1,11 +1,11 @@
-import React, { Component, RefObject, createRef } from "react";
+import { Component, RefObject, createRef } from "react";
 import map from "../assets/threepiecesvg.svg";
 import { GameTile } from "./GameTile";
 import { getGameTiles } from "./client";
 import "../style/gameScreen.css";
 
 type props = {
-  tileSelected: Function;
+  tileSelected: (tile: GameTile) => void;
 };
 
 class GameScreen extends Component<props> {
@@ -20,14 +20,14 @@ class GameScreen extends Component<props> {
     mouseY: 0,
     mouseDown: false,
     zoom: 1,
-    gameTiles: new Array<GameTile>()
+    gameTiles: new Array<GameTile>(),
   };
 
   canvasRef: RefObject<HTMLCanvasElement>;
   animationFrameId: number | null;
   image: HTMLImageElement;
 
-  constructor(props: { tileSelected: Function }) {
+  constructor(props: { tileSelected: () => void }) {
     super(props);
     this.canvasRef = createRef<HTMLCanvasElement>();
     this.animationFrameId = null;
@@ -36,21 +36,21 @@ class GameScreen extends Component<props> {
   }
 
   componentDidMount(): void {
-    let fisrtTimeTiles: GameTile[] = getGameTiles();
-    let ctx = this.canvasRef.current?.getContext("2d");
-    let canvasSize: number = 0.55;
-    let canvasAspectRation = 11 / 15;
+    const fisrtTimeTiles: GameTile[] = getGameTiles();
+    const ctx = this.canvasRef.current?.getContext("2d");
+    const canvasSize: number = 0.55;
+    const canvasAspectRation = 11 / 15;
     ctx.canvas.width = window.innerWidth * canvasSize;
     ctx.canvas.height = window.innerWidth * canvasSize * canvasAspectRation;
     ctx.lineWidth = 1;
 
-    let tileSize: number = ctx.canvas.width / 15;
+    const tileSize: number = ctx.canvas.width / 15;
     for (let i = 0; i < fisrtTimeTiles.length; i++) {
       fisrtTimeTiles[i].changeSize(tileSize);
     }
 
     const renderCanvas = () => {
-      let tiles = this.state.gameTiles;
+      const tiles = this.state.gameTiles;
       this.canvasRef.current
         .getContext("2d")
         .clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -81,15 +81,11 @@ class GameScreen extends Component<props> {
     this.setState({
       gameTiles: fisrtTimeTiles,
       mapWidth: ctx.canvas.width,
-      mapHeight: ctx.canvas.height
+      mapHeight: ctx.canvas.height,
     });
   }
 
-  componentDidUpdate(
-    prevProps: Readonly<{}>,
-    prevState: Readonly<{}>,
-    snapshot?: any
-  ): void {
+  componentDidUpdate(): void {
     this.checkOffset();
   }
 
@@ -100,7 +96,7 @@ class GameScreen extends Component<props> {
   }
 
   mouseClickDown = (e) => {
-    for (let tile of this.state.gameTiles) {
+    for (const tile of this.state.gameTiles) {
       if (tile._selected) {
         this.props.tileSelected(tile);
       }
@@ -108,7 +104,7 @@ class GameScreen extends Component<props> {
     this.setState({
       mouseX: e.clientX,
       mouseY: e.clientY,
-      mouseDown: true
+      mouseDown: true,
     });
   };
 
@@ -122,7 +118,7 @@ class GameScreen extends Component<props> {
 
   mouseEnter = () => {
     document.addEventListener("wheel", this.preventDefault, {
-      passive: false
+      passive: false,
     });
   };
 
@@ -135,16 +131,16 @@ class GameScreen extends Component<props> {
   };
 
   mouseHover = (e) => {
-    let mouseX = e.clientX;
-    let mouseY = e.clientY;
-    let tiles = this.state.gameTiles;
+    const mouseX = e.clientX;
+    const mouseY = e.clientY;
+    const tiles = this.state.gameTiles;
     const rect = this.canvasRef.current.getBoundingClientRect();
 
     for (let i = 0; i < tiles.length; i++) {
-      let tileX = tiles[i]._x * this.state.zoom + this.state.offsetX + rect.x;
-      let tileY = tiles[i]._y * this.state.zoom + this.state.offsetY + rect.y;
-      let tileW = tiles[i]._size * this.state.zoom;
-      let tileH = tiles[i]._size * this.state.zoom;
+      const tileX = tiles[i]._x * this.state.zoom + this.state.offsetX + rect.x;
+      const tileY = tiles[i]._y * this.state.zoom + this.state.offsetY + rect.y;
+      const tileW = tiles[i]._size * this.state.zoom;
+      const tileH = tiles[i]._size * this.state.zoom;
 
       if (
         mouseX > tileX &&
@@ -162,11 +158,11 @@ class GameScreen extends Component<props> {
   mouseDrag = (e) => {
     this.mouseHover(e);
     if (this.state.mouseDown) {
-      let oldMouseX = this.state.mouseX;
-      let oldMouseY = this.state.mouseY;
+      const oldMouseX = this.state.mouseX;
+      const oldMouseY = this.state.mouseY;
 
-      let newMouseX = e.clientX;
-      let newMouseY = e.clientY;
+      const newMouseX = e.clientX;
+      const newMouseY = e.clientY;
 
       let newOffsetX = this.state.offsetX + newMouseX - oldMouseX;
       let newOffsetY = this.state.offsetY + newMouseY - oldMouseY;
@@ -180,7 +176,7 @@ class GameScreen extends Component<props> {
         mouseX: newMouseX,
         mouseY: newMouseY,
         offsetX: newOffsetX,
-        offsetY: newOffsetY
+        offsetY: newOffsetY,
       });
     }
   };
@@ -227,13 +223,13 @@ class GameScreen extends Component<props> {
     ) {
       this.setState({
         offsetX: newOffsetX,
-        offsetY: newOffsetY
+        offsetY: newOffsetY,
       });
     }
   };
 
   mouseWheel = (e) => {
-    let { zoom, offsetX, offsetY } = this.state;
+    const { zoom } = this.state;
 
     const rect = e.target.getBoundingClientRect();
     const mouseX = e.clientX - rect.left;
@@ -253,13 +249,13 @@ class GameScreen extends Component<props> {
 
     const zoomChange = newZoom / zoom;
 
-    offsetX = mouseX - zoomChange * (mouseX - offsetX);
-    offsetY = mouseY - zoomChange * (mouseY - offsetY);
+    const offsetX = mouseX - zoomChange * (mouseX - this.state.offsetX);
+    const offsetY = mouseY - zoomChange * (mouseY - this.state.offsetY);
 
     this.setState({
       zoom: newZoom,
-      offsetX: offsetX,
-      offsetY: offsetY
+      offsetX,
+      offsetY,
     });
   };
 
