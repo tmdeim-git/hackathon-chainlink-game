@@ -2,7 +2,7 @@ import { NFT, createThirdwebClient, getContract, sendAndConfirmTransaction, send
 import { sepolia } from "thirdweb/chains";
 import { inAppWallet, createWallet } from "thirdweb/wallets";
 import { claimTo, getNFTs } from "thirdweb/extensions/erc721";
-import { Land, Owner, Resource } from "./types";
+import { Land, LandNFTAttributes, LandNFTMetaData, Owner, Resource } from "./types";
 import { ethers } from "ethers";
 import { ethers6Adapter } from "thirdweb/adapters/ethers6";
 
@@ -22,7 +22,7 @@ export const client = createThirdwebClient({
 export const landContract = getContract({
     address: import.meta.env.VITE_LAND_CONTRACT,
     chain: sepolia,
-    client: client
+    client: client,
 });
 
 // NOTE: This part should usually be protected in an API
@@ -36,6 +36,8 @@ export async function getUserLands(ownerAddress: string) {
 
 async function getLands() {
     const nfts = await getNFTs({ contract: landContract, includeOwners: true });
+    console.log(nfts);
+
     return nftsToLands(nfts);
 }
 
@@ -63,18 +65,24 @@ function nftsToLands(nfts: NFT[]) {
     const lands: Land[] = [];
 
     for (const nft of nfts) {
-        const attributes = nft.metadata.attributes as Record<string, MetadataAttributes>;
+        const nftMetadata = nft.metadata as LandNFTMetaData;
+        const landNftAttributes = nftMetadata.attributes as Record<string, MetadataAttributes>;
 
+        nftMetadata.id = nft.id;
+        console.log(landNftAttributes)
         lands.push({
             ownerAddress: nft.owner,
-            id: Number(attributes[0].value),
-            resources: attributes[1].value.split(',').map(resource => {
-                if (isResource(resource)) {
+            nftMetadata: nftMetadata,
+            id: Number(landNftAttributes[0].value),
+            resources: landNftAttributes[1].value.split(",").map(resource => {
+                // make the string resources to an array of Resources
+                // exemple: "seawater,ore" => ["seawater", "ore"]
+                if (resource && isResource(resource)) {
                     return resource;
                 } else {
                     throw 'Bad resource received: ' + resource;
                 }
-            }),
+            })
         })
     }
 

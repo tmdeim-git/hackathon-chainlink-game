@@ -20,6 +20,10 @@ class Game extends Component {
     if (this.state.selectedTile) return this.state.selectedTile._name;
   };
 
+  getTileId = (): string => {
+    if (this.state.selectedTile) return this.state.selectedTile._id;
+  };
+
   getRessourceType = (): string => {
     if (this.state.selectedTile) return this.state.selectedTile._ressource;
   };
@@ -48,6 +52,7 @@ class Game extends Component {
         <div className="tile-info-rect">
           <div>Tile Infos :</div>
           <div>Tile Name : {this.getTileName()}</div>
+          <div>Tile ID : {this.getTileId()}</div>
           <div>Ressource : {this.getRessourceType()}</div>
           <div>Production Rate : {this.getRessourceRate()}</div>
           <div>Stock : {this.getAmmount()}</div>
