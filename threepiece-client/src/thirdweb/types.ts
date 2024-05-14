@@ -1,6 +1,26 @@
+import { NFT } from "thirdweb";
+import { LazyMintParams } from "thirdweb/extensions/erc721";
+
+export type LandNFTMetaData = NFT['metadata'] & {
+    attributes?: LandNFTAttributes
+    properties?: LandNFTAttributes
+}
+
+export type LandNFTAttributes = [
+    {
+        readonly trait_type: 'id',
+        value: number
+    },
+    {
+        readonly trait_type: 'resources',
+        value: Resource[]
+    },
+]
+
 export interface Land {
     id: number
-    ownerAddress: string
+    nftMetadata?: LandNFTMetaData
+    ownerAddress?: string
     resources: Resource[]
 }
 
@@ -15,7 +35,9 @@ export abstract class Item {
 
 export enum Resource {
     Sand = 'sand',
+    Seawater = 'seawater',
     Water = 'water',
     Wood = 'wood',
     Soil = 'soil',
+    Ore = 'ore',
 }

@@ -20,7 +20,7 @@ class GameScreen extends Component<props> {
     mouseY: 0,
     mouseDown: false,
     zoom: 1,
-    gameTiles: []
+    gameTiles: new Array<GameTile>()
   };
 
   canvasRef: RefObject<HTMLCanvasElement>;
@@ -44,7 +44,7 @@ class GameScreen extends Component<props> {
     ctx.canvas.height = window.innerWidth * canvasSize * canvasAspectRation;
     ctx.lineWidth = 1;
 
-    let tileSize: number = ctx.canvas.width / 75;
+    let tileSize: number = ctx.canvas.width / 15;
     for (let i = 0; i < fisrtTimeTiles.length; i++) {
       fisrtTimeTiles[i].changeSize(tileSize);
     }
@@ -248,7 +248,8 @@ class GameScreen extends Component<props> {
       newZoom = zoom / zoomFactor;
     }
 
-    newZoom = Math.min(Math.max(newZoom, 1), 5);
+    const maxZoom = 8;
+    newZoom = Math.min(Math.max(newZoom, 1), maxZoom);
 
     const zoomChange = newZoom / zoom;
 
