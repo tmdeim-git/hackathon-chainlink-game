@@ -4,13 +4,6 @@ import { GameTile } from "./GameTile";
 import "../style/game.css";
 import { startEvent } from "../thirdweb/events";
 
-const test = [];
-for (let i = 0; i < 100; i++) {
-  test.push(
-    "stringstringstringstringstringstringstringstringstringstringstring" + i
-  );
-}
-
 type GameState = {
   selectedTile: GameTile | null;
   eventHistory: string[];
@@ -19,7 +12,7 @@ type GameState = {
 class Game extends Component<Record<string, never>, GameState> {
   state = {
     selectedTile: null,
-    eventHistory: test,
+    eventHistory: [] as string[],
   };
 
   componentDidMount(): void {

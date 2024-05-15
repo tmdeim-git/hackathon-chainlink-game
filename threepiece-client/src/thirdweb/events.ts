@@ -18,7 +18,7 @@ const startTokenCreatedEvent = (onEvent?: (message: string) => void) =>
       const event = events[0];
       const id = event.args.startTokenId;
       console.log(`Token created`, event);
-      onEvent && onEvent("token has been created");
+      onEvent && onEvent(`${id} has created a new tile`);
     },
     events: [tokensLazyMintedEvent()],
     contract: landContract,
@@ -30,7 +30,7 @@ const startMetadataUpdateEvent = (onEvent?: (message: string) => void) =>
       const event = events[0];
       const id = event.args._fromTokenId;
       console.log(`Token metadata updated`, event);
-      onEvent && onEvent("token has been created");
+      onEvent && onEvent(`${id} has updated a tile`);
     },
     events: [batchMetadataUpdateEvent()],
     contract: landContract,
@@ -44,14 +44,14 @@ const startTransferEvent = (onEvent?: (message: string) => void) =>
       let message: string;
       if (event.args.from == "0x0000000000000000000000000000000000000000") {
         console.log("Token claimed", event);
-        message = "token has been created";
+        message = `${event.args.to} has claimed an tile`;
       } else if (
         event.args.to == "0x0000000000000000000000000000000000000000"
       ) {
         console.log("Token burned", event);
-        message = "Token burned";
+        message = `${event.args.from} has burned a tile`;
       } else {
-        message = "Token transfered";
+        message = `A tile has been transfered from ${event.args.from} to ${event.args.to}`;
       }
       onEvent && onEvent(message);
     },
