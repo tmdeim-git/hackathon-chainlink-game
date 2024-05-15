@@ -6,6 +6,11 @@ export type LandNFT = NFT & {
     }
 }
 
+export enum LandEvent {
+    None,
+    Raining
+}
+
 export type LandNFTAttributes = [
     {
         readonly trait_type: 'id',
@@ -15,13 +20,18 @@ export type LandNFTAttributes = [
         readonly trait_type: 'resources',
         value: Resource[]
     },
+    {
+        readonly trait_type: 'event',
+        value: LandEvent
+    },
 ]
 
 export interface Land {
     id: number
+    resources: Resource[]
+    currentEvent: LandEvent
     nft?: LandNFT
     ownerAddress?: string
-    resources: Resource[]
 }
 
 export interface Owner {

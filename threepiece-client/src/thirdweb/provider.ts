@@ -76,14 +76,14 @@ function nftsToLands(nfts: NFT[]) {
                 nft: nft as LandNFT,
                 id: Number(landNftAttributes[0].value),
                 resources: landNftAttributes[1].value.split(",").map(resource => {
-                    // make the string resources to an array of Resources
-                    // exemple: "seawater,ore" => ["seawater", "ore"]
+                    // exemple: string "seawater,ore" => valid Ressource array like [Resource.Seawater, Resource.Ore]
                     if (resource && isResource(resource)) {
                         return resource;
                     } else {
                         throw 'Bad resource received: ' + resource;
                     }
-                })
+                }),
+                currentEvent: Number(landNftAttributes[2]?.value) || 0
             })
         }
     }

@@ -14,7 +14,6 @@ function Connect() {
         startEvent();
         const address = wallet.getAccount().address;
         wallet.switchChain(sepolia);
-        // await getUserLands(address);
         console.log("TODO: Redirect to game...")
       }} />
   );

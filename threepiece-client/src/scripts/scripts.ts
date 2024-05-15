@@ -100,7 +100,8 @@ export async function generateJson() {
         for (let j = 0; j < config.cols; j++) {
             list.push({
                 id: i * config.cols + j,
-                resources: "water"
+                resources: "water",
+                hasEvent: 0
             })
         }
     }
