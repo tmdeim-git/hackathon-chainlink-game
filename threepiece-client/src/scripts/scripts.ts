@@ -1,21 +1,15 @@
-import { ethers } from "ethers";
-import { ethers6Adapter } from "thirdweb/adapters/ethers6";
+
 import { LazyMintParams, claimTo, lazyMint } from "thirdweb/extensions/erc721";
 import config from "./lands.json";
-import { client, landContract, allLands } from "../thirdweb/provider";
-import { sendAndConfirmTransaction } from "thirdweb";
-import { Land, LandNFT, Resource } from "../thirdweb/types";
+import { client, landContract, allLands, getAdminAccount } from "../thirdweb/provider";
+import { NFT, sendAndConfirmTransaction } from "thirdweb";
+import { Land, Resource } from "../thirdweb/types";
 import { updateBatchBaseURI } from "../thirdweb/11155111/erc721";
 import { download, upload } from "thirdweb/storage";
 
-const metamask = new ethers.InfuraProvider("sepolia");
-const signer: ethers.Signer = new ethers.Wallet(import.meta.env.VITE_METAMASK_ADMIN_PRIVATE_KEY, metamask);
-const admin = await ethers6Adapter.signer.fromEthers({
-    signer,
-});
-
 export async function mintAndClaimLands() {
     const nfts: LazyMintParams['nfts'] = [];
+    const admin = await getAdminAccount();
 
     for (const land of config.lands) {
         nfts.push(
@@ -29,7 +23,7 @@ export async function mintAndClaimLands() {
                         value: land.id + 1
                     }, {
                         trait_type: "resources",
-                        value: "water"
+                        value: land.resources
                     }
                 ]
             }
@@ -64,10 +58,10 @@ export async function mintAndClaimLands() {
     console.log(claimResult);
 }
 
-export async function updateMetadata(nftToChange: LandNFT, newMetadata: LandNFT['metadata']) {
+export async function updateMetadata(nftToChange: NFT, newMetadata: NFT['metadata']) {
     const currentBaseNftsRepo = nftToChange.tokenURI.substring(0, nftToChange.tokenURI.lastIndexOf('/')) + '/';
 
-    const metadatas: Record<number, LandNFT['metadata']> = {};
+    const metadatas: Record<number, NFT['metadata']> = {};
     for (const land of allLands) {
         const res = await download({
             client,
@@ -92,7 +86,7 @@ export async function updateMetadata(nftToChange: LandNFT, newMetadata: LandNFT[
     })
 
     const result = await sendAndConfirmTransaction({
-        account: admin,
+        account: await getAdminAccount(),
         transaction: updateMetadataTx
     });
 
@@ -100,13 +94,13 @@ export async function updateMetadata(nftToChange: LandNFT, newMetadata: LandNFT[
 }
 
 export async function generateJson() {
-    const list: Land[] = []
+    const list = []
 
     for (let i = 0; i < config.rows; i++) {
         for (let j = 0; j < config.cols; j++) {
             list.push({
                 id: i * config.cols + j,
-                resources: [Resource.Water]
+                resources: "water"
             })
         }
     }

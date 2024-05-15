@@ -55,7 +55,7 @@ export async function claimLand(address: string, landId: number) {
 
 }
 
-async function getAdminAccount() {
+export async function getAdminAccount() {
     const metamask = new ethers.InfuraProvider("sepolia");
     const signer: ethers.Signer = new ethers.Wallet(import.meta.env.VITE_METAMASK_ADMIN_PRIVATE_KEY, metamask);
 

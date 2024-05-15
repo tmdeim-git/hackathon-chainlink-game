@@ -4,993 +4,663 @@
     "lands": [
         {
             "id": 0,
-            "resources": [
-                "seawater"
-            ]
+            "resources": "water"
         },
         {
             "id": 1,
-            "resources": [
-                "seawater"
-            ]
+            "resources": "water"
         },
         {
             "id": 2,
-            "resources": [
-                "seawater, water"
-            ]
+            "resources": "water"
         },
         {
             "id": 3,
-            "resources": [
-                "seawater, water"
-            ]
+            "resources": "water"
         },
         {
             "id": 4,
-            "resources": [
-                "seawater, water"
-            ]
+            "resources": "water"
         },
         {
             "id": 5,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 6,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 7,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 8,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 9,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 10,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 11,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 12,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 13,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 14,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 15,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 16,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 17,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 18,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 19,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 20,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 21,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 22,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 23,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 24,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 25,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 26,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 27,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 28,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 29,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 30,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 31,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 32,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 33,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 34,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 35,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 36,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 37,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 38,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 39,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 40,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 41,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 42,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 43,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 44,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 45,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 46,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 47,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 48,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 49,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 50,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 51,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 52,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 53,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 54,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 55,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 56,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 57,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 58,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 59,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 60,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 61,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 62,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 63,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 64,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 65,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 66,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 67,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 68,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 69,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 70,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 71,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 72,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 73,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 74,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 75,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 76,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 77,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 78,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 79,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 80,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 81,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 82,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 83,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 84,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 85,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 86,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 87,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 88,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 89,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 90,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 91,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 92,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 93,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 94,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 95,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 96,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 97,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 98,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 99,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 100,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 101,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 102,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 103,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 104,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 105,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 106,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 107,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 108,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 109,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 110,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 111,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 112,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 113,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 114,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 115,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 116,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 117,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 118,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 119,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 120,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 121,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 122,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 123,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 124,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 125,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 126,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 127,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 128,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 129,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 130,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 131,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 132,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 133,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 134,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 135,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 136,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 137,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 138,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 139,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 140,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 141,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 142,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 143,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 144,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 145,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 146,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 147,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 148,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 149,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 150,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 151,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 152,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 153,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 154,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 155,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 156,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 157,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 158,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 159,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 160,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 161,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 162,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 163,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         },
         {
             "id": 164,
-            "resources": [
-                "water"
-            ]
+            "resources": "water"
         }
     ]
 }
