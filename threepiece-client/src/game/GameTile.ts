@@ -22,9 +22,9 @@ export class GameTile {
     this._id = id;
   }
   draw(ctx: CanvasRenderingContext2D): void {
-    if (this._selected) ctx.lineWidth = 3;
+    //if (this._selected) ctx.lineWidth = 3;
     ctx.strokeRect(this._x, this._y, this._size, this._size);
-    if (this._selected) ctx.lineWidth = 1;
+    //if (this._selected) ctx.lineWidth = 1;
   }
 
   changeSize = (size: number) => {

@@ -20,7 +20,8 @@ class GameScreen extends Component<props> {
     mouseY: 0,
     mouseDown: false,
     zoom: 1,
-    gameTiles: new Array<GameTile>(),
+    gameTiles: {},
+    selectedTile: null
   };
 
   canvasRef: RefObject<HTMLCanvasElement>;
@@ -37,6 +38,7 @@ class GameScreen extends Component<props> {
 
   componentDidMount(): void {
     const fisrtTimeTiles: GameTile[] = getGameTiles();
+    let gameTilesDic: { [id: number]: GameTile } = {};
     const ctx = this.canvasRef.current?.getContext("2d");
     const canvasSize: number = 0.55;
     const canvasAspectRation = 11 / 15;
@@ -47,10 +49,11 @@ class GameScreen extends Component<props> {
     const tileSize: number = ctx.canvas.width / 15;
     for (let i = 0; i < fisrtTimeTiles.length; i++) {
       fisrtTimeTiles[i].changeSize(tileSize);
+      gameTilesDic[fisrtTimeTiles[i]._id] = fisrtTimeTiles[i];
     }
 
     const renderCanvas = () => {
-      const tiles = this.state.gameTiles;
+      const tileDic = this.state.gameTiles;
       this.canvasRef.current
         .getContext("2d")
         .clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -69,8 +72,21 @@ class GameScreen extends Component<props> {
         ctx.canvas.width,
         ctx.canvas.height
       );
-      for (let i = 0; i < tiles.length; i++) {
-        tiles[i].draw(ctx);
+      for (const tileKey in tileDic) {
+        const tile = this.state.gameTiles[tileKey];
+        tile.draw(ctx);
+      }
+
+      const selectedTile = this.state.selectedTile;
+      if (selectedTile) {
+        ctx.lineWidth = 3;
+        ctx.strokeRect(
+          selectedTile._x,
+          selectedTile._y,
+          selectedTile._size,
+          selectedTile._size
+        );
+        ctx.lineWidth = 1;
       }
       ctx.setTransform(1, 0, 0, 1, 0, 0);
 
@@ -79,9 +95,9 @@ class GameScreen extends Component<props> {
 
     this.animationFrameId = requestAnimationFrame(renderCanvas);
     this.setState({
-      gameTiles: fisrtTimeTiles,
+      gameTiles: gameTilesDic,
       mapWidth: ctx.canvas.width,
-      mapHeight: ctx.canvas.height,
+      mapHeight: ctx.canvas.height
     });
   }
 
@@ -96,7 +112,8 @@ class GameScreen extends Component<props> {
   }
 
   mouseClickDown = (e) => {
-    for (const tile of this.state.gameTiles) {
+    for (const tileKey in this.state.gameTiles) {
+      const tile = this.state.gameTiles[tileKey];
       if (tile._selected) {
         this.props.tileSelected(tile);
       }
@@ -104,7 +121,7 @@ class GameScreen extends Component<props> {
     this.setState({
       mouseX: e.clientX,
       mouseY: e.clientY,
-      mouseDown: true,
+      mouseDown: true
     });
   };
 
@@ -118,7 +135,7 @@ class GameScreen extends Component<props> {
 
   mouseEnter = () => {
     document.addEventListener("wheel", this.preventDefault, {
-      passive: false,
+      passive: false
     });
   };
 
@@ -131,28 +148,16 @@ class GameScreen extends Component<props> {
   };
 
   mouseHover = (e) => {
-    const mouseX = e.clientX;
-    const mouseY = e.clientY;
-    const tiles = this.state.gameTiles;
     const rect = this.canvasRef.current.getBoundingClientRect();
+    const mouseX = e.clientX - rect.x;
+    const mouseY = e.clientY - rect.y;
+    const tileDic = this.state.gameTiles;
+    const tileSize = tileDic[0]._size;
+    const i = Math.floor(mouseY / tileSize);
+    const j = Math.floor(mouseX / tileSize);
+    const newId = i * 100 + j;
 
-    for (let i = 0; i < tiles.length; i++) {
-      const tileX = tiles[i]._x * this.state.zoom + this.state.offsetX + rect.x;
-      const tileY = tiles[i]._y * this.state.zoom + this.state.offsetY + rect.y;
-      const tileW = tiles[i]._size * this.state.zoom;
-      const tileH = tiles[i]._size * this.state.zoom;
-
-      if (
-        mouseX > tileX &&
-        mouseX < tileX + tileW &&
-        mouseY > tileY &&
-        mouseY < tileY + tileH
-      ) {
-        tiles[i]._selected = true;
-      } else {
-        tiles[i]._selected = false;
-      }
-    }
+    this.setState({ selectedTile: tileDic[newId] });
   };
 
   mouseDrag = (e) => {
@@ -176,7 +181,7 @@ class GameScreen extends Component<props> {
         mouseX: newMouseX,
         mouseY: newMouseY,
         offsetX: newOffsetX,
-        offsetY: newOffsetY,
+        offsetY: newOffsetY
       });
     }
   };
@@ -223,7 +228,7 @@ class GameScreen extends Component<props> {
     ) {
       this.setState({
         offsetX: newOffsetX,
-        offsetY: newOffsetY,
+        offsetY: newOffsetY
       });
     }
   };
@@ -255,7 +260,7 @@ class GameScreen extends Component<props> {
     this.setState({
       zoom: newZoom,
       offsetX,
-      offsetY,
+      offsetY
     });
   };
 

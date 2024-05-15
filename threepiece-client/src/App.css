@@ -41,5 +41,5 @@
 }
 
 .app {
-  backdrop-filter: black;
+  backdrop-filter: blur(4px);
 }
