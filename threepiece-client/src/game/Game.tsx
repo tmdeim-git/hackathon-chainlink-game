@@ -79,7 +79,14 @@ class Game extends Component<Record<string, never>, GameState> {
             <p className="event-name">Event history:</p>
             <div className="event-history-table">
               {this.state.eventHistory.map((info, i) => (
-                <p key={i}>{info}</p>
+                <p
+                  key={i}
+                  style={{
+                    paddingLeft: "20px",
+                  }}
+                >
+                  {`- ${info}`}
+                </p>
               ))}
             </div>
           </div>
