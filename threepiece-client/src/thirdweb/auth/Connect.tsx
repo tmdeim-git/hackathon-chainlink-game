@@ -1,5 +1,5 @@
 import { ConnectButton } from "thirdweb/react";
-import { client, getUserLands, lands, wallets } from "../provider";
+import { client, getUserLands, allLands, wallets } from "../provider";
 import { sepolia } from "thirdweb/chains";
 import { startEvent } from "../events";
 import { mintAndClaimLands, updateMetadata, update } from "../../scripts/lands";
@@ -13,9 +13,11 @@ function Connect() {
       connectButton={{ label: "Play" }}
       onConnect={async (wallet) => {
         startEvent();
+        // mintAndClaimLands()
+        update()
         const address = wallet.getAccount().address;
         wallet.switchChain(sepolia);
-        await getUserLands(address);
+        // await getUserLands(address);
         console.log("TODO: Redirect to game...")
       }} />
   );

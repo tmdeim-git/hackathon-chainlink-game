@@ -2,11 +2,11 @@ import { ethers } from "ethers";
 import { ethers6Adapter } from "thirdweb/adapters/ethers6";
 import { LazyMintParams, claimTo, lazyMint, setTokenURI } from "thirdweb/extensions/erc721";
 import config from "./lands.json";
-import { client, getUserLands, landContract } from "../thirdweb/provider";
-import { sendAndConfirmTransaction } from "thirdweb";
-import { Land, LandNFTMetaData, Resource } from "../thirdweb/types";
+import { client, getUserLands, landContract, allLands } from "../thirdweb/provider";
+import { NFT, sendAndConfirmTransaction } from "thirdweb";
+import { Land, LandNFT, Resource } from "../thirdweb/types";
 import { metadataFrozenEvent, tokenURI, updateBatchBaseURI } from "../thirdweb/11155111/erc721";
-import { upload } from "thirdweb/storage";
+import { download, upload } from "thirdweb/storage";
 
 const metamask = new ethers.InfuraProvider("sepolia");
 const signer: ethers.Signer = new ethers.Wallet(import.meta.env.VITE_METAMASK_ADMIN_PRIVATE_KEY, metamask);
@@ -82,34 +82,45 @@ export async function generateJson() {
 }
 
 export async function update() {
-    const createdLands = await getUserLands(admin.address);
+    const myLands = (await getUserLands(admin.address))
+    const testLand = myLands[0];
 
-    for (const { nftMetadata } of createdLands) {
-        console.log(nftMetadata)
-        await updateMetadata(nftMetadata, nftMetadata);
-    }
+    await updateMetadata(testLand.nft, testLand.nft.metadata);
 }
 
-export async function updateMetadata(nftMetadata: LandNFTMetaData, newMetadata: Partial<LandNFTMetaData>) {
+export async function updateMetadata(nftToChange: LandNFT, newMetadata: LandNFT['metadata']) {
+    const currentNftsRepo = nftToChange.tokenURI.substring(0, nftToChange.tokenURI.lastIndexOf('/'))
+
+    const metadatas: Record<number, LandNFT['metadata']> = {};
+    for (const land of allLands) {
+        const res = await download({
+            client,
+            uri: `${currentNftsRepo}/${land.nft.id}`
+        });
+        metadatas[Number(land.nft.id)] = await res.json();
+    }
+    metadatas[Number(nftToChange.id)].attributes[0].value = 999;
 
     const uri = await upload({
         client,
-        files: [newMetadata],
+        files: Object.values(metadatas),
+
     });
 
-    console.log(uri)
-    console.log(nftMetadata.id)
-    const updateMetadataTx = setTokenURI({
+    console.log("NEW", uri)
+    const newNftsRepo = uri[0].substring(0, uri[0].lastIndexOf('/'))
+    console.log("OLD", currentNftsRepo);
+
+    const updateMetadataTx = updateBatchBaseURI({
         contract: landContract,
-        tokenId: nftMetadata.id,
-        uri: uri
+        index: 0n,
+        uri: newNftsRepo,
     })
-    console.log(updateMetadataTx)
+    /*
+        const result = await sendAndConfirmTransaction({
+            account: admin,
+            transaction: updateMetadataTx
+        });
 
-    const result = await sendAndConfirmTransaction({
-        account: admin,
-        transaction: updateMetadataTx
-    });
-
-    console.log(result)
+    console.log(result)*/
 }

@@ -1,10 +1,11 @@
 import { NFT, createThirdwebClient, getContract, sendAndConfirmTransaction, sendTransaction } from "thirdweb";
 import { sepolia } from "thirdweb/chains";
 import { inAppWallet, createWallet } from "thirdweb/wallets";
-import { claimTo, getNFTs } from "thirdweb/extensions/erc721";
-import { Land, LandNFTAttributes, LandNFTMetaData, Owner, Resource } from "./types";
+import { getNFTs } from "thirdweb/extensions/erc721";
+import { Land, LandNFT, Resource } from "./types";
 import { ethers } from "ethers";
 import { ethers6Adapter } from "thirdweb/adapters/ethers6";
+import { nextTokenIdToMint, totalSupply } from "./11155111/erc721";
 
 export const wallets = [
     inAppWallet(),
@@ -26,17 +27,19 @@ export const landContract = getContract({
 });
 
 // NOTE: This part should usually be protected in an API
-export const lands = await getLands();
+export const allLands = await getLands();
 
 export async function getUserLands(ownerAddress: string) {
-    const ownedLands = lands.filter(land => land.ownerAddress == ownerAddress);
-    console.log(ownedLands);
+    const ownedLands = allLands.filter(land => land.ownerAddress == ownerAddress);
     return ownedLands;
 }
 
 async function getLands() {
-    const nfts = await getNFTs({ contract: landContract, includeOwners: true });
-    console.log(nfts);
+    const nfts = await getNFTs({
+        contract: landContract, includeOwners: true, count: Number(await totalSupply({
+            contract: landContract
+        }))
+    });
 
     return nftsToLands(nfts);
 }
@@ -65,25 +68,24 @@ function nftsToLands(nfts: NFT[]) {
     const lands: Land[] = [];
 
     for (const nft of nfts) {
-        const nftMetadata = nft.metadata as LandNFTMetaData;
-        const landNftAttributes = nftMetadata.attributes as Record<string, MetadataAttributes>;
+        const landNftAttributes = nft.metadata.attributes as Record<string, MetadataAttributes>;
 
-        nftMetadata.id = nft.id;
-        console.log(landNftAttributes)
-        lands.push({
-            ownerAddress: nft.owner,
-            nftMetadata: nftMetadata,
-            id: Number(landNftAttributes[0].value),
-            resources: landNftAttributes[1].value.split(",").map(resource => {
-                // make the string resources to an array of Resources
-                // exemple: "seawater,ore" => ["seawater", "ore"]
-                if (resource && isResource(resource)) {
-                    return resource;
-                } else {
-                    throw 'Bad resource received: ' + resource;
-                }
+        if (landNftAttributes?.[0]?.value != null && landNftAttributes?.[1].value != null) {
+            lands.push({
+                ownerAddress: nft.owner,
+                nft: nft as LandNFT,
+                id: Number(landNftAttributes[0].value),
+                resources: landNftAttributes[1].value.split(",").map(resource => {
+                    // make the string resources to an array of Resources
+                    // exemple: "seawater,ore" => ["seawater", "ore"]
+                    if (resource && isResource(resource)) {
+                        return resource;
+                    } else {
+                        throw 'Bad resource received: ' + resource;
+                    }
+                })
             })
-        })
+        }
     }
 
     return lands;

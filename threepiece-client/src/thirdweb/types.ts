@@ -1,9 +1,9 @@
 import { NFT } from "thirdweb";
-import { LazyMintParams } from "thirdweb/extensions/erc721";
 
-export type LandNFTMetaData = NFT['metadata'] & {
-    attributes?: LandNFTAttributes
-    properties?: LandNFTAttributes
+export type LandNFT = NFT & {
+    metadata: {
+        attributes?: LandNFTAttributes
+    }
 }
 
 export type LandNFTAttributes = [
@@ -19,7 +19,7 @@ export type LandNFTAttributes = [
 
 export interface Land {
     id: number
-    nftMetadata?: LandNFTMetaData
+    nft?: LandNFT
     ownerAddress?: string
     resources: Resource[]
 }
