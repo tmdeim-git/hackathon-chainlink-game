@@ -7,8 +7,8 @@ export type LandNFT = NFT & {
 }
 
 export enum LandEvent {
-    None,
-    Raining
+    None = "none",
+    Raining = "raining"
 }
 
 export type LandNFTAttributes = [
@@ -29,7 +29,7 @@ export type LandNFTAttributes = [
 export interface Land {
     id: number
     resources: Resource[]
-    currentEvent?: LandEvent
+    event?: LandEvent
     nft?: LandNFT
     ownerAddress?: string
 }
@@ -56,3 +56,27 @@ export interface MetadataAttributes {
     trait_type: string
     value: any
 }
+
+export function isValidLand(land: any): land is Land {
+    const resources = land.resources;
+    const landEvent = land.event;
+
+    return isValidEnumArray(resources, Resource) && isValidEnumValue(landEvent, LandEvent)
+}
+
+// Generic type predicate function for array of enums
+export function isValidEnumArray<T extends string>(
+    arr: string[],
+    enumValues: Record<string, T>
+): arr is T[] {
+    return arr.every(value => Object.values(enumValues).includes(value as T));
+}
+
+// Generic type predicate function for single enum value
+export function isValidEnumValue<T extends string>(
+    value: string,
+    enumValues: Record<string, T>
+): value is T {
+    return Object.values(enumValues).includes(value as T);
+}
+

@@ -4,828 +4,828 @@
     "lands": [
         {
             "id": 0,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 1,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 2,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 3,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 4,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 5,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 6,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 7,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 8,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 9,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 10,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 11,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 12,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 13,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 14,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 15,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 16,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 17,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 18,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 19,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 20,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 21,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 22,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 23,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 24,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 25,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 26,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 27,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 28,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 29,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 30,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 31,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 32,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 33,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 34,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 35,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 36,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 37,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 38,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 39,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 40,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 41,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 42,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 43,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 44,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 45,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 46,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 47,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 48,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 49,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 50,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 51,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 52,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 53,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 54,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 55,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 56,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 57,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 58,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 59,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 60,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 61,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 62,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 63,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 64,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 65,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 66,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 67,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 68,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 69,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 70,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 71,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 72,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 73,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 74,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 75,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 76,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 77,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 78,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 79,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 80,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 81,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 82,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 83,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 84,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 85,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 86,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 87,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 88,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 89,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 90,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 91,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 92,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 93,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 94,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 95,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 96,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 97,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 98,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 99,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 100,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 101,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 102,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 103,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 104,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 105,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 106,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 107,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 108,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 109,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 110,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 111,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 112,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 113,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 114,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 115,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 116,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 117,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 118,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 119,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 120,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 121,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 122,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 123,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 124,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 125,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 126,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 127,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 128,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 129,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 130,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 131,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 132,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 133,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 134,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 135,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 136,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 137,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 138,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 139,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 140,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 141,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 142,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 143,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 144,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 145,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 146,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 147,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 148,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 149,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 150,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 151,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 152,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 153,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 154,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 155,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 156,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 157,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 158,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 159,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 160,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 161,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 162,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 163,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         },
         {
             "id": 164,
-            "resources": "water",
-            "hasEvent": 0
+            "resources": "water,soil",
+            "event": "none"
         }
     ]
 }

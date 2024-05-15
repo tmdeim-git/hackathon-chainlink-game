@@ -2,7 +2,7 @@ import { NFT, createThirdwebClient, getContract, sendAndConfirmTransaction, send
 import { sepolia } from "thirdweb/chains";
 import { inAppWallet, createWallet } from "thirdweb/wallets";
 import { getNFTs } from "thirdweb/extensions/erc721";
-import { Land, LandNFT, MetadataAttributes, Resource } from "./types";
+import { Land, LandNFT, LandNFTAttributes, MetadataAttributes, Resource, isValidLand } from "./types";
 import { ethers } from "ethers";
 import { ethers6Adapter } from "thirdweb/adapters/ethers6";
 import { nextTokenIdToMint, totalSupply } from "./11155111/erc721";
@@ -68,32 +68,28 @@ function nftsToLands(nfts: NFT[]) {
     const lands: Land[] = [];
 
     for (const nft of nfts) {
-        const landNftAttributes = nft.metadata.attributes as unknown as Array<MetadataAttributes>;
+        const landNftAttributes = nft.metadata.attributes as unknown as LandNFTAttributes;
 
-        if (landNftAttributes?.[0]?.value != null && landNftAttributes?.[1].value != null) {
-            lands.push({
-                ownerAddress: nft.owner,
-                nft: nft as LandNFT,
-                id: Number(landNftAttributes[0].value),
-                resources: landNftAttributes[1].value.split(",").map(resource => {
-                    // exemple: string "seawater,ore" => valid Ressource array like [Resource.Seawater, Resource.Ore]
-                    if (resource && isResource(resource)) {
-                        return resource;
-                    } else {
-                        throw 'Bad resource received: ' + resource;
-                    }
-                }),
-                currentEvent: Number(landNftAttributes[2]?.value) || 0
-            })
+        const land: Land = {
+            ownerAddress: nft.owner,
+            nft: nft as LandNFT,
+            id: Number(landNftAttributes?.[0]?.value),
+            resources: landNftAttributes?.[1]?.value,
+            event: landNftAttributes?.[2]?.value
         }
+
+        if (!isValidLand(land)) {
+            console.log(landNftAttributes)
+            throw new Error('Problem parsing NFT ' + nft.id);
+        }
+
+        lands.push(land)
+
     }
 
     return lands;
 }
 
-function isResource(value: string): value is Resource {
-    return Object.values(Resource).includes(value as Resource);
-}
 
 
 

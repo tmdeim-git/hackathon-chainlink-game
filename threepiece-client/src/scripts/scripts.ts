@@ -3,32 +3,43 @@ import { LazyMintParams, claimTo, lazyMint } from "thirdweb/extensions/erc721";
 import config from "./lands.json";
 import { client, landContract, allLands, getAdminAccount } from "../thirdweb/provider";
 import { NFT, sendAndConfirmTransaction } from "thirdweb";
-import { Land, MetadataAttributes, Resource } from "../thirdweb/types";
+import { Land, LandEvent, LandNFTAttributes, MetadataAttributes, Resource, isValidLand } from "../thirdweb/types";
 import { updateBatchBaseURI } from "../thirdweb/11155111/erc721";
-import { download, upload } from "thirdweb/storage";
+import { upload } from "thirdweb/storage";
 
 export async function mintAndClaimLands() {
     const nfts: LazyMintParams['nfts'] = [];
     const admin = await getAdminAccount();
 
-    for (const land of config.lands) {
+    for (const configLand of config.lands) {
+        const land: Land = {
+            id: configLand.id,
+            resources: configLand.resources.split(',') as Resource[],
+            event: configLand.event as LandEvent
+        };
+
+        if (!isValidLand(land))
+            throw new Error('JSON contains errors for land id: ' + configLand.id);
+
+        const attributes: LandNFTAttributes = [
+            {
+                trait_type: "id",
+                value: land.id + 1
+            }, {
+                trait_type: "resources",
+                value: land.resources
+            }, {
+                trait_type: "event",
+                value: land.event
+            }
+        ];
+
         nfts.push(
             {
                 name: `ThreePiece Land #${land.id + 1}`,
                 description: "A land full of mystery...",
                 image: "ipfs://QmcJoG6Sgh3Mhv94tXANDrjom7JVv3adpW5igX9VbaHyYN",
-                attributes: [
-                    {
-                        trait_type: "id",
-                        value: land.id + 1
-                    }, {
-                        trait_type: "resources",
-                        value: land.resources
-                    }, {
-                        trait_type: "hasEvent",
-                        value: land.hasEvent
-                    }
-                ]
+                attributes: attributes
             }
         );
     }
@@ -71,8 +82,8 @@ export async function batchAddMetadata(newAttr: MetadataAttributes) {
     const metadatas = allLands.map(l => l.nft.metadata) as NFT['metadata'][];
     console.log(metadatas[0]);
 
-    for (const metadata of metadatas) {
-        metadata.attributes[Object.keys(metadata.attributes).length] = newAttr;
+    for (const { attributes } of metadatas) {
+        attributes[Object.keys(attributes).length] = newAttr;
     }
 
     return await uploadMetadata(metadatas);
@@ -93,13 +104,11 @@ export async function batchRemoveMetadata(trait_type: MetadataAttributes['trait_
 
 export async function batchUpdateMetadata(updatedAttributes: MetadataAttributes) {
     const metadatas = allLands.map(l => l.nft.metadata) as NFT['metadata'][];
-    console.log(metadatas[0]);
 
-    for (const metadata of metadatas) {
-        console.log(1, metadata.attributes);
-        metadata.attributes[updatedAttributes.trait_type] = updatedAttributes.value;
-        console.log(2, metadata.attributes);
-
+    for (const { attributes } of metadatas) {
+        const attributesArr = attributes as unknown as Array<MetadataAttributes>;
+        const indexOfTrait = attributesArr.findIndex(e => e.trait_type === updatedAttributes.trait_type);
+        attributes[indexOfTrait] = updatedAttributes;
     }
 
     return await uploadMetadata(metadatas);
@@ -125,6 +134,8 @@ async function uploadMetadata(metadatas: NFT['metadata'][]) {
     });
 
     console.log(result);
+
+    return result;
 }
 
 export async function generateJson() {
