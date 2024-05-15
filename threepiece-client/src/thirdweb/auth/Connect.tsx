@@ -1,7 +1,8 @@
 import { ConnectButton } from "thirdweb/react";
-import { client, wallets } from "../provider";
+import { allLands, client, wallets } from "../provider";
 import { sepolia } from "thirdweb/chains";
 import { startEvent } from "../events";
+import { batchAddMetadata, batchRemoveMetadata, batchUpdateMetadata, mintAndClaimLands, updateMetadata } from "../../scripts/scripts";
 
 function Connect() {
 

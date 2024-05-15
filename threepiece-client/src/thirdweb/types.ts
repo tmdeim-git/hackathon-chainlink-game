@@ -29,7 +29,7 @@ export type LandNFTAttributes = [
 export interface Land {
     id: number
     resources: Resource[]
-    currentEvent: LandEvent
+    currentEvent?: LandEvent
     nft?: LandNFT
     ownerAddress?: string
 }
@@ -50,4 +50,9 @@ export enum Resource {
     Wood = 'wood',
     Soil = 'soil',
     Ore = 'ore',
+}
+
+export interface MetadataAttributes {
+    trait_type: string
+    value: any
 }

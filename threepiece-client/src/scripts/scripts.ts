@@ -3,7 +3,7 @@ import { LazyMintParams, claimTo, lazyMint } from "thirdweb/extensions/erc721";
 import config from "./lands.json";
 import { client, landContract, allLands, getAdminAccount } from "../thirdweb/provider";
 import { NFT, sendAndConfirmTransaction } from "thirdweb";
-import { Land, Resource } from "../thirdweb/types";
+import { Land, MetadataAttributes, Resource } from "../thirdweb/types";
 import { updateBatchBaseURI } from "../thirdweb/11155111/erc721";
 import { download, upload } from "thirdweb/storage";
 
@@ -24,6 +24,9 @@ export async function mintAndClaimLands() {
                     }, {
                         trait_type: "resources",
                         value: land.resources
+                    }, {
+                        trait_type: "hasEvent",
+                        value: land.hasEvent
                     }
                 ]
             }
@@ -59,19 +62,50 @@ export async function mintAndClaimLands() {
 }
 
 export async function updateMetadata(nftToChange: NFT, newMetadata: NFT['metadata']) {
-    const currentBaseNftsRepo = nftToChange.tokenURI.substring(0, nftToChange.tokenURI.lastIndexOf('/')) + '/';
+    const metadatas = allLands.map(l => l.nft.metadata) as NFT['metadata'][];
+    metadatas[Number(nftToChange.id)] = newMetadata;
+    return await uploadMetadata(metadatas);
+}
 
-    const metadatas: Record<number, NFT['metadata']> = {};
-    for (const land of allLands) {
-        const res = await download({
-            client,
-            uri: `${currentBaseNftsRepo}${land.nft.id}`
-        });
-        metadatas[Number(land.nft.id)] = await res.json();
+export async function batchAddMetadata(newAttr: MetadataAttributes) {
+    const metadatas = allLands.map(l => l.nft.metadata) as NFT['metadata'][];
+    console.log(metadatas[0]);
+
+    for (const metadata of metadatas) {
+        metadata.attributes[Object.keys(metadata.attributes).length] = newAttr;
     }
 
-    metadatas[Number(nftToChange.id)] = newMetadata;
+    return await uploadMetadata(metadatas);
+}
 
+export async function batchRemoveMetadata(trait_type: MetadataAttributes['trait_type']) {
+    const metadatas = allLands.map(l => l.nft.metadata) as NFT['metadata'][];
+
+    for (const { attributes } of metadatas) {
+        const attributesArr = attributes as unknown as Array<MetadataAttributes>;
+        const indexOfTrait = attributesArr.findIndex(e => e.trait_type === trait_type);
+        attributesArr.splice(indexOfTrait, 1)
+        attributes[indexOfTrait] = attributesArr[indexOfTrait];
+    }
+
+    return await uploadMetadata(metadatas);
+}
+
+export async function batchUpdateMetadata(updatedAttributes: MetadataAttributes) {
+    const metadatas = allLands.map(l => l.nft.metadata) as NFT['metadata'][];
+    console.log(metadatas[0]);
+
+    for (const metadata of metadatas) {
+        console.log(1, metadata.attributes);
+        metadata.attributes[updatedAttributes.trait_type] = updatedAttributes.value;
+        console.log(2, metadata.attributes);
+
+    }
+
+    return await uploadMetadata(metadatas);
+}
+
+async function uploadMetadata(metadatas: NFT['metadata'][]) {
     const uri = await upload({
         client,
         files: Object.values(metadatas),

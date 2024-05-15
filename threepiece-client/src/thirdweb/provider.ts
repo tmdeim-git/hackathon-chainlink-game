@@ -2,7 +2,7 @@ import { NFT, createThirdwebClient, getContract, sendAndConfirmTransaction, send
 import { sepolia } from "thirdweb/chains";
 import { inAppWallet, createWallet } from "thirdweb/wallets";
 import { getNFTs } from "thirdweb/extensions/erc721";
-import { Land, LandNFT, Resource } from "./types";
+import { Land, LandNFT, MetadataAttributes, Resource } from "./types";
 import { ethers } from "ethers";
 import { ethers6Adapter } from "thirdweb/adapters/ethers6";
 import { nextTokenIdToMint, totalSupply } from "./11155111/erc721";
@@ -68,7 +68,7 @@ function nftsToLands(nfts: NFT[]) {
     const lands: Land[] = [];
 
     for (const nft of nfts) {
-        const landNftAttributes = nft.metadata.attributes as Record<string, MetadataAttributes>;
+        const landNftAttributes = nft.metadata.attributes as unknown as Array<MetadataAttributes>;
 
         if (landNftAttributes?.[0]?.value != null && landNftAttributes?.[1].value != null) {
             lands.push({
@@ -89,11 +89,6 @@ function nftsToLands(nfts: NFT[]) {
     }
 
     return lands;
-}
-
-interface MetadataAttributes {
-    trait_type: string
-    value: string
 }
 
 function isResource(value: string): value is Resource {
