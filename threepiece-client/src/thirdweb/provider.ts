@@ -26,6 +26,12 @@ export const landContract = getContract({
     client: client,
 });
 
+export const landStableContract = getContract({
+    address: import.meta.env.VITE_LAND_STABLE_CONTRACT,
+    chain: sepolia,
+    client: client,
+});
+
 // NOTE: This part should usually be protected in an API
 export const allLands = await getLands();
 

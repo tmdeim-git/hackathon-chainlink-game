@@ -1,12 +1,15 @@
 
 import { LazyMintParams, claimTo, lazyMint } from "thirdweb/extensions/erc721";
 import config from "./lands.json";
-import { client, landContract, allLands, getAdminAccount } from "../thirdweb/provider";
+import { client, landContract, allLands, getAdminAccount, landStableContract } from "../thirdweb/provider";
 import { NFT, sendAndConfirmTransaction } from "thirdweb";
 import { Land, LandEvent, LandNFTAttributes, MetadataAttributes, Resource, isValidLand } from "../thirdweb/types";
 import { updateBatchBaseURI } from "../thirdweb/11155111/erc721";
 import { upload } from "thirdweb/storage";
 
+/**
+ * Create and claim NFTs to the admin account
+ */
 export async function mintAndClaimLands() {
     const nfts: LazyMintParams['nfts'] = [];
     const admin = await getAdminAccount();
@@ -72,13 +75,19 @@ export async function mintAndClaimLands() {
     console.log(claimResult);
 }
 
+/**
+ * Update the metadata for a single NFT with the metadata given
+ */
 export async function updateMetadata(nftToChange: NFT, newMetadata: NFT['metadata']) {
     const metadatas = allLands.map(l => l.nft.metadata) as NFT['metadata'][];
     metadatas[Number(nftToChange.id)] = newMetadata;
-    return await uploadMetadata(metadatas);
+    return await batchUpdateMetadata(metadatas);
 }
 
-export async function batchAddMetadata(newAttr: MetadataAttributes) {
+/**
+ * For every NFT, add a new attribute with a default value
+ */
+export async function batchAddAttribute(newAttr: MetadataAttributes) {
     const metadatas = allLands.map(l => l.nft.metadata) as NFT['metadata'][];
     console.log(metadatas[0]);
 
@@ -86,10 +95,13 @@ export async function batchAddMetadata(newAttr: MetadataAttributes) {
         attributes[Object.keys(attributes).length] = newAttr;
     }
 
-    return await uploadMetadata(metadatas);
+    return await batchUpdateMetadata(metadatas);
 }
 
-export async function batchRemoveMetadata(trait_type: MetadataAttributes['trait_type']) {
+/**
+ * For every NFT, remove a single attribute based on the trait_type given
+ */
+export async function batchRemoveAttribute(trait_type: MetadataAttributes['trait_type']) {
     const metadatas = allLands.map(l => l.nft.metadata) as NFT['metadata'][];
 
     for (const { attributes } of metadatas) {
@@ -99,10 +111,13 @@ export async function batchRemoveMetadata(trait_type: MetadataAttributes['trait_
         attributes[indexOfTrait] = attributesArr[indexOfTrait];
     }
 
-    return await uploadMetadata(metadatas);
+    return await batchUpdateMetadata(metadatas);
 }
 
-export async function batchUpdateMetadata(updatedAttributes: MetadataAttributes) {
+/**
+ * For every NFT, update a single attribute based on the trait_type given
+ */
+export async function batchUpdateAttribute(updatedAttributes: MetadataAttributes) {
     const metadatas = allLands.map(l => l.nft.metadata) as NFT['metadata'][];
 
     for (const { attributes } of metadatas) {
@@ -111,10 +126,20 @@ export async function batchUpdateMetadata(updatedAttributes: MetadataAttributes)
         attributes[indexOfTrait] = updatedAttributes;
     }
 
-    return await uploadMetadata(metadatas);
+    return await batchUpdateMetadata(metadatas);
 }
 
-async function uploadMetadata(metadatas: NFT['metadata'][]) {
+/**
+ * Update literally every single NFT metadata from the STABLE contract with with the ones from the CURRENT contract
+ */
+export async function batchUpdateStable() {
+    return await batchUpdateMetadata(allLands.map(l => l.nft.metadata), true);
+}
+
+/**
+ * Update literally every single NFT metadata with the ones given in parameter
+ */
+export async function batchUpdateMetadata(metadatas: NFT['metadata'][], toStable: boolean = false) {
     const uri = await upload({
         client,
         files: Object.values(metadatas),
@@ -123,7 +148,7 @@ async function uploadMetadata(metadatas: NFT['metadata'][]) {
     const newNftsRepo = uri[0].substring(0, uri[0].lastIndexOf('/')) + '/';
 
     const updateMetadataTx = updateBatchBaseURI({
-        contract: landContract,
+        contract: toStable ? landStableContract : landContract,
         index: 0n,
         uri: newNftsRepo,
     })
@@ -138,6 +163,9 @@ async function uploadMetadata(metadatas: NFT['metadata'][]) {
     return result;
 }
 
+/**
+ * Used to create the JSON for the initial lands
+ */
 export async function generateJson() {
     const list = []
 
