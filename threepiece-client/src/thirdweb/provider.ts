@@ -78,6 +78,9 @@ function nftsToLands(nfts: NFT[]) {
 
     for (const nft of nfts) {
         const landNftAttributes = nft.metadata.attributes as unknown as LandNFTAttributes;
+        if (typeof landNftAttributes?.[1]?.value === 'string') {
+            landNftAttributes[1].value = JSON.parse(landNftAttributes?.[1]?.value);
+        }
 
         const land: Land = {
             ownerAddress: nft.owner,
