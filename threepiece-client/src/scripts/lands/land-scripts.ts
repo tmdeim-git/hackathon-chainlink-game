@@ -1,9 +1,10 @@
-import { ContractOptions, sendAndConfirmTransaction } from "thirdweb";
+import { ContractOptions, NFT, sendAndConfirmTransaction } from "thirdweb";
 import { LazyMintParams, burn, lazyMint, claimTo } from "thirdweb/extensions/erc721";
 import { multicall } from "../../thirdweb/11155111/erc721";
-import { getAdminAccount, allLandNfts, landContract } from "../../thirdweb/provider";
+import { getAdminAccount, allLandNfts, landContract, landStableContract } from "../../thirdweb/provider";
 import { Land, Resource, LandEvent, isValidLand, LandNFTAttributes } from "../../thirdweb/types";
 import config from './config.json'
+import { batchUpdateMetadata } from "../erc721-scripts";
 
 /**
  * Burn, create and claim NFTs to the admin account
@@ -83,6 +84,12 @@ export async function resetLandNfts(contract?: Readonly<ContractOptions<[]>>) {
     console.log(batchResult);
 }
 
+/**
+ * Update literally every single NFT metadata from the STABLE contract with with the ones from the CURRENT contract
+ */
+export async function batchUpdateStable(nftList: NFT[]) {
+    return await batchUpdateMetadata(nftList.map(n => n.metadata), landStableContract);
+}
 
 /**
  * Used to create the JSON for the initial lands

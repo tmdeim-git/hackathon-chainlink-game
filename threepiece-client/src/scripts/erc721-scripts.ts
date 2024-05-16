@@ -5,16 +5,6 @@ import { MetadataAttributes } from "../thirdweb/types";
 import { updateBatchBaseURI } from "../thirdweb/11155111/erc721";
 import { upload } from "thirdweb/storage";
 
-
-/**
- * Update the metadata for a single NFT with the metadata given
- */
-export async function updateMetadata(nftToChange: NFT, newMetadata: NFT['metadata'], nftList: NFT[], contract: Readonly<ContractOptions<[]>>) {
-    const metadatas = nftList.map(n => n.metadata);
-    metadatas[Number(nftToChange.id)] = newMetadata;
-    return await batchUpdateMetadata(metadatas, contract);
-}
-
 /**
  * For every NFT, add a new attribute with a default value
  */
@@ -60,16 +50,18 @@ export async function batchUpdateAttribute(updatedAttributes: MetadataAttributes
 }
 
 /**
- * Update literally every single NFT metadata from the STABLE contract with with the ones from the CURRENT contract
+ * Update the metadata for a single NFT with the metadata given
  */
-export async function batchUpdateStable(nftList: NFT[], contract: Readonly<ContractOptions<[]>>) {
-    return await batchUpdateMetadata(nftList.map(n => n.metadata), contract);
+export async function updateMetadata(nftToChange: NFT, newMetadata: NFT['metadata'], nftList: NFT[], contract: Readonly<ContractOptions<[]>>) {
+    const metadatas = nftList.map(n => n.metadata);
+    metadatas[Number(nftToChange.id)] = newMetadata;
+    return await batchUpdateMetadata(metadatas, contract);
 }
 
 /**
  * Update literally every single NFT metadata with the ones given in parameter
  */
-async function batchUpdateMetadata(metadatas: NFT['metadata'][], contract: Readonly<ContractOptions<[]>>) {
+export async function batchUpdateMetadata(metadatas: NFT['metadata'][], contract: Readonly<ContractOptions<[]>>) {
     const uri = await upload({
         client,
         files: Object.values(metadatas),
