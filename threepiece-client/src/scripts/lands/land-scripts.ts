@@ -1,21 +1,22 @@
 import { ContractOptions, sendAndConfirmTransaction } from "thirdweb";
 import { LazyMintParams, burn, lazyMint, claimTo } from "thirdweb/extensions/erc721";
 import { multicall } from "../../thirdweb/11155111/erc721";
-import { getAdminAccount, allLandNfts } from "../../thirdweb/provider";
+import { getAdminAccount, allLandNfts, landContract } from "../../thirdweb/provider";
 import { Land, Resource, LandEvent, isValidLand, LandNFTAttributes } from "../../thirdweb/types";
 import config from './config.json'
 
 /**
  * Burn, create and claim NFTs to the admin account
  */
-export async function resetLandNfts(contract: Readonly<ContractOptions<[]>>) {
+export async function resetLandNfts(contract?: Readonly<ContractOptions<[]>>) {
+    const contractToUse = contract || landContract;
     const nfts: LazyMintParams['nfts'] = [];
     const admin = await getAdminAccount();
 
     for (const configLand of config.lands) {
         const land: Land = {
             id: configLand.id,
-            resources: configLand.resources.split(',') as Resource[],
+            resources: configLand.resources as Resource[],
             event: configLand.event as LandEvent
         };
 
@@ -46,22 +47,24 @@ export async function resetLandNfts(contract: Readonly<ContractOptions<[]>>) {
     }
 
     const burnData = []
+    console.log(allLandNfts);
+
     for (const nft of allLandNfts) {
         const burnTx = burn({
-            contract: contract,
+            contract: contractToUse,
             tokenId: nft.id
         });
         burnData.push(await (burnTx.data as () => Promise<`0x${string}`>)())
     };
 
     const mintTx = lazyMint({
-        contract: contract,
+        contract: contractToUse,
         nfts
     });
     const mintData = await (mintTx.data as () => Promise<`0x${string}`>)()
 
     const claimTx = claimTo({
-        contract: contract,
+        contract: contractToUse,
         quantity: BigInt(config.lands.length),
         to: admin.address
     });
@@ -69,7 +72,7 @@ export async function resetLandNfts(contract: Readonly<ContractOptions<[]>>) {
 
     const batchTx = multicall({
         data: [...burnData, mintData, claimData],
-        contract: contract
+        contract: contractToUse
     })
 
     const batchResult = await sendAndConfirmTransaction({
@@ -89,11 +92,12 @@ export async function outputLandJson() {
 
     for (let i = 0; i < config.rows; i++) {
         for (let j = 0; j < config.cols; j++) {
-            list.push({
+            const land: Land = {
                 id: i * config.cols + j,
-                resources: "water",
-                hasEvent: 0
-            })
+                resources: [Resource.Water],
+                event: LandEvent.None
+            }
+            list.push(land)
         }
     }
 

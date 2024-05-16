@@ -46,11 +46,9 @@ export async function getUserLands(ownerAddress: string) {
 }
 
 async function getLands() {
-    const nfts = await getNFTs({
-        contract: landContract, includeOwners: true, count: Number(await totalSupply({
-            contract: landContract
-        }))
-    });
+    const nfts = (await getNFTs({
+        contract: landContract, includeOwners: true, count: Number.MAX_SAFE_INTEGER
+    })).filter(n => n.owner != null); // remove burned nfts
 
     return nftsToLands(nfts);
 }
