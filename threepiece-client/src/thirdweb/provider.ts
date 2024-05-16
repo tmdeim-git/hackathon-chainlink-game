@@ -38,7 +38,7 @@ export const landStableContract = getContract({
 
 // NOTE: This part should usually be protected in an API
 export const allLands = await getLands();
-export const allNfts = allLands.map(n => n.nft);
+export const allLandNfts = allLands.map(n => n.nft);
 
 export async function getUserLands(ownerAddress: string) {
     const ownedLands = allLands.filter(land => land.ownerAddress == ownerAddress);
