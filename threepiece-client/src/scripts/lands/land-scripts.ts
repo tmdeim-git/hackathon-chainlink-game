@@ -1,10 +1,10 @@
 import { ContractOptions, NFT, sendAndConfirmTransaction } from "thirdweb";
 import { LazyMintParams, burn, lazyMint, claimTo } from "thirdweb/extensions/erc721";
-import { multicall } from "../../thirdweb/11155111/erc721";
+import { multicall } from "../../thirdweb/generated-contracts/erc721";
 import { getAdminAccount, allLandNfts, landContract, landStableContract } from "../../thirdweb/provider";
 import { Land, Resource, LandEvent, isValidLand, LandNFTAttributes } from "../../thirdweb/types";
 import config from './config.json'
-import { batchUpdateMetadata } from "../erc721-scripts";
+import { batchUpdateMetadata, sendAndConfirmMulticall } from "../erc721-scripts";
 
 /**
  * Burn, create and claim NFTs to the admin account
@@ -12,7 +12,6 @@ import { batchUpdateMetadata } from "../erc721-scripts";
 export async function resetLandNfts(contract?: Readonly<ContractOptions<[]>>) {
     const contractToUse = contract || landContract;
     const nfts: LazyMintParams['nfts'] = [];
-    const admin = await getAdminAccount();
 
     for (const configLand of config.lands) {
         const land: Land = {
@@ -47,7 +46,7 @@ export async function resetLandNfts(contract?: Readonly<ContractOptions<[]>>) {
         );
     }
 
-    const burnData = []
+    const burnTxList = []
     console.log(allLandNfts);
 
     for (const nft of allLandNfts) {
@@ -55,31 +54,22 @@ export async function resetLandNfts(contract?: Readonly<ContractOptions<[]>>) {
             contract: contractToUse,
             tokenId: nft.id
         });
-        burnData.push(await (burnTx.data as () => Promise<`0x${string}`>)())
+        burnTxList.push(burnTx)
     };
 
     const mintTx = lazyMint({
         contract: contractToUse,
         nfts
     });
-    const mintData = await (mintTx.data as () => Promise<`0x${string}`>)()
 
+    const admin = await getAdminAccount();
     const claimTx = claimTo({
         contract: contractToUse,
         quantity: BigInt(config.lands.length),
         to: admin.address
     });
-    const claimData = await (claimTx.data as () => Promise<`0x${string}`>)()
 
-    const batchTx = multicall({
-        data: [...burnData, mintData, claimData],
-        contract: contractToUse
-    })
-
-    const batchResult = await sendAndConfirmTransaction({
-        account: admin,
-        transaction: batchTx
-    })
+    const batchResult = await sendAndConfirmMulticall([...burnTxList, mintTx, claimTx], contractToUse)
 
     console.log(batchResult);
 }

@@ -3,7 +3,7 @@ import {
     tokensLazyMintedEvent,
     batchMetadataUpdateEvent,
     transferEvent,
-} from "./11155111/erc721";
+} from "./generated-contracts/erc721";
 import { landContract } from "./provider";
 
 export function startEvent(onEvent?: (message: string) => void) {

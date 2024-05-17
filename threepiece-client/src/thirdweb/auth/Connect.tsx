@@ -1,7 +1,7 @@
 import { ConnectButton } from "thirdweb/react";
-import { client, wallets } from "../provider";
-import { sepolia } from "thirdweb/chains";
+import { testChain, client, wallets } from "../provider";
 import { startEvent } from "../events";
+import { resetLandNfts } from "../../scripts/lands/land-scripts";
 
 function Connect() {
 
@@ -13,7 +13,7 @@ function Connect() {
       onConnect={async (wallet) => {
         startEvent();
         const address = wallet.getAccount().address;
-        wallet.switchChain(sepolia);
+        wallet.switchChain(testChain);
         console.log("TODO: Redirect to game...")
       }} />
   );

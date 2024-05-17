@@ -1,36 +1,26 @@
 import {
   allLandNfts,
+  testChain,
   client,
   getAdminAccount,
-  getUserLands,
-  landContract,
 } from "../thirdweb/provider";
 import {
   ContractOptions,
   NFT,
-  defineChain,
+  PreparedTransaction,
   getContract,
   sendAndConfirmTransaction,
-  sendTransaction,
 } from "thirdweb";
 import { MetadataAttributes } from "../thirdweb/types";
 import {
-  SetClaimConditionsParams,
-  setClaimConditions,
-  totalSupply,
   updateBatchBaseURI,
-} from "../thirdweb/11155111/erc721";
+} from "../thirdweb/generated-contracts/erc721";
 import { upload } from "thirdweb/storage";
-import { ThirdwebSDK, createMerkleTreeFromAllowList } from "@thirdweb-dev/sdk";
-import { ethers } from "ethers";
-import { sepolia } from "thirdweb/chains";
 import {
   createListing,
-  getAllListings,
   getAllValidListings,
 } from "thirdweb/extensions/marketplace";
-import { ethers5Adapter } from "thirdweb/adapters/ethers5";
-import { multicall } from "../thirdweb/11155111/marketplace";
+import { multicall } from "../thirdweb/generated-contracts/marketplace";
 
 /**
  * For every NFT, add a new attribute with a default value
@@ -136,48 +126,11 @@ export async function batchUpdateMetadata(
   return result;
 }
 
-export async function createContract(
-  name: string,
-  primary_sale_recipient: string
-) {
-  const sdk = new ThirdwebSDK("sepolia", client);
-  const metamask = new ethers.providers.InfuraProvider("sepolia");
-  const signer: ethers.Signer = new ethers.Wallet(
-    import.meta.env.VITE_METAMASK_ADMIN_PRIVATE_KEY,
-    metamask
-  );
-  sdk.updateSignerOrProvider(signer);
-
-  const contractAdress = await sdk.deployer.deployBuiltInContract("nft-drop", {
-    name,
-    primary_sale_recipient,
-  });
-  console.log(contractAdress);
-}
-
-async function multicallTx(
-  listingData: Readonly<`0x${string}`[]>,
-  marketplaceContract: Readonly<ContractOptions<[]>>
-) {
-  const batchTx = multicall({
-    data: [...listingData],
-    contract: marketplaceContract,
-  });
-  console.log(batchTx);
-
-  const batchResult = await sendAndConfirmTransaction({
-    account: await getAdminAccount(5),
-    transaction: batchTx,
-  });
-
-  console.log(batchResult);
-}
-
 export async function createBatchListing() {
   let listingData = [];
   const marketplaceContract = getContract({
     address: import.meta.env.VITE_MARKETPLACE_CONTRACT,
-    chain: defineChain(11155111),
+    chain: testChain,
     client,
   });
 
@@ -190,14 +143,40 @@ export async function createBatchListing() {
       assetContractAddress: import.meta.env.VITE_LAND_CONTRACT,
       pricePerToken: "0.001",
     });
-    const listingDataPromise: `0x${string}` = await (
-      listingTx.data as () => Promise<`0x${string}`>
-    )();
-    listingData.push(listingDataPromise);
+
+    listingData.push(listingTx);
   }
-  await multicallTx(listingData, marketplaceContract);
+  await sendAndConfirmMulticall(listingData, marketplaceContract);
   const listings = await getAllValidListings({
     contract: marketplaceContract,
   });
   console.log(listings);
+}
+
+export async function sendAndConfirmMulticall(
+  listTx: Readonly<PreparedTransaction[]>,
+  contract: Readonly<ContractOptions<[]>>
+) {
+  const dataList: `0x${string}`[] = [];
+
+  for (const tx of listTx) {
+    const txData = await (
+      tx.data as () => Promise<`0x${string}`>
+    )()
+    dataList.push(txData);
+  }
+
+  const batchTx = multicall({
+    data: [...dataList],
+    contract: contract,
+  });
+  console.log(batchTx);
+
+  const batchResult = await sendAndConfirmTransaction({
+    account: await getAdminAccount(),
+    transaction: batchTx,
+  });
+
+  console.log(batchResult);
+  return batchResult;
 }

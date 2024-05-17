@@ -1,16 +1,14 @@
 import {
+    Chain,
     NFT,
     createThirdwebClient,
     getContract,
 } from "thirdweb";
-import { sepolia } from "thirdweb/chains";
 import { inAppWallet, createWallet } from "thirdweb/wallets";
 import { getNFTs } from "thirdweb/extensions/erc721";
-import { Land, LandNFT, LandNFTAttributes, MetadataAttributes, Resource, isValidLand } from "./types";
+import { Land, LandNFT, LandNFTAttributes, isValidLand } from "./types";
 import { ethers } from "ethers";
 import { ethers6Adapter } from "thirdweb/adapters/ethers6";
-import { SetClaimConditionsParams, nextTokenIdToMint, totalSupply } from "./11155111/erc721";
-import { ethers5Adapter } from "thirdweb/adapters/ethers5";
 
 export const wallets = [
     inAppWallet(),
@@ -25,16 +23,24 @@ export const client = createThirdwebClient({
     clientId: import.meta.env.VITE_THIRDWEB_CLIENT_ID,
 });
 
+const polygonZkevmCardona: Chain = {
+    id: 2442,
+    name: "Polygon zkEVM Cardona Testnet",
+    rpc: "https://rpc.cardona.zkevm-rpc.com/",
+    testnet: true,
+};
+export const testChain: Chain = polygonZkevmCardona;
+
 export const landContract = getContract({
     address: import.meta.env.VITE_LAND_CONTRACT,
-    chain: sepolia,
-    client: client,
+    chain: testChain,
+    client,
 });
 
 export const landStableContract = getContract({
     address: import.meta.env.VITE_LAND_STABLE_CONTRACT,
-    chain: sepolia,
-    client: client,
+    chain: testChain,
+    client,
 });
 
 // NOTE: This part should usually be protected in an API
@@ -64,14 +70,11 @@ export async function claimLand(address: string, landId: number) {
     // if gas is paid, send and confirm nft transfer transaction
 }
 
-export async function getAdminAccount(version: 5 | 6 = 6) {
-    const metamask = new ethers.providers.InfuraProvider("sepolia");
+export async function getAdminAccount() {
+    const metamask = new ethers.JsonRpcProvider(testChain.rpc);
     const signer: ethers.Signer = new ethers.Wallet(import.meta.env.VITE_METAMASK_ADMIN_PRIVATE_KEY, metamask);
-    if (version === 5) {
-        return await ethers5Adapter.signer.fromEthers({
-            signer,
-        });;
-    }
+    console.log(await signer.getAddress());
+
     return await ethers6Adapter.signer.fromEthers({
         signer,
     });
