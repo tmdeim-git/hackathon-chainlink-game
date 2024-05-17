@@ -9,7 +9,8 @@ import { getNFTs } from "thirdweb/extensions/erc721";
 import { Land, LandNFT, LandNFTAttributes, MetadataAttributes, Resource, isValidLand } from "./types";
 import { ethers } from "ethers";
 import { ethers6Adapter } from "thirdweb/adapters/ethers6";
-import { nextTokenIdToMint, totalSupply } from "./11155111/erc721";
+import { SetClaimConditionsParams, nextTokenIdToMint, totalSupply } from "./11155111/erc721";
+import { ethers5Adapter } from "thirdweb/adapters/ethers5";
 
 export const wallets = [
     inAppWallet(),
@@ -63,10 +64,14 @@ export async function claimLand(address: string, landId: number) {
     // if gas is paid, send and confirm nft transfer transaction
 }
 
-export async function getAdminAccount() {
-    const metamask = new ethers.InfuraProvider("sepolia");
+export async function getAdminAccount(version: 5 | 6 = 6) {
+    const metamask = new ethers.providers.InfuraProvider("sepolia");
     const signer: ethers.Signer = new ethers.Wallet(import.meta.env.VITE_METAMASK_ADMIN_PRIVATE_KEY, metamask);
-
+    if (version === 5) {
+        return await ethers5Adapter.signer.fromEthers({
+            signer,
+        });;
+    }
     return await ethers6Adapter.signer.fromEthers({
         signer,
     });
