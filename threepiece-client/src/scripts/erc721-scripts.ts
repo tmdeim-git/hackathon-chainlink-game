@@ -8,9 +8,9 @@ import {
 import { MetadataAttributes } from "../thirdweb/types";
 import {
   updateBatchBaseURI,
-} from "../thirdweb/generated-contracts/erc721";
+} from "../thirdweb/generated-contracts/nft-drop";
 import { upload } from "thirdweb/storage";
-import { multicall } from "../thirdweb/generated-contracts/marketplace";
+import { multicall } from "../thirdweb/generated-contracts/marketplace-v3";
 import { ethers } from "ethers";
 import { ethers6Adapter } from "thirdweb/adapters/ethers6";
 import { testChain } from "../providers/web3-provider";
@@ -150,7 +150,7 @@ export async function sendAndConfirmMulticall(
 export async function getAdminAccount() {
   const metamask = new ethers.JsonRpcProvider(testChain.rpc);
   const signer: ethers.Signer = new ethers.Wallet(import.meta.env.VITE_METAMASK_ADMIN_PRIVATE_KEY, metamask);
-  
+
   return await ethers6Adapter.signer.fromEthers({
     signer,
   });

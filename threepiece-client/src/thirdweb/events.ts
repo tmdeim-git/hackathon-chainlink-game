@@ -3,7 +3,7 @@ import {
     tokensLazyMintedEvent,
     batchMetadataUpdateEvent,
     transferEvent,
-} from "./generated-contracts/erc721";
+} from "./generated-contracts/nft-drop";
 import { landContract } from "../providers/web3-provider";
 
 export function startEvent(onEvent?: (message: string) => void) {
