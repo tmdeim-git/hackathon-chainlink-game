@@ -1,7 +1,9 @@
 import { allLandNfts } from "../../providers/land-provider";
-import { sendAndConfirmMulticall } from "../erc721-scripts";
 import { createListing, getAllValidListings } from "thirdweb/extensions/marketplace";
 import { marketplaceContract } from "../../providers/marketplace-provider";
+import { PreparedTransaction, ContractOptions, sendAndConfirmTransaction } from "thirdweb";
+import { multicall } from "../../thirdweb/generated-contracts/marketplace-v3";
+import { getAdminAccount } from "../erc721-scripts";
 
 export async function createBatchListing() {
     const allListingTx = [];
@@ -17,7 +19,7 @@ export async function createBatchListing() {
         allListingTx.push(listingTx);
     }
 
-    const result = await sendAndConfirmMulticall(allListingTx, marketplaceContract);
+    const result = await marketplaceSendAndConfirmMulticall(allListingTx, marketplaceContract);
 
     console.log(result);
 
@@ -26,4 +28,32 @@ export async function createBatchListing() {
     });
 
     console.log(listings);
+}
+
+async function marketplaceSendAndConfirmMulticall(
+    listTx: Readonly<PreparedTransaction[]>,
+    contract: Readonly<ContractOptions<[]>>
+) {
+    const dataList: `0x${string}`[] = [];
+
+    for (const tx of listTx) {
+        const txData = await (
+            tx.data as () => Promise<`0x${string}`>
+        )()
+        dataList.push(txData);
+    }
+
+    const batchTx = multicall({
+        data: dataList,
+        contract: contract,
+    });
+    console.log(batchTx);
+
+    const batchResult = await sendAndConfirmTransaction({
+        account: await getAdminAccount(),
+        transaction: batchTx,
+    });
+
+    console.log(batchResult);
+    return batchResult;
 }

@@ -2,7 +2,6 @@ import { client } from "../providers/web3-provider";
 import {
   ContractOptions,
   NFT,
-  PreparedTransaction,
   sendAndConfirmTransaction,
 } from "thirdweb";
 import { MetadataAttributes } from "../thirdweb/types";
@@ -10,7 +9,6 @@ import {
   updateBatchBaseURI,
 } from "../thirdweb/generated-contracts/nft-drop";
 import { upload } from "thirdweb/storage";
-import { multicall } from "../thirdweb/generated-contracts/marketplace-v3";
 import { ethers } from "ethers";
 import { ethers6Adapter } from "thirdweb/adapters/ethers6";
 import { testChain } from "../providers/web3-provider";
@@ -117,34 +115,6 @@ export async function batchUpdateMetadata(
   console.log(result);
 
   return result;
-}
-
-export async function sendAndConfirmMulticall(
-  listTx: Readonly<PreparedTransaction[]>,
-  contract: Readonly<ContractOptions<[]>>
-) {
-  const dataList: `0x${string}`[] = [];
-
-  for (const tx of listTx) {
-    const txData = await (
-      tx.data as () => Promise<`0x${string}`>
-    )()
-    dataList.push(txData);
-  }
-
-  const batchTx = multicall({
-    data: dataList,
-    contract: contract,
-  });
-  console.log(batchTx);
-
-  const batchResult = await sendAndConfirmTransaction({
-    account: await getAdminAccount(),
-    transaction: batchTx,
-  });
-
-  console.log(batchResult);
-  return batchResult;
 }
 
 export async function getAdminAccount() {

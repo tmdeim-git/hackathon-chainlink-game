@@ -1,11 +1,12 @@
-import { ContractOptions, NFT } from "thirdweb";
+import { ContractOptions, NFT, PreparedTransaction, sendAndConfirmTransaction } from "thirdweb";
 import { LazyMintParams, burn, lazyMint, claimTo } from "thirdweb/extensions/erc721";
 import { allLandNfts } from "../../providers/land-provider";
 import { landContract, landStableContract } from "../../providers/web3-provider";
 import { getAdminAccount } from "../erc721-scripts";
 import { Land, Resource, LandEvent, isValidLand, LandNFTAttributes } from "../../thirdweb/types";
 import config from './config.json'
-import { batchUpdateMetadata, sendAndConfirmMulticall } from "../erc721-scripts";
+import { batchUpdateMetadata } from "../erc721-scripts";
+import { multicall } from "../../thirdweb/generated-contracts/nft-drop";
 
 /**
  * Burn, create and claim NFTs to the admin account
@@ -70,7 +71,7 @@ export async function resetLandNfts(contract?: Readonly<ContractOptions<[]>>) {
         to: admin.address
     });
 
-    const batchResult = await sendAndConfirmMulticall([...burnTxList, mintTx, claimTx], contractToUse)
+    const batchResult = await landSendAndConfirmMulticall([...burnTxList, mintTx, claimTx], contractToUse)
 
     console.log(batchResult);
 }
@@ -90,6 +91,34 @@ export async function claimLand(address: string, landId: bigint) {
  */
 export async function batchUpdateStable(nftList: NFT[]) {
     return await batchUpdateMetadata(nftList.map(n => n.metadata), landStableContract);
+}
+
+async function landSendAndConfirmMulticall(
+    listTx: Readonly<PreparedTransaction[]>,
+    contract: Readonly<ContractOptions<[]>>
+) {
+    const dataList: `0x${string}`[] = [];
+
+    for (const tx of listTx) {
+        const txData = await (
+            tx.data as () => Promise<`0x${string}`>
+        )()
+        dataList.push(txData);
+    }
+
+    const batchTx = multicall({
+        data: dataList,
+        contract: contract,
+    });
+    console.log(batchTx);
+
+    const batchResult = await sendAndConfirmTransaction({
+        account: await getAdminAccount(),
+        transaction: batchTx,
+    });
+
+    console.log(batchResult);
+    return batchResult;
 }
 
 /**
