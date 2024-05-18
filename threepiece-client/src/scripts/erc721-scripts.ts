@@ -1,14 +1,8 @@
-import {
-  allLandNfts,
-  testChain,
-  client,
-  getAdminAccount,
-} from "../thirdweb/provider";
+import { client } from "../providers/web3-provider";
 import {
   ContractOptions,
   NFT,
   PreparedTransaction,
-  getContract,
   sendAndConfirmTransaction,
 } from "thirdweb";
 import { MetadataAttributes } from "../thirdweb/types";
@@ -16,11 +10,10 @@ import {
   updateBatchBaseURI,
 } from "../thirdweb/generated-contracts/erc721";
 import { upload } from "thirdweb/storage";
-import {
-  createListing,
-  getAllValidListings,
-} from "thirdweb/extensions/marketplace";
 import { multicall } from "../thirdweb/generated-contracts/marketplace";
+import { ethers } from "ethers";
+import { ethers6Adapter } from "thirdweb/adapters/ethers6";
+import { testChain } from "../providers/web3-provider";
 
 /**
  * For every NFT, add a new attribute with a default value
@@ -126,33 +119,6 @@ export async function batchUpdateMetadata(
   return result;
 }
 
-export async function createBatchListing() {
-  let listingData = [];
-  const marketplaceContract = getContract({
-    address: import.meta.env.VITE_MARKETPLACE_CONTRACT,
-    chain: testChain,
-    client,
-  });
-
-  console.log(allLandNfts);
-
-  for (const nft of allLandNfts) {
-    const listingTx = createListing({
-      contract: marketplaceContract,
-      tokenId: nft.id,
-      assetContractAddress: import.meta.env.VITE_LAND_CONTRACT,
-      pricePerToken: "0.001",
-    });
-
-    listingData.push(listingTx);
-  }
-  await sendAndConfirmMulticall(listingData, marketplaceContract);
-  const listings = await getAllValidListings({
-    contract: marketplaceContract,
-  });
-  console.log(listings);
-}
-
 export async function sendAndConfirmMulticall(
   listTx: Readonly<PreparedTransaction[]>,
   contract: Readonly<ContractOptions<[]>>
@@ -167,7 +133,7 @@ export async function sendAndConfirmMulticall(
   }
 
   const batchTx = multicall({
-    data: [...dataList],
+    data: dataList,
     contract: contract,
   });
   console.log(batchTx);
@@ -180,3 +146,13 @@ export async function sendAndConfirmMulticall(
   console.log(batchResult);
   return batchResult;
 }
+
+export async function getAdminAccount() {
+  const metamask = new ethers.JsonRpcProvider(testChain.rpc);
+  const signer: ethers.Signer = new ethers.Wallet(import.meta.env.VITE_METAMASK_ADMIN_PRIVATE_KEY, metamask);
+  
+  return await ethers6Adapter.signer.fromEthers({
+    signer,
+  });
+}
+

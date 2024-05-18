@@ -4,7 +4,7 @@ import {
     batchMetadataUpdateEvent,
     transferEvent,
 } from "./generated-contracts/erc721";
-import { landContract } from "./provider";
+import { landContract } from "../providers/web3-provider";
 
 export function startEvent(onEvent?: (message: string) => void) {
     startTokenCreatedEvent(onEvent);

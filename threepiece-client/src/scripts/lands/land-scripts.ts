@@ -1,7 +1,8 @@
-import { ContractOptions, NFT, sendAndConfirmTransaction } from "thirdweb";
+import { ContractOptions, NFT } from "thirdweb";
 import { LazyMintParams, burn, lazyMint, claimTo } from "thirdweb/extensions/erc721";
-import { multicall } from "../../thirdweb/generated-contracts/erc721";
-import { getAdminAccount, allLandNfts, landContract, landStableContract } from "../../thirdweb/provider";
+import { allLandNfts } from "../../providers/land-provider";
+import { landContract, landStableContract } from "../../providers/web3-provider";
+import { getAdminAccount } from "../erc721-scripts";
 import { Land, Resource, LandEvent, isValidLand, LandNFTAttributes } from "../../thirdweb/types";
 import config from './config.json'
 import { batchUpdateMetadata, sendAndConfirmMulticall } from "../erc721-scripts";
@@ -72,6 +73,16 @@ export async function resetLandNfts(contract?: Readonly<ContractOptions<[]>>) {
     const batchResult = await sendAndConfirmMulticall([...burnTxList, mintTx, claimTx], contractToUse)
 
     console.log(batchResult);
+}
+
+export async function claimLand(address: string, landId: bigint) {
+    const account = await getAdminAccount();
+
+    // prepare NFT transfer transaction from admin to user
+
+    // prepare gas bill to user
+
+    // if gas is paid, send and confirm nft transfer transaction
 }
 
 /**
