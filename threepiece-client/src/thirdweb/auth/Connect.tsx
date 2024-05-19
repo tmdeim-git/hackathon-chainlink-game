@@ -1,9 +1,10 @@
 import { ConnectButton } from "thirdweb/react";
-import { client } from "../../providers/web3-provider";
+import { thirdwebClient } from "../../providers/web3-provider";
 import { testChain } from "../../providers/web3-provider";
 import { startEvent } from "../events";
-import { resetLandNfts } from "../../scripts/lands/land-scripts";
+import { createNftdropContract, resetLandNfts } from "../../scripts/lands/land-scripts";
 import { createWallet, inAppWallet } from "thirdweb/wallets";
+import { allLandNfts } from "../../providers/land-provider";
 
 export const wallets = [
   inAppWallet(),
@@ -14,10 +15,11 @@ export const wallets = [
   createWallet("walletConnect"),
 ];
 
+allLandNfts
 function Connect() {
   return (
     <ConnectButton
-      client={client}
+      client={thirdwebClient}
       wallets={wallets}
       connectButton={{ label: "Play" }}
       onConnect={async (wallet) => {

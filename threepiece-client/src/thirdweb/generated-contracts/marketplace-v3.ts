@@ -43,7 +43,7 @@ export function buyerApprovedForListingEvent(filters: BuyerApprovedForListingEve
     signature: "event BuyerApprovedForListing(uint256 indexed listingId, address indexed buyer, bool approved)",
     filters,
   });
-};
+}
 
 
 /**
@@ -79,7 +79,7 @@ export function cancelledListingEvent(filters: CancelledListingEventFilters = {}
     signature: "event CancelledListing(address indexed listingCreator, uint256 indexed listingId)",
     filters,
   });
-};
+}
 
 
 /**
@@ -115,7 +115,7 @@ export function currencyApprovedForListingEvent(filters: CurrencyApprovedForList
     signature: "event CurrencyApprovedForListing(uint256 indexed listingId, address indexed currency, uint256 pricePerToken)",
     filters,
   });
-};
+}
 
 
 /**
@@ -153,7 +153,7 @@ export function newListingEvent(filters: NewListingEventFilters = {}) {
     signature: "event NewListing(address indexed listingCreator, uint256 indexed listingId, address indexed assetContract, (uint256 listingId, uint256 tokenId, uint256 quantity, uint256 pricePerToken, uint128 startTimestamp, uint128 endTimestamp, address listingCreator, address assetContract, address currency, uint8 tokenType, uint8 status, bool reserved) listing)",
     filters,
   });
-};
+}
 
 
 /**
@@ -191,7 +191,7 @@ export function newSaleEvent(filters: NewSaleEventFilters = {}) {
     signature: "event NewSale(address indexed listingCreator, uint256 indexed listingId, address indexed assetContract, uint256 tokenId, address buyer, uint256 quantityBought, uint256 totalPricePaid)",
     filters,
   });
-};
+}
 
 
 /**
@@ -229,7 +229,7 @@ export function updatedListingEvent(filters: UpdatedListingEventFilters = {}) {
     signature: "event UpdatedListing(address indexed listingCreator, uint256 indexed listingId, address indexed assetContract, (uint256 listingId, uint256 tokenId, uint256 quantity, uint256 pricePerToken, uint128 startTimestamp, uint128 endTimestamp, address listingCreator, address assetContract, address currency, uint8 tokenType, uint8 status, bool reserved) listing)",
     filters,
   });
-};
+}
 
 
 /**
@@ -267,7 +267,7 @@ export function auctionClosedEvent(filters: AuctionClosedEventFilters = {}) {
     signature: "event AuctionClosed(uint256 indexed auctionId, address indexed assetContract, address indexed closer, uint256 tokenId, address auctionCreator, address winningBidder)",
     filters,
   });
-};
+}
 
 
 /**
@@ -303,7 +303,7 @@ export function cancelledAuctionEvent(filters: CancelledAuctionEventFilters = {}
     signature: "event CancelledAuction(address indexed auctionCreator, uint256 indexed auctionId)",
     filters,
   });
-};
+}
 
 
 /**
@@ -341,7 +341,7 @@ export function newAuctionEvent(filters: NewAuctionEventFilters = {}) {
     signature: "event NewAuction(address indexed auctionCreator, uint256 indexed auctionId, address indexed assetContract, (uint256 auctionId, uint256 tokenId, uint256 quantity, uint256 minimumBidAmount, uint256 buyoutBidAmount, uint64 timeBufferInSeconds, uint64 bidBufferBps, uint64 startTimestamp, uint64 endTimestamp, address auctionCreator, address assetContract, address currency, uint8 tokenType, uint8 status) auction)",
     filters,
   });
-};
+}
 
 
 /**
@@ -379,7 +379,7 @@ export function newBidEvent(filters: NewBidEventFilters = {}) {
     signature: "event NewBid(uint256 indexed auctionId, address indexed bidder, address indexed assetContract, uint256 bidAmount, (uint256 auctionId, uint256 tokenId, uint256 quantity, uint256 minimumBidAmount, uint256 buyoutBidAmount, uint64 timeBufferInSeconds, uint64 bidBufferBps, uint64 startTimestamp, uint64 endTimestamp, address auctionCreator, address assetContract, address currency, uint8 tokenType, uint8 status) auction)",
     filters,
   });
-};
+}
 
 
 /**
@@ -417,7 +417,7 @@ export function acceptedOfferEvent(filters: AcceptedOfferEventFilters = {}) {
     signature: "event AcceptedOffer(address indexed offeror, uint256 indexed offerId, address indexed assetContract, uint256 tokenId, address seller, uint256 quantityBought, uint256 totalPricePaid)",
     filters,
   });
-};
+}
 
 
 /**
@@ -453,7 +453,7 @@ export function cancelledOfferEvent(filters: CancelledOfferEventFilters = {}) {
     signature: "event CancelledOffer(address indexed offeror, uint256 indexed offerId)",
     filters,
   });
-};
+}
 
 
 /**
@@ -491,7 +491,7 @@ export function newOfferEvent(filters: NewOfferEventFilters = {}) {
     signature: "event NewOffer(address indexed offeror, uint256 indexed offerId, address indexed assetContract, (uint256 offerId, uint256 tokenId, uint256 quantity, uint256 totalPrice, uint256 expirationTimestamp, address offeror, address assetContract, address currency, uint8 tokenType, uint8 status) offer)",
     filters,
   });
-};
+}
 
 
 
@@ -516,7 +516,7 @@ export function contractURIUpdatedEvent() {
   return prepareEvent({
     signature: "event ContractURIUpdated(string prevURI, string newURI)",
   });
-};
+}
 
 
 /**
@@ -552,7 +552,7 @@ export function extensionAddedEvent(filters: ExtensionAddedEventFilters = {}) {
     signature: "event ExtensionAdded(string indexed name, address indexed implementation, ((string name, string metadataURI, address implementation) metadata, (bytes4 functionSelector, string functionSignature)[] functions) extension)",
     filters,
   });
-};
+}
 
 
 /**
@@ -586,7 +586,7 @@ export function extensionRemovedEvent(filters: ExtensionRemovedEventFilters = {}
     signature: "event ExtensionRemoved(string indexed name, ((string name, string metadataURI, address implementation) metadata, (bytes4 functionSelector, string functionSignature)[] functions) extension)",
     filters,
   });
-};
+}
 
 
 /**
@@ -622,7 +622,7 @@ export function extensionReplacedEvent(filters: ExtensionReplacedEventFilters = 
     signature: "event ExtensionReplaced(string indexed name, address indexed implementation, ((string name, string metadataURI, address implementation) metadata, (bytes4 functionSelector, string functionSignature)[] functions) extension)",
     filters,
   });
-};
+}
 
 
 
@@ -647,7 +647,7 @@ export function flatPlatformFeeUpdatedEvent() {
   return prepareEvent({
     signature: "event FlatPlatformFeeUpdated(address platformFeeRecipient, uint256 flatFee)",
   });
-};
+}
 
 
 /**
@@ -683,7 +683,7 @@ export function functionDisabledEvent(filters: FunctionDisabledEventFilters = {}
     signature: "event FunctionDisabled(string indexed name, bytes4 indexed functionSelector, (string name, string metadataURI, address implementation) extMetadata)",
     filters,
   });
-};
+}
 
 
 /**
@@ -719,7 +719,7 @@ export function functionEnabledEvent(filters: FunctionEnabledEventFilters = {}) 
     signature: "event FunctionEnabled(string indexed name, bytes4 indexed functionSelector, (bytes4 functionSelector, string functionSignature) extFunction, (string name, string metadataURI, address implementation) extMetadata)",
     filters,
   });
-};
+}
 
 
 
@@ -744,7 +744,7 @@ export function initializedEvent() {
   return prepareEvent({
     signature: "event Initialized(uint8 version)",
   });
-};
+}
 
 
 /**
@@ -778,7 +778,7 @@ export function platformFeeInfoUpdatedEvent(filters: PlatformFeeInfoUpdatedEvent
     signature: "event PlatformFeeInfoUpdated(address indexed platformFeeRecipient, uint256 platformFeeBps)",
     filters,
   });
-};
+}
 
 
 
@@ -803,7 +803,7 @@ export function platformFeeTypeUpdatedEvent() {
   return prepareEvent({
     signature: "event PlatformFeeTypeUpdated(uint8 feeType)",
   });
-};
+}
 
 
 /**
@@ -841,7 +841,7 @@ export function roleAdminChangedEvent(filters: RoleAdminChangedEventFilters = {}
     signature: "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
     filters,
   });
-};
+}
 
 
 /**
@@ -879,7 +879,7 @@ export function roleGrantedEvent(filters: RoleGrantedEventFilters = {}) {
     signature: "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
     filters,
   });
-};
+}
 
 
 /**
@@ -917,7 +917,7 @@ export function roleRevokedEvent(filters: RoleRevokedEventFilters = {}) {
     signature: "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
     filters,
   });
-};
+}
 
 
 /**
@@ -953,7 +953,7 @@ export function royaltyEngineUpdatedEvent(filters: RoyaltyEngineUpdatedEventFilt
     signature: "event RoyaltyEngineUpdated(address indexed previousAddress, address indexed newAddress)",
     filters,
   });
-};
+}
 
 
 /**
@@ -992,7 +992,7 @@ export async function _msgData(
     ],
     params: []
   });
-};
+}
 
 
 
@@ -1027,7 +1027,7 @@ export async function _msgSender(
     ],
     params: []
   });
-};
+}
 
 
 /**
@@ -1082,7 +1082,7 @@ export async function currencyPriceForListing(
     ],
     params: [options.listingId, options.currency]
   });
-};
+}
 
 
 /**
@@ -1199,7 +1199,7 @@ export async function getAllListings(
     ],
     params: [options.startId, options.endId]
   });
-};
+}
 
 
 /**
@@ -1316,7 +1316,7 @@ export async function getAllValidListings(
     ],
     params: [options.startId, options.endId]
   });
-};
+}
 
 
 /**
@@ -1426,7 +1426,7 @@ export async function getListing(
     ],
     params: [options.listingId]
   });
-};
+}
 
 
 /**
@@ -1481,7 +1481,7 @@ export async function isBuyerApprovedForListing(
     ],
     params: [options.listingId, options.buyer]
   });
-};
+}
 
 
 /**
@@ -1536,7 +1536,7 @@ export async function isCurrencyApprovedForListing(
     ],
     params: [options.listingId, options.currency]
   });
-};
+}
 
 
 
@@ -1571,7 +1571,7 @@ export async function totalListings(
     ],
     params: []
   });
-};
+}
 
 
 /**
@@ -1698,7 +1698,7 @@ export async function getAllAuctions(
     ],
     params: [options.startId, options.endId]
   });
-};
+}
 
 
 /**
@@ -1825,7 +1825,7 @@ export async function getAllValidAuctions(
     ],
     params: [options.startId, options.endId]
   });
-};
+}
 
 
 /**
@@ -1945,7 +1945,7 @@ export async function getAuction(
     ],
     params: [options.auctionId]
   });
-};
+}
 
 
 /**
@@ -2003,7 +2003,7 @@ export async function getWinningBid(
     ],
     params: [options.auctionId]
   });
-};
+}
 
 
 /**
@@ -2051,7 +2051,7 @@ export async function isAuctionExpired(
     ],
     params: [options.auctionId]
   });
-};
+}
 
 
 /**
@@ -2106,7 +2106,7 @@ export async function isNewWinningBid(
     ],
     params: [options.auctionId, options.bidAmount]
   });
-};
+}
 
 
 
@@ -2141,7 +2141,7 @@ export async function totalAuctions(
     ],
     params: []
   });
-};
+}
 
 
 /**
@@ -2248,7 +2248,7 @@ export async function getAllOffers(
     ],
     params: [options.startId, options.endId]
   });
-};
+}
 
 
 /**
@@ -2355,7 +2355,7 @@ export async function getAllValidOffers(
     ],
     params: [options.startId, options.endId]
   });
-};
+}
 
 
 /**
@@ -2455,7 +2455,7 @@ export async function getOffer(
     ],
     params: [options.offerId]
   });
-};
+}
 
 
 
@@ -2490,7 +2490,7 @@ export async function totalOffers(
     ],
     params: []
   });
-};
+}
 
 
 
@@ -2525,7 +2525,7 @@ export async function DEFAULT_ADMIN_ROLE(
     ],
     params: []
   });
-};
+}
 
 
 
@@ -2560,7 +2560,7 @@ export async function contractType(
     ],
     params: []
   });
-};
+}
 
 
 
@@ -2595,7 +2595,7 @@ export async function contractURI(
     ],
     params: []
   });
-};
+}
 
 
 
@@ -2630,7 +2630,7 @@ export async function contractVersion(
     ],
     params: []
   });
-};
+}
 
 
 
@@ -2665,7 +2665,7 @@ export async function defaultExtensions(
     ],
     params: []
   });
-};
+}
 
 
 
@@ -2741,7 +2741,7 @@ export async function getAllExtensions(
     ],
     params: []
   });
-};
+}
 
 
 /**
@@ -2830,7 +2830,7 @@ export async function getExtension(
     ],
     params: [options.extensionName]
   });
-};
+}
 
 
 
@@ -2870,7 +2870,7 @@ export async function getFlatPlatformFeeInfo(
     ],
     params: []
   });
-};
+}
 
 
 /**
@@ -2918,7 +2918,7 @@ export async function getImplementationForFunction(
     ],
     params: [options.functionSelector]
   });
-};
+}
 
 
 /**
@@ -2983,7 +2983,7 @@ export async function getMetadataForFunction(
     ],
     params: [options.functionSelector]
   });
-};
+}
 
 
 
@@ -3023,7 +3023,7 @@ export async function getPlatformFeeInfo(
     ],
     params: []
   });
-};
+}
 
 
 
@@ -3058,7 +3058,7 @@ export async function getPlatformFeeType(
     ],
     params: []
   });
-};
+}
 
 
 /**
@@ -3106,7 +3106,7 @@ export async function getRoleAdmin(
     ],
     params: [options.role]
   });
-};
+}
 
 
 /**
@@ -3161,7 +3161,7 @@ export async function getRoleMember(
     ],
     params: [options.role, options.index]
   });
-};
+}
 
 
 /**
@@ -3209,7 +3209,7 @@ export async function getRoleMemberCount(
     ],
     params: [options.role]
   });
-};
+}
 
 
 
@@ -3244,7 +3244,7 @@ export async function getRoyaltyEngineAddress(
     ],
     params: []
   });
-};
+}
 
 
 /**
@@ -3299,7 +3299,7 @@ export async function hasRole(
     ],
     params: [options.role, options.account]
   });
-};
+}
 
 
 /**
@@ -3354,7 +3354,7 @@ export async function hasRoleWithSwitch(
     ],
     params: [options.role, options.account]
   });
-};
+}
 
 
 /**
@@ -3402,7 +3402,7 @@ export async function isTrustedForwarder(
     ],
     params: [options.forwarder]
   });
-};
+}
 
 
 /**
@@ -3450,7 +3450,7 @@ export async function supportsInterface(
     ],
     params: [options.interfaceId]
   });
-};
+}
 
 
 /**
@@ -3513,7 +3513,7 @@ export function approveBuyerForListing(
     ],
     params: [options.listingId, options.buyer, options.toApprove]
   });
-};
+}
 
 
 /**
@@ -3572,7 +3572,7 @@ export function approveCurrencyForListing(
     ],
     params: [options.listingId, options.currency, options.pricePerTokenInCurrency]
   });
-};
+}
 
 
 /**
@@ -3645,7 +3645,7 @@ export function buyFromListing(
     ],
     params: [options.listingId, options.buyFor, options.quantity, options.currency, options.expectedTotalPrice]
   });
-};
+}
 
 
 /**
@@ -3690,7 +3690,7 @@ export function cancelListing(
     ],
     params: [options.listingId]
   });
-};
+}
 
 
 /**
@@ -3783,7 +3783,7 @@ export function createListing(
     ],
     params: [options.params]
   });
-};
+}
 
 
 /**
@@ -3877,7 +3877,7 @@ export function updateListing(
     ],
     params: [options.listingId, options.params]
   });
-};
+}
 
 
 /**
@@ -3929,7 +3929,7 @@ export function bidInAuction(
     ],
     params: [options.auctionId, options.bidAmount]
   });
-};
+}
 
 
 /**
@@ -3974,7 +3974,7 @@ export function cancelAuction(
     ],
     params: [options.auctionId]
   });
-};
+}
 
 
 /**
@@ -4019,7 +4019,7 @@ export function collectAuctionPayout(
     ],
     params: [options.auctionId]
   });
-};
+}
 
 
 /**
@@ -4064,7 +4064,7 @@ export function collectAuctionTokens(
     ],
     params: [options.auctionId]
   });
-};
+}
 
 
 /**
@@ -4167,7 +4167,7 @@ export function createAuction(
     ],
     params: [options.params]
   });
-};
+}
 
 
 /**
@@ -4212,7 +4212,7 @@ export function acceptOffer(
     ],
     params: [options.offerId]
   });
-};
+}
 
 
 /**
@@ -4257,7 +4257,7 @@ export function cancelOffer(
     ],
     params: [options.offerId]
   });
-};
+}
 
 
 /**
@@ -4340,7 +4340,7 @@ export function makeOffer(
     ],
     params: [options.params]
   });
-};
+}
 
 
 /**
@@ -4392,7 +4392,7 @@ export function _disableFunctionInExtension(
     ],
     params: [options.extensionName, options.functionSelector]
   });
-};
+}
 
 
 /**
@@ -4478,7 +4478,7 @@ export function addExtension(
     ],
     params: [options.extension]
   });
-};
+}
 
 
 /**
@@ -4530,7 +4530,7 @@ export function disableFunctionInExtension(
     ],
     params: [options.extensionName, options.functionSelector]
   });
-};
+}
 
 
 /**
@@ -4594,7 +4594,7 @@ export function enableFunctionInExtension(
     ],
     params: [options.extensionName, options.function]
   });
-};
+}
 
 
 /**
@@ -4664,7 +4664,7 @@ export function getRoyalty(
     ],
     params: [options.tokenAddress, options.tokenId, options.value]
   });
-};
+}
 
 
 /**
@@ -4716,7 +4716,7 @@ export function grantRole(
     ],
     params: [options.role, options.account]
   });
-};
+}
 
 
 /**
@@ -4789,7 +4789,7 @@ export function initialize(
     ],
     params: [options.defaultAdmin, options.contractURI, options.trustedForwarders, options.platformFeeRecipient, options.platformFeeBps]
   });
-};
+}
 
 
 /**
@@ -4840,7 +4840,7 @@ export function multicall(
     ],
     params: [options.data]
   });
-};
+}
 
 
 /**
@@ -4919,7 +4919,7 @@ export function onERC1155BatchReceived(
     ],
     params: [options.arg_0, options.arg_1, options.arg_2, options.arg_3, options.arg_4]
   });
-};
+}
 
 
 /**
@@ -4998,7 +4998,7 @@ export function onERC1155Received(
     ],
     params: [options.arg_0, options.arg_1, options.arg_2, options.arg_3, options.arg_4]
   });
-};
+}
 
 
 /**
@@ -5070,7 +5070,7 @@ export function onERC721Received(
     ],
     params: [options.arg_0, options.arg_1, options.arg_2, options.arg_3]
   });
-};
+}
 
 
 /**
@@ -5115,7 +5115,7 @@ export function removeExtension(
     ],
     params: [options.extensionName]
   });
-};
+}
 
 
 /**
@@ -5167,7 +5167,7 @@ export function renounceRole(
     ],
     params: [options.role, options.account]
   });
-};
+}
 
 
 /**
@@ -5253,7 +5253,7 @@ export function replaceExtension(
     ],
     params: [options.extension]
   });
-};
+}
 
 
 /**
@@ -5305,7 +5305,7 @@ export function revokeRole(
     ],
     params: [options.role, options.account]
   });
-};
+}
 
 
 /**
@@ -5350,7 +5350,7 @@ export function setContractURI(
     ],
     params: [options.uri]
   });
-};
+}
 
 
 /**
@@ -5402,7 +5402,7 @@ export function setFlatPlatformFeeInfo(
     ],
     params: [options.platformFeeRecipient, options.flatFee]
   });
-};
+}
 
 
 /**
@@ -5454,7 +5454,7 @@ export function setPlatformFeeInfo(
     ],
     params: [options.platformFeeRecipient, options.platformFeeBps]
   });
-};
+}
 
 
 /**
@@ -5499,7 +5499,7 @@ export function setPlatformFeeType(
     ],
     params: [options.feeType]
   });
-};
+}
 
 
 /**
@@ -5544,6 +5544,6 @@ export function setRoyaltyEngine(
     ],
     params: [options.royaltyEngineAddress]
   });
-};
+}
 
 

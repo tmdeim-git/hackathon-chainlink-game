@@ -3,7 +3,8 @@ import { createListing, getAllValidListings } from "thirdweb/extensions/marketpl
 import { marketplaceContract } from "../../providers/marketplace-provider";
 import { PreparedTransaction, ContractOptions, sendAndConfirmTransaction } from "thirdweb";
 import { multicall } from "../../thirdweb/generated-contracts/marketplace-v3";
-import { getAdminAccount } from "../erc721-scripts";
+import { adminAccount, adminSdk, thirdwebClient, testChain } from "../../providers/web3-provider";
+import { ThirdwebSDK } from "@thirdweb-dev/sdk";
 
 export async function createBatchListing() {
     const allListingTx = [];
@@ -30,6 +31,14 @@ export async function createBatchListing() {
     console.log(listings);
 }
 
+export async function createMarketplaceContract() {
+    const sdk = ThirdwebSDK.fromSigner(adminSdk.getSigner(), testChain.rpc, thirdwebClient);
+    const contractAddress = await sdk.deployer.deployMarketplaceV3({
+        name: "Momo RLSS Marketplace",
+    });
+    console.log("Deployed at", contractAddress);
+}
+
 async function marketplaceSendAndConfirmMulticall(
     listTx: Readonly<PreparedTransaction[]>,
     contract: Readonly<ContractOptions<[]>>
@@ -50,7 +59,7 @@ async function marketplaceSendAndConfirmMulticall(
     console.log(batchTx);
 
     const batchResult = await sendAndConfirmTransaction({
-        account: await getAdminAccount(),
+        account: adminAccount,
         transaction: batchTx,
     });
 

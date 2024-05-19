@@ -38,7 +38,7 @@ class GameScreen extends Component<props> {
 
   componentDidMount(): void {
     const fisrtTimeTiles: GameTile[] = getGameTiles();
-    let gameTilesDic: { [id: number]: GameTile } = {};
+    const gameTilesDic: { [id: number]: GameTile } = {};
     const ctx = this.canvasRef.current?.getContext("2d");
     const canvasSize: number = 0.55;
     const canvasAspectRation = 11 / 15;

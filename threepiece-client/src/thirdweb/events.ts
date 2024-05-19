@@ -18,7 +18,7 @@ const startTokenCreatedEvent = (onEvent?: (message: string) => void) =>
             const event = events[0];
             const id = event.args.startTokenId;
             console.log(`Token created`, event);
-            onEvent && onEvent(`${id} has created a new tile`);
+            onEvent && onEvent(`New NFT of ID ${id} has been created!`);
         },
         events: [tokensLazyMintedEvent()],
         contract: landContract,

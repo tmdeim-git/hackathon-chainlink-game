@@ -1,7 +1,10 @@
-import { client } from "../providers/web3-provider";
+import { adminAccount, adminSdk, thirdwebClient, testChain } from "../providers/web3-provider";
 import {
   ContractOptions,
   NFT,
+  PreparedTransaction,
+  prepareContractCall,
+  resolveMethod,
   sendAndConfirmTransaction,
 } from "thirdweb";
 import { MetadataAttributes } from "../thirdweb/types";
@@ -9,10 +12,7 @@ import {
   updateBatchBaseURI,
 } from "../thirdweb/generated-contracts/nft-drop";
 import { upload } from "thirdweb/storage";
-import { ethers } from "ethers";
-import { ethers6Adapter } from "thirdweb/adapters/ethers6";
-import { testChain } from "../providers/web3-provider";
-
+import { ThirdwebSDK } from "@thirdweb-dev/sdk";
 /**
  * For every NFT, add a new attribute with a default value
  */
@@ -95,7 +95,7 @@ export async function batchUpdateMetadata(
   contract: Readonly<ContractOptions<[]>>
 ) {
   const uri = await upload({
-    client,
+    client: thirdwebClient,
     files: Object.values(metadatas),
   });
 
@@ -108,7 +108,7 @@ export async function batchUpdateMetadata(
   });
 
   const result = await sendAndConfirmTransaction({
-    account: await getAdminAccount(),
+    account: adminAccount,
     transaction: updateMetadataTx,
   });
 
@@ -117,12 +117,37 @@ export async function batchUpdateMetadata(
   return result;
 }
 
-export async function getAdminAccount() {
-  const metamask = new ethers.JsonRpcProvider(testChain.rpc);
-  const signer: ethers.Signer = new ethers.Wallet(import.meta.env.VITE_METAMASK_ADMIN_PRIVATE_KEY, metamask);
+// ============== MULTICALL FUNCTIONS ============== 
 
-  return await ethers6Adapter.signer.fromEthers({
-    signer,
+export async function sendAndConfirmMulticall(
+  listTx: Readonly<PreparedTransaction[]>,
+  contract: Readonly<ContractOptions<[]>>
+) {
+  const dataList: `0x${string}`[] = [];
+
+  for (const tx of listTx) {
+    const txData = await (
+      tx.data as () => Promise<`0x${string}`>
+    )()
+    dataList.push(txData);
+  }
+
+  // @ts-ignore error ts(2322)
+  const batchTx = prepareContractCall({
+    contract: contract,
+    method: resolveMethod("multicall"),
+    params: [
+      // @ts-ignore error ts(2322)
+      dataList,
+    ],
   });
-}
+  console.log(batchTx);
 
+  const batchResult = await sendAndConfirmTransaction({
+    account: adminAccount,
+    transaction: batchTx,
+  });
+
+  console.log(batchResult);
+  return batchResult;
+}
