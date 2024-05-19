@@ -3,7 +3,7 @@ export class GameTile {
   _y: number;
   _i: number;
   _j: number;
-  _size: number;
+  _size: number = 0;
   _id: number;
   _name: string = "Tile name";
   _selected: boolean = false;
@@ -13,12 +13,11 @@ export class GameTile {
   _currentAmmount: number = 500;
   _owner: string = " Joe Blow";
 
-  constructor(i: number, j: number, size: number, id: number) {
-    this._x = j * size;
-    this._y = i * size;
+  constructor(i: number, j: number, id: number) {
+    this._x = j * this._size;
+    this._y = i * this._size;
     this._i = i;
     this._j = j;
-    this._size = size;
     this._id = id;
   }
   draw(ctx: CanvasRenderingContext2D): void {

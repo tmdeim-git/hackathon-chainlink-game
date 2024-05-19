@@ -152,10 +152,10 @@ class GameScreen extends Component<props> {
     const mouseX = e.clientX - rect.x;
     const mouseY = e.clientY - rect.y;
     const tileDic = this.state.gameTiles;
-    const tileSize = tileDic[0]._size;
+    const tileSize = tileDic[1]._size;
     const i = Math.floor(mouseY / tileSize);
     const j = Math.floor(mouseX / tileSize);
-    const newId = i * 100 + j;
+    const newId = i * 15 + j + 1;
 
     this.setState({ selectedTile: tileDic[newId] });
   };
