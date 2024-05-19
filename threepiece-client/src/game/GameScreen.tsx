@@ -21,7 +21,7 @@ class GameScreen extends Component<props> {
     mouseY: 0,
     mouseDown: false,
     zoom: 1,
-    gameTiles: {},
+    gameTiles: {} as Record<string, GameTile>,
     selectedTile: null,
   };
   canvasRef: RefObject<HTMLCanvasElement>;
@@ -74,7 +74,7 @@ class GameScreen extends Component<props> {
       );
       for (const tileKey in tileDic) {
         const tile = this.state.gameTiles[tileKey];
-        tile.draw(ctx);
+        tile.draw(ctx, this.props.ownerAddress);
       }
 
       const selectedTile = this.state.selectedTile;

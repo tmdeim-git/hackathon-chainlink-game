@@ -12,16 +12,19 @@ export class GameTile {
   _maximumCapacity: number = 2500;
   _currentAmmount: number = 500;
   _owner: string = " Joe Blow";
+  _ownerId: string;
 
-  constructor(i: number, j: number, id: number) {
+  constructor(i: number, j: number, id: number, ownerId: string) {
     this._x = j * this._size;
     this._y = i * this._size;
     this._i = i;
     this._j = j;
+    this._ownerId = ownerId;
     this._id = id;
   }
-  draw(ctx: CanvasRenderingContext2D): void {
+  draw(ctx: CanvasRenderingContext2D, currentOwnerId?: string): void {
     //if (this._selected) ctx.lineWidth = 3;
+    ctx.strokeStyle = currentOwnerId === this._ownerId ? "green" : "black";
     ctx.strokeRect(this._x, this._y, this._size, this._size);
     //if (this._selected) ctx.lineWidth = 1;
   }
