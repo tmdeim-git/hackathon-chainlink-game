@@ -18,12 +18,8 @@ export class GameTile {
     this._land = land;
     this._isUnclaimedTile = isUnclaimedTile;
   }
-  draw(ctx: CanvasRenderingContext2D, currentOwnerId?: string): void {
+  draw(ctx: CanvasRenderingContext2D): void {
     //if (this._selected) ctx.lineWidth = 3;
-    if (!this._isUnclaimedTile) {
-      ctx.strokeStyle =
-        currentOwnerId === this._land.ownerAddress ? "green" : "black";
-    }
     ctx.strokeRect(this._x, this._y, this._size, this._size);
     //if (this._selected) ctx.lineWidth = 1;
   }

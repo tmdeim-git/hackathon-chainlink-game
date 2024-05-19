@@ -22,7 +22,7 @@ class GameScreen extends Component<props> {
     mouseDown: false,
     zoom: 1,
     gameTiles: {} as Record<string, GameTile>,
-    selectedTile: null
+    selectedTile: null as GameTile | null,
   };
   canvasRef: RefObject<HTMLCanvasElement>;
   animationFrameId: number | null;
@@ -72,13 +72,37 @@ class GameScreen extends Component<props> {
         ctx.canvas.width,
         ctx.canvas.height
       );
-      for (const tileKey in tileDic) {
-        const tile = this.state.gameTiles[tileKey];
-        tile.draw(ctx, this.props.ownerAddress);
+      const tileDicFilter = Object.entries(tileDic);
+      const unClaimedTiles = tileDicFilter.filter(
+        ([, tile]) =>
+          tile._isUnclaimedTile ||
+          tile._land.ownerAddress !== this.props.ownerAddress
+      );
+      const claimedTiles = tileDicFilter.filter(
+        ([, tile]) =>
+          !unClaimedTiles.some(
+            ([, unClaimedTile]) => unClaimedTile._land.id === tile._land.id
+          )
+      );
+      for (const [, unClaimedTile] of unClaimedTiles) {
+        unClaimedTile.draw(ctx);
       }
+
+      ctx.strokeStyle = "green";
+      ctx.lineWidth = 3;
+      for (const [, claimedTile] of claimedTiles) {
+        claimedTile.draw(ctx);
+      }
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = "black";
 
       const selectedTile = this.state.selectedTile;
       if (selectedTile) {
+        ctx.strokeStyle = unClaimedTiles.some(
+          ([, tile]) => tile._land.id === selectedTile._land.id
+        )
+          ? "black"
+          : "green";
         ctx.lineWidth = 3;
         ctx.strokeRect(
           selectedTile._x,
@@ -86,6 +110,7 @@ class GameScreen extends Component<props> {
           selectedTile._size,
           selectedTile._size
         );
+        ctx.strokeStyle = "black";
         ctx.lineWidth = 1;
       }
       ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -97,7 +122,7 @@ class GameScreen extends Component<props> {
     this.setState({
       gameTiles: gameTilesDic,
       mapWidth: ctx.canvas.width,
-      mapHeight: ctx.canvas.height
+      mapHeight: ctx.canvas.height,
     });
   }
 
@@ -116,7 +141,7 @@ class GameScreen extends Component<props> {
     this.setState({
       mouseX: e.clientX,
       mouseY: e.clientY,
-      mouseDown: true
+      mouseDown: true,
     });
   };
 
@@ -130,7 +155,7 @@ class GameScreen extends Component<props> {
 
   mouseEnter = () => {
     document.addEventListener("wheel", this.preventDefault, {
-      passive: false
+      passive: false,
     });
   };
 
@@ -176,7 +201,7 @@ class GameScreen extends Component<props> {
         mouseX: newMouseX,
         mouseY: newMouseY,
         offsetX: newOffsetX,
-        offsetY: newOffsetY
+        offsetY: newOffsetY,
       });
     }
   };
@@ -223,7 +248,7 @@ class GameScreen extends Component<props> {
     ) {
       this.setState({
         offsetX: newOffsetX,
-        offsetY: newOffsetY
+        offsetY: newOffsetY,
       });
     }
   };
@@ -255,7 +280,7 @@ class GameScreen extends Component<props> {
     this.setState({
       zoom: newZoom,
       offsetX,
-      offsetY
+      offsetY,
     });
   };
 
