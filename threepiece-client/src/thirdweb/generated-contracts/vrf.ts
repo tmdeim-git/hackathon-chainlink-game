@@ -13,6 +13,31 @@ import {
 
 
 /**
+ * Creates an event object for the ContractURIUpdated event.
+ * @returns The prepared event object.
+ * @example
+ * ```
+ * import { getContractEvents } from "thirdweb";
+ * import { contractURIUpdatedEvent } from "TODO";
+ * 
+ * const events = await getContractEvents({
+ * contract,
+ * events: [
+ *  contractURIUpdatedEvent()
+ * ],
+ * });
+ * ```
+ */ 
+export function contractURIUpdatedEvent() {
+  return prepareEvent({
+    signature: "event ContractURIUpdated(string prevURI, string newURI)",
+  });
+};
+  
+
+
+
+/**
  * Creates an event object for the CoordinatorSet event.
  * @returns The prepared event object.
  * @example
@@ -31,6 +56,31 @@ import {
 export function coordinatorSetEvent() {
   return prepareEvent({
     signature: "event CoordinatorSet(address vrfCoordinator)",
+  });
+};
+  
+
+
+
+/**
+ * Creates an event object for the GameRandomEvent event.
+ * @returns The prepared event object.
+ * @example
+ * ```
+ * import { getContractEvents } from "thirdweb";
+ * import { gameRandomEventEvent } from "TODO";
+ * 
+ * const events = await getContractEvents({
+ * contract,
+ * events: [
+ *  gameRandomEventEvent()
+ * ],
+ * });
+ * ```
+ */ 
+export function gameRandomEventEvent() {
+  return prepareEvent({
+    signature: "event GameRandomEvent(uint256 requestId, string eventName, bool[] results)",
   });
 };
   
@@ -164,30 +214,30 @@ export function requestSentEvent() {
 
 
 /**
- * Calls the "entryfee" function on the contract.
- * @param options - The options for the entryfee function.
+ * Calls the "contractURI" function on the contract.
+ * @param options - The options for the contractURI function.
  * @returns The parsed result of the function call.
  * @example
  * ```
- * import { entryfee } from "TODO";
+ * import { contractURI } from "TODO";
  * 
- * const result = await entryfee();
+ * const result = await contractURI();
  * 
  * ```
  */
-export async function entryfee(
+export async function contractURI(
   options: BaseTransactionOptions
 ) {
   return readContract({
     contract: options.contract,
     method: [
-  "0x7af4b357",
+  "0xe8a3d485",
   [],
   [
     {
-      "internalType": "uint256",
+      "internalType": "string",
       "name": "",
-      "type": "uint256"
+      "type": "string"
     }
   ]
 ],
@@ -199,65 +249,30 @@ export async function entryfee(
 
 
 /**
- * Calls the "gameId" function on the contract.
- * @param options - The options for the gameId function.
+ * Calls the "deployer" function on the contract.
+ * @param options - The options for the deployer function.
  * @returns The parsed result of the function call.
  * @example
  * ```
- * import { gameId } from "TODO";
+ * import { deployer } from "TODO";
  * 
- * const result = await gameId();
+ * const result = await deployer();
  * 
  * ```
  */
-export async function gameId(
+export async function deployer(
   options: BaseTransactionOptions
 ) {
   return readContract({
     contract: options.contract,
     method: [
-  "0xd7c81b55",
+  "0xd5f39488",
   [],
   [
     {
-      "internalType": "uint256",
+      "internalType": "address",
       "name": "",
-      "type": "uint256"
-    }
-  ]
-],
-    params: []
-  });
-};
-
-
-
-
-/**
- * Calls the "gameStarted" function on the contract.
- * @param options - The options for the gameStarted function.
- * @returns The parsed result of the function call.
- * @example
- * ```
- * import { gameStarted } from "TODO";
- * 
- * const result = await gameStarted();
- * 
- * ```
- */
-export async function gameStarted(
-  options: BaseTransactionOptions
-) {
-  return readContract({
-    contract: options.contract,
-    method: [
-  "0x5e123ce4",
-  [],
-  [
-    {
-      "internalType": "bool",
-      "name": "",
-      "type": "bool"
+      "type": "address"
     }
   ]
 ],
@@ -390,124 +405,6 @@ export async function owner(
 
 
 /**
- * Represents the parameters for the "players" function.
- */
-export type PlayersParams = {
-  arg_0: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"","type":"uint256"}>
-};
-
-/**
- * Calls the "players" function on the contract.
- * @param options - The options for the players function.
- * @returns The parsed result of the function call.
- * @example
- * ```
- * import { players } from "TODO";
- * 
- * const result = await players({
- *  arg_0: ...,
- * });
- * 
- * ```
- */
-export async function players(
-  options: BaseTransactionOptions<PlayersParams>
-) {
-  return readContract({
-    contract: options.contract,
-    method: [
-  "0xf71d96cb",
-  [
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }
-  ],
-  [
-    {
-      "internalType": "address",
-      "name": "",
-      "type": "address"
-    }
-  ]
-],
-    params: [options.arg_0]
-  });
-};
-
-
-
-
-/**
- * Calls the "randomWordsNum" function on the contract.
- * @param options - The options for the randomWordsNum function.
- * @returns The parsed result of the function call.
- * @example
- * ```
- * import { randomWordsNum } from "TODO";
- * 
- * const result = await randomWordsNum();
- * 
- * ```
- */
-export async function randomWordsNum(
-  options: BaseTransactionOptions
-) {
-  return readContract({
-    contract: options.contract,
-    method: [
-  "0x9a8ff87c",
-  [],
-  [
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }
-  ]
-],
-    params: []
-  });
-};
-
-
-
-
-/**
- * Calls the "recentWinner" function on the contract.
- * @param options - The options for the recentWinner function.
- * @returns The parsed result of the function call.
- * @example
- * ```
- * import { recentWinner } from "TODO";
- * 
- * const result = await recentWinner();
- * 
- * ```
- */
-export async function recentWinner(
-  options: BaseTransactionOptions
-) {
-  return readContract({
-    contract: options.contract,
-    method: [
-  "0x4f8c70cf",
-  [],
-  [
-    {
-      "internalType": "address",
-      "name": "",
-      "type": "address"
-    }
-  ]
-],
-    params: []
-  });
-};
-
-
-/**
  * Represents the parameters for the "requestIds" function.
  */
 export type RequestIdsParams = {
@@ -600,6 +497,26 @@ export async function s_requests(
       "internalType": "bool",
       "name": "exists",
       "type": "bool"
+    },
+    {
+      "internalType": "string",
+      "name": "eventName",
+      "type": "string"
+    },
+    {
+      "internalType": "bool",
+      "name": "isGameRandomEvent",
+      "type": "bool"
+    },
+    {
+      "internalType": "uint8",
+      "name": "chance",
+      "type": "uint8"
+    },
+    {
+      "internalType": "uint256",
+      "name": "numberOfResultsWanted",
+      "type": "uint256"
     }
   ]
 ],
@@ -770,6 +687,51 @@ export function requestRandomWords(
 
 
 /**
+ * Represents the parameters for the "setContractURI" function.
+ */
+export type SetContractURIParams = {
+  uri: AbiParameterToPrimitiveType<{"internalType":"string","name":"_uri","type":"string"}>
+};
+
+/**
+ * Calls the "setContractURI" function on the contract.
+ * @param options - The options for the "setContractURI" function.
+ * @returns A prepared transaction object.
+ * @example
+ * ```
+ * import { setContractURI } from "TODO";
+ * 
+ * const transaction = setContractURI({
+ *  uri: ...,
+ * });
+ * 
+ * // Send the transaction
+ * ...
+ * 
+ * ```
+ */
+export function setContractURI(
+  options: BaseTransactionOptions<SetContractURIParams>
+) {
+  return prepareContractCall({
+    contract: options.contract,
+    method: [
+  "0x938e3d7b",
+  [
+    {
+      "internalType": "string",
+      "name": "_uri",
+      "type": "string"
+    }
+  ],
+  []
+],
+    params: [options.uri]
+  });
+};
+
+
+/**
  * Represents the parameters for the "setCoordinator" function.
  */
 export type SetCoordinatorParams = {
@@ -855,6 +817,71 @@ export function transferOwnership(
   []
 ],
     params: [options.to]
+  });
+};
+
+
+/**
+ * Represents the parameters for the "triggerGameRandomEvent" function.
+ */
+export type TriggerGameRandomEventParams = {
+  eventName: AbiParameterToPrimitiveType<{"internalType":"string","name":"eventName","type":"string"}>
+chance: AbiParameterToPrimitiveType<{"internalType":"uint8","name":"chance","type":"uint8"}>
+numberOfResultsWanted: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"numberOfResultsWanted","type":"uint256"}>
+};
+
+/**
+ * Calls the "triggerGameRandomEvent" function on the contract.
+ * @param options - The options for the "triggerGameRandomEvent" function.
+ * @returns A prepared transaction object.
+ * @example
+ * ```
+ * import { triggerGameRandomEvent } from "TODO";
+ * 
+ * const transaction = triggerGameRandomEvent({
+ *  eventName: ...,
+ *  chance: ...,
+ *  numberOfResultsWanted: ...,
+ * });
+ * 
+ * // Send the transaction
+ * ...
+ * 
+ * ```
+ */
+export function triggerGameRandomEvent(
+  options: BaseTransactionOptions<TriggerGameRandomEventParams>
+) {
+  return prepareContractCall({
+    contract: options.contract,
+    method: [
+  "0x5c19eb31",
+  [
+    {
+      "internalType": "string",
+      "name": "eventName",
+      "type": "string"
+    },
+    {
+      "internalType": "uint8",
+      "name": "chance",
+      "type": "uint8"
+    },
+    {
+      "internalType": "uint256",
+      "name": "numberOfResultsWanted",
+      "type": "uint256"
+    }
+  ],
+  [
+    {
+      "internalType": "uint256",
+      "name": "requestId",
+      "type": "uint256"
+    }
+  ]
+],
+    params: [options.eventName, options.chance, options.numberOfResultsWanted]
   });
 };
 

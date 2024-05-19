@@ -5,7 +5,7 @@ import { sendAndConfirmTransaction, watchContractEvents } from 'thirdweb';
 
 
 let seed: string | undefined;
-export async function generateRandomNumberInRange(startRange: number, endRange: number) {
+export async function rngVrf(startRange: number, endRange: number) {
     if (!seed) {
         const transaction = requestRandomWords({
             contract: vrfContract
