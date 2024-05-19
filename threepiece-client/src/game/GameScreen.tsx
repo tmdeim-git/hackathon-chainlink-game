@@ -159,8 +159,7 @@ class GameScreen extends Component<props> {
     });
   };
 
-  preventDefault = (e: any) => {
-    e = e || window.event;
+  preventDefault = (e: WheelEvent) => {
     if (e.preventDefault) {
       e.preventDefault();
     }
