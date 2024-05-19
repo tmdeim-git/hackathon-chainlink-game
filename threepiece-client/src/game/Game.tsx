@@ -15,54 +15,40 @@ type Props = {
 class Game extends Component<Props, GameState> {
   state = {
     selectedTile: null,
-    eventHistory: [] as string[],
+    eventHistory: [] as string[]
   };
 
   componentDidMount(): void {
     const onEvent = (message: string) => {
       this.setState((prev) => ({
-        eventHistory: [...prev.eventHistory, message],
+        eventHistory: [...prev.eventHistory, message]
       }));
     };
     startEvent(onEvent);
   }
 
   handleSelectedTile = (tile: GameTile) => {
+    console.log("selected");
     this.setState({ selectedTile: tile });
   };
 
-  getId = (): number => {
-    if (this.state.selectedTile) return this.state.selectedTile._id;
-  };
-
-  getTileName = (): string => {
-    if (this.state.selectedTile) return this.state.selectedTile._name;
-  };
-
   getTileId = (): string => {
-    if (this.state.selectedTile) return this.state.selectedTile._id;
+    if (this.state.selectedTile) return this.state.selectedTile._land.id;
   };
 
   getRessourceType = (): string => {
-    if (this.state.selectedTile) return this.state.selectedTile._ressource;
-  };
-
-  getAmmount = (): string => {
-    if (this.state.selectedTile)
-      return (
-        this.state.selectedTile._currentAmmount +
-        "/" +
-        this.state.selectedTile._maximumCapacity
-      );
+    let ressourceToString = "";
+    if (this.state.selectedTile) {
+      this.state.selectedTile._land.resources.forEach((element) => {
+        ressourceToString += element + ", ";
+      });
+    }
+    return ressourceToString;
   };
 
   getOwner = (): number => {
-    if (this.state.selectedTile) return this.state.selectedTile._owner;
-  };
-
-  getRessourceRate = (): string => {
     if (this.state.selectedTile)
-      return this.state.selectedTile._productionRate + " u/s";
+      return this.state.selectedTile._land.ownerAddress;
   };
 
   render = () => {
@@ -71,11 +57,8 @@ class Game extends Component<Props, GameState> {
         <div>
           <div className="tile-info-rect">
             <div>Tile Infos :</div>
-            <div>Tile Name : {this.getTileName()}</div>
             <div>Tile ID : {this.getTileId()}</div>
-            <div>Ressource : {this.getRessourceType()}</div>
-            <div>Production Rate : {this.getRessourceRate()}</div>
-            <div>Stock : {this.getAmmount()}</div>
+            <div>Resources : {this.getRessourceType()}</div>
             <div>Owned By : {this.getOwner()}</div>
           </div>
           <div className="event-history">
@@ -85,7 +68,7 @@ class Game extends Component<Props, GameState> {
                 <p
                   key={i}
                   style={{
-                    paddingLeft: "20px",
+                    paddingLeft: "20px"
                   }}
                 >
                   {`- ${info}`}

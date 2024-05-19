@@ -9,9 +9,9 @@ export function getGameTiles(): GameTile[] {
   const lands: Land[] = allLands;
 
   for (let k = 0; k < lands.length; k++) {
-    const i = Math.floor((lands[k].id - 1) / col);
-    const j = (lands[k].id - 1) % col;
-    result.push(new GameTile(i, j, lands[k].id, lands[k].ownerAddress));
+    let i = Math.floor((lands[k].id - 1) / col);
+    let j = (lands[k].id - 1) % col;
+    result.push(new GameTile(i, j, lands[k]));
   }
 
   return result;

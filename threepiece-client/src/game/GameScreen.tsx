@@ -22,7 +22,7 @@ class GameScreen extends Component<props> {
     mouseDown: false,
     zoom: 1,
     gameTiles: {} as Record<string, GameTile>,
-    selectedTile: null,
+    selectedTile: null
   };
   canvasRef: RefObject<HTMLCanvasElement>;
   animationFrameId: number | null;
@@ -49,7 +49,7 @@ class GameScreen extends Component<props> {
     const tileSize: number = ctx.canvas.width / 15;
     for (let i = 0; i < fisrtTimeTiles.length; i++) {
       fisrtTimeTiles[i].changeSize(tileSize);
-      gameTilesDic[fisrtTimeTiles[i]._id] = fisrtTimeTiles[i];
+      gameTilesDic[fisrtTimeTiles[i]._land.id] = fisrtTimeTiles[i];
     }
 
     const renderCanvas = () => {
@@ -93,12 +93,11 @@ class GameScreen extends Component<props> {
       this.animationFrameId = requestAnimationFrame(renderCanvas);
     };
 
-    console.log(gameTilesDic);
     this.animationFrameId = requestAnimationFrame(renderCanvas);
     this.setState({
       gameTiles: gameTilesDic,
       mapWidth: ctx.canvas.width,
-      mapHeight: ctx.canvas.height,
+      mapHeight: ctx.canvas.height
     });
   }
 
@@ -113,16 +112,11 @@ class GameScreen extends Component<props> {
   }
 
   mouseClickDown = (e) => {
-    for (const tileKey in this.state.gameTiles) {
-      const tile = this.state.gameTiles[tileKey];
-      if (tile._selected) {
-        this.props.tileSelected(tile);
-      }
-    }
+    this.props.tileSelected(this.state.selectedTile);
     this.setState({
       mouseX: e.clientX,
       mouseY: e.clientY,
-      mouseDown: true,
+      mouseDown: true
     });
   };
 
@@ -136,7 +130,7 @@ class GameScreen extends Component<props> {
 
   mouseEnter = () => {
     document.addEventListener("wheel", this.preventDefault, {
-      passive: false,
+      passive: false
     });
   };
 
@@ -182,7 +176,7 @@ class GameScreen extends Component<props> {
         mouseX: newMouseX,
         mouseY: newMouseY,
         offsetX: newOffsetX,
-        offsetY: newOffsetY,
+        offsetY: newOffsetY
       });
     }
   };
@@ -229,7 +223,7 @@ class GameScreen extends Component<props> {
     ) {
       this.setState({
         offsetX: newOffsetX,
-        offsetY: newOffsetY,
+        offsetY: newOffsetY
       });
     }
   };
@@ -261,7 +255,7 @@ class GameScreen extends Component<props> {
     this.setState({
       zoom: newZoom,
       offsetX,
-      offsetY,
+      offsetY
     });
   };
 

@@ -1,26 +1,20 @@
+import { Land } from "../thirdweb/types";
+
 export class GameTile {
   _x: number;
   _y: number;
   _i: number;
   _j: number;
   _size: number = 0;
-  _id: number;
-  _name: string = "Tile name";
+  _land: Land;
   _selected: boolean = false;
-  _ressource: string = "Wood";
-  _productionRate: number = 45;
-  _maximumCapacity: number = 2500;
-  _currentAmmount: number = 500;
-  _owner: string = " Joe Blow";
-  _ownerId: string;
 
-  constructor(i: number, j: number, id: number, ownerId: string) {
+  constructor(i: number, j: number, land: Land) {
     this._x = j * this._size;
     this._y = i * this._size;
     this._i = i;
     this._j = j;
-    this._ownerId = ownerId;
-    this._id = id;
+    this._land = land;
   }
   draw(ctx: CanvasRenderingContext2D, currentOwnerId?: string): void {
     //if (this._selected) ctx.lineWidth = 3;

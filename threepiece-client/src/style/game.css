@@ -1,7 +1,7 @@
 .tile-info-rect {
   font-family: "Comic Sans MS";
   width: 400px;
-  height: 600px;
+  height: 300px;
   background-image: linear-gradient(
     to bottom right,
     rgb(26, 63, 131),
@@ -17,7 +17,7 @@
 }
 
 .event-history {
-  padding-top: 50px;
+  padding-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -29,10 +29,8 @@
 .event-history-table {
   display: flex;
   flex-direction: column;
-  min-width: 400px;
-  max-width: 400px;
-  min-height: 500px;
-  max-height: 500px;
+  width: 400px;
+  height: 400px;
   align-items: start;
   background-color: rgb(148 163 184);
   overflow-y: auto;
