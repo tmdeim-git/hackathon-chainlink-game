@@ -14,14 +14,14 @@ type Props = {
 };
 class Game extends Component<Props, GameState> {
   state = {
-    selectedTile: null,
-    eventHistory: [] as string[]
+    selectedTile: null as GameTile | null,
+    eventHistory: [] as string[],
   };
 
   componentDidMount(): void {
     const onEvent = (message: string) => {
       this.setState((prev) => ({
-        eventHistory: [...prev.eventHistory, message]
+        eventHistory: [...prev.eventHistory, message],
       }));
     };
     startEvent(onEvent);
@@ -46,9 +46,11 @@ class Game extends Component<Props, GameState> {
     return ressourceToString;
   };
 
-  getOwner = (): number => {
+  getOwner = (): string => {
     if (this.state.selectedTile)
-      return this.state.selectedTile._land.ownerAddress;
+      return this.state.selectedTile._isUnclaimedTile
+        ? "Nobody"
+        : this.state.selectedTile._land.ownerAddress;
   };
 
   render = () => {
@@ -68,7 +70,7 @@ class Game extends Component<Props, GameState> {
                 <p
                   key={i}
                   style={{
-                    paddingLeft: "20px"
+                    paddingLeft: "20px",
                   }}
                 >
                   {`- ${info}`}

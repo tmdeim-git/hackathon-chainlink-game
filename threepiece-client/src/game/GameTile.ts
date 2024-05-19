@@ -8,17 +8,22 @@ export class GameTile {
   _size: number = 0;
   _land: Land;
   _selected: boolean = false;
+  _isUnclaimedTile: boolean = false;
 
-  constructor(i: number, j: number, land: Land) {
+  constructor(i: number, j: number, land: Land, isUnclaimedTile: boolean) {
     this._x = j * this._size;
     this._y = i * this._size;
     this._i = i;
     this._j = j;
     this._land = land;
+    this._isUnclaimedTile = isUnclaimedTile;
   }
   draw(ctx: CanvasRenderingContext2D, currentOwnerId?: string): void {
     //if (this._selected) ctx.lineWidth = 3;
-    ctx.strokeStyle = currentOwnerId === this._ownerId ? "green" : "black";
+    if (!this._isUnclaimedTile) {
+      ctx.strokeStyle =
+        currentOwnerId === this._land.ownerAddress ? "green" : "black";
+    }
     ctx.strokeRect(this._x, this._y, this._size, this._size);
     //if (this._selected) ctx.lineWidth = 1;
   }
