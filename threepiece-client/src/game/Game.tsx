@@ -32,18 +32,12 @@ class Game extends Component<Props, GameState> {
     this.setState({ selectedTile: tile });
   };
 
-  getTileId = (): string => {
+  getTileId = (): number => {
     if (this.state.selectedTile) return this.state.selectedTile._land.id;
   };
 
   getRessourceType = (): string => {
-    let ressourceToString = "";
-    if (this.state.selectedTile) {
-      this.state.selectedTile._land.resources.forEach((element) => {
-        ressourceToString += element + ", ";
-      });
-    }
-    return ressourceToString;
+    return this.state.selectedTile?._land.resources.join(",");
   };
 
   getOwner = (): string => {
@@ -58,7 +52,7 @@ class Game extends Component<Props, GameState> {
       <div className="game-page">
         <div>
           <div className="tile-info-rect">
-            <div>Tile Infos :</div>
+            <h2>TILE INFO</h2>
             <div>Tile ID : {this.getTileId()}</div>
             <div>Resources : {this.getRessourceType()}</div>
             <div>Owned By : {this.getOwner()}</div>

@@ -45,7 +45,7 @@ export function approvalEvent(filters: ApprovalEventFilters = {}) {
     signature: "event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId)",
     filters,
   });
-};
+}
   
 
 /**
@@ -81,7 +81,7 @@ export function approvalForAllEvent(filters: ApprovalForAllEventFilters = {}) {
     signature: "event ApprovalForAll(address indexed owner, address indexed operator, bool approved)",
     filters,
   });
-};
+}
   
 
 
@@ -106,7 +106,7 @@ export function batchMetadataUpdateEvent() {
   return prepareEvent({
     signature: "event BatchMetadataUpdate(uint256 _fromTokenId, uint256 _toTokenId)",
   });
-};
+}
   
 
 
@@ -131,7 +131,7 @@ export function claimConditionsUpdatedEvent() {
   return prepareEvent({
     signature: "event ClaimConditionsUpdated((uint256 startTimestamp, uint256 maxClaimableSupply, uint256 supplyClaimed, uint256 quantityLimitPerWallet, bytes32 merkleRoot, uint256 pricePerToken, address currency, string metadata)[] claimConditions, bool resetEligibility)",
   });
-};
+}
   
 
 
@@ -156,7 +156,7 @@ export function contractURIUpdatedEvent() {
   return prepareEvent({
     signature: "event ContractURIUpdated(string prevURI, string newURI)",
   });
-};
+}
   
 
 /**
@@ -190,7 +190,7 @@ export function defaultRoyaltyEvent(filters: DefaultRoyaltyEventFilters = {}) {
     signature: "event DefaultRoyalty(address indexed newRoyaltyRecipient, uint256 newRoyaltyBps)",
     filters,
   });
-};
+}
   
 
 
@@ -215,7 +215,7 @@ export function flatPlatformFeeUpdatedEvent() {
   return prepareEvent({
     signature: "event FlatPlatformFeeUpdated(address platformFeeRecipient, uint256 flatFee)",
   });
-};
+}
   
 
 
@@ -240,7 +240,7 @@ export function initializedEvent() {
   return prepareEvent({
     signature: "event Initialized(uint8 version)",
   });
-};
+}
   
 
 
@@ -265,7 +265,7 @@ export function maxTotalSupplyUpdatedEvent() {
   return prepareEvent({
     signature: "event MaxTotalSupplyUpdated(uint256 maxTotalSupply)",
   });
-};
+}
   
 
 
@@ -290,7 +290,7 @@ export function metadataFrozenEvent() {
   return prepareEvent({
     signature: "event MetadataFrozen()",
   });
-};
+}
   
 
 /**
@@ -326,7 +326,7 @@ export function ownerUpdatedEvent(filters: OwnerUpdatedEventFilters = {}) {
     signature: "event OwnerUpdated(address indexed prevOwner, address indexed newOwner)",
     filters,
   });
-};
+}
   
 
 /**
@@ -360,7 +360,7 @@ export function platformFeeInfoUpdatedEvent(filters: PlatformFeeInfoUpdatedEvent
     signature: "event PlatformFeeInfoUpdated(address indexed platformFeeRecipient, uint256 platformFeeBps)",
     filters,
   });
-};
+}
   
 
 
@@ -385,7 +385,7 @@ export function platformFeeTypeUpdatedEvent() {
   return prepareEvent({
     signature: "event PlatformFeeTypeUpdated(uint8 feeType)",
   });
-};
+}
   
 
 /**
@@ -419,7 +419,7 @@ export function primarySaleRecipientUpdatedEvent(filters: PrimarySaleRecipientUp
     signature: "event PrimarySaleRecipientUpdated(address indexed recipient)",
     filters,
   });
-};
+}
   
 
 /**
@@ -457,7 +457,7 @@ export function roleAdminChangedEvent(filters: RoleAdminChangedEventFilters = {}
     signature: "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
     filters,
   });
-};
+}
   
 
 /**
@@ -495,7 +495,7 @@ export function roleGrantedEvent(filters: RoleGrantedEventFilters = {}) {
     signature: "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
     filters,
   });
-};
+}
   
 
 /**
@@ -533,7 +533,7 @@ export function roleRevokedEvent(filters: RoleRevokedEventFilters = {}) {
     signature: "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
     filters,
   });
-};
+}
   
 
 /**
@@ -569,7 +569,7 @@ export function royaltyForTokenEvent(filters: RoyaltyForTokenEventFilters = {}) 
     signature: "event RoyaltyForToken(uint256 indexed tokenId, address indexed royaltyRecipient, uint256 royaltyBps)",
     filters,
   });
-};
+}
   
 
 /**
@@ -603,7 +603,7 @@ export function tokenURIRevealedEvent(filters: TokenURIRevealedEventFilters = {}
     signature: "event TokenURIRevealed(uint256 indexed index, string revealedURI)",
     filters,
   });
-};
+}
   
 
 /**
@@ -641,7 +641,7 @@ export function tokensClaimedEvent(filters: TokensClaimedEventFilters = {}) {
     signature: "event TokensClaimed(uint256 indexed claimConditionIndex, address indexed claimer, address indexed receiver, uint256 startTokenId, uint256 quantityClaimed)",
     filters,
   });
-};
+}
   
 
 /**
@@ -675,7 +675,7 @@ export function tokensLazyMintedEvent(filters: TokensLazyMintedEventFilters = {}
     signature: "event TokensLazyMinted(uint256 indexed startTokenId, uint256 endTokenId, string baseURI, bytes encryptedBaseURI)",
     filters,
   });
-};
+}
   
 
 /**
@@ -713,7 +713,7 @@ export function transferEvent(filters: TransferEventFilters = {}) {
     signature: "event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)",
     filters,
   });
-};
+}
   
 
 /**
@@ -752,7 +752,7 @@ export async function DEFAULT_ADMIN_ROLE(
 ],
     params: []
   });
-};
+}
 
 
 /**
@@ -800,7 +800,7 @@ export async function balanceOf(
 ],
     params: [options.owner]
   });
-};
+}
 
 
 /**
@@ -848,7 +848,7 @@ export async function batchFrozen(
 ],
     params: [options.arg_0]
   });
-};
+}
 
 
 
@@ -888,7 +888,7 @@ export async function claimCondition(
 ],
     params: []
   });
-};
+}
 
 
 
@@ -923,7 +923,7 @@ export async function contractType(
 ],
     params: []
   });
-};
+}
 
 
 
@@ -958,7 +958,7 @@ export async function contractURI(
 ],
     params: []
   });
-};
+}
 
 
 
@@ -993,7 +993,7 @@ export async function contractVersion(
 ],
     params: []
   });
-};
+}
 
 
 /**
@@ -1048,7 +1048,7 @@ export async function encryptDecrypt(
 ],
     params: [options.data, options.key]
   });
-};
+}
 
 
 /**
@@ -1096,7 +1096,7 @@ export async function encryptedData(
 ],
     params: [options.arg_0]
   });
-};
+}
 
 
 
@@ -1131,7 +1131,7 @@ export async function getActiveClaimConditionId(
 ],
     params: []
   });
-};
+}
 
 
 /**
@@ -1179,7 +1179,7 @@ export async function getApproved(
 ],
     params: [options.tokenId]
   });
-};
+}
 
 
 
@@ -1214,7 +1214,7 @@ export async function getBaseURICount(
 ],
     params: []
   });
-};
+}
 
 
 /**
@@ -1262,7 +1262,7 @@ export async function getBatchIdAtIndex(
 ],
     params: [options.index]
   });
-};
+}
 
 
 /**
@@ -1352,7 +1352,7 @@ export async function getClaimConditionById(
 ],
     params: [options.conditionId]
   });
-};
+}
 
 
 
@@ -1392,7 +1392,7 @@ export async function getDefaultRoyaltyInfo(
 ],
     params: []
   });
-};
+}
 
 
 
@@ -1432,7 +1432,7 @@ export async function getFlatPlatformFeeInfo(
 ],
     params: []
   });
-};
+}
 
 
 
@@ -1472,7 +1472,7 @@ export async function getPlatformFeeInfo(
 ],
     params: []
   });
-};
+}
 
 
 
@@ -1507,7 +1507,7 @@ export async function getPlatformFeeType(
 ],
     params: []
   });
-};
+}
 
 
 /**
@@ -1562,7 +1562,7 @@ export async function getRevealURI(
 ],
     params: [options.batchId, options.key]
   });
-};
+}
 
 
 /**
@@ -1610,7 +1610,7 @@ export async function getRoleAdmin(
 ],
     params: [options.role]
   });
-};
+}
 
 
 /**
@@ -1665,7 +1665,7 @@ export async function getRoleMember(
 ],
     params: [options.role, options.index]
   });
-};
+}
 
 
 /**
@@ -1713,7 +1713,7 @@ export async function getRoleMemberCount(
 ],
     params: [options.role]
   });
-};
+}
 
 
 /**
@@ -1766,7 +1766,7 @@ export async function getRoyaltyInfoForToken(
 ],
     params: [options.tokenId]
   });
-};
+}
 
 
 /**
@@ -1821,7 +1821,7 @@ export async function getSupplyClaimedByWallet(
 ],
     params: [options.conditionId, options.claimer]
   });
-};
+}
 
 
 /**
@@ -1876,7 +1876,7 @@ export async function hasRole(
 ],
     params: [options.role, options.account]
   });
-};
+}
 
 
 /**
@@ -1931,7 +1931,7 @@ export async function hasRoleWithSwitch(
 ],
     params: [options.role, options.account]
   });
-};
+}
 
 
 /**
@@ -1986,7 +1986,7 @@ export async function isApprovedForAll(
 ],
     params: [options.owner, options.operator]
   });
-};
+}
 
 
 /**
@@ -2034,7 +2034,7 @@ export async function isEncryptedBatch(
 ],
     params: [options.batchId]
   });
-};
+}
 
 
 /**
@@ -2082,7 +2082,7 @@ export async function isTrustedForwarder(
 ],
     params: [options.forwarder]
   });
-};
+}
 
 
 
@@ -2117,7 +2117,7 @@ export async function maxTotalSupply(
 ],
     params: []
   });
-};
+}
 
 
 
@@ -2152,7 +2152,7 @@ export async function name(
 ],
     params: []
   });
-};
+}
 
 
 
@@ -2187,7 +2187,7 @@ export async function nextTokenIdToClaim(
 ],
     params: []
   });
-};
+}
 
 
 
@@ -2222,7 +2222,7 @@ export async function nextTokenIdToMint(
 ],
     params: []
   });
-};
+}
 
 
 
@@ -2257,7 +2257,7 @@ export async function owner(
 ],
     params: []
   });
-};
+}
 
 
 /**
@@ -2305,7 +2305,7 @@ export async function ownerOf(
 ],
     params: [options.tokenId]
   });
-};
+}
 
 
 
@@ -2340,7 +2340,7 @@ export async function primarySaleRecipient(
 ],
     params: []
   });
-};
+}
 
 
 /**
@@ -2400,7 +2400,7 @@ export async function royaltyInfo(
 ],
     params: [options.tokenId, options.salePrice]
   });
-};
+}
 
 
 /**
@@ -2448,7 +2448,7 @@ export async function supportsInterface(
 ],
     params: [options.interfaceId]
   });
-};
+}
 
 
 
@@ -2483,7 +2483,7 @@ export async function symbol(
 ],
     params: []
   });
-};
+}
 
 
 /**
@@ -2531,7 +2531,7 @@ export async function tokenURI(
 ],
     params: [options.tokenId]
   });
-};
+}
 
 
 
@@ -2566,7 +2566,7 @@ export async function totalMinted(
 ],
     params: []
   });
-};
+}
 
 
 
@@ -2601,7 +2601,7 @@ export async function totalSupply(
 ],
     params: []
   });
-};
+}
 
 
 /**
@@ -2706,7 +2706,7 @@ export async function verifyClaim(
 ],
     params: [options.conditionId, options.claimer, options.quantity, options.currency, options.pricePerToken, options.allowlistProof]
   });
-};
+}
 
 
 /**
@@ -2762,7 +2762,7 @@ export function approve(
 ],
     params: [options.to, options.tokenId]
   });
-};
+}
 
 
 /**
@@ -2807,7 +2807,7 @@ export function burn(
 ],
     params: [options.tokenId]
   });
-};
+}
 
 
 /**
@@ -2909,7 +2909,7 @@ export function claim(
 ],
     params: [options.receiver, options.quantity, options.currency, options.pricePerToken, options.allowlistProof, options.data]
   });
-};
+}
 
 
 /**
@@ -2954,7 +2954,7 @@ export function freezeBatchBaseURI(
 ],
     params: [options.index]
   });
-};
+}
 
 
 /**
@@ -3006,7 +3006,7 @@ export function grantRole(
 ],
     params: [options.role, options.account]
   });
-};
+}
 
 
 /**
@@ -3114,7 +3114,7 @@ export function initialize(
 ],
     params: [options.defaultAdmin, options.name, options.symbol, options.contractURI, options.trustedForwarders, options.saleRecipient, options.royaltyRecipient, options.royaltyBps, options.platformFeeBps, options.platformFeeRecipient]
   });
-};
+}
 
 
 /**
@@ -3179,7 +3179,7 @@ export function lazyMint(
 ],
     params: [options.amount, options.baseURIForTokens, options.data]
   });
-};
+}
 
 
 /**
@@ -3230,7 +3230,7 @@ export function multicall(
 ],
     params: [options.data]
   });
-};
+}
 
 
 /**
@@ -3282,7 +3282,7 @@ export function renounceRole(
 ],
     params: [options.role, options.account]
   });
-};
+}
 
 
 /**
@@ -3340,7 +3340,7 @@ export function reveal(
 ],
     params: [options.index, options.key]
   });
-};
+}
 
 
 /**
@@ -3392,7 +3392,7 @@ export function revokeRole(
 ],
     params: [options.role, options.account]
   });
-};
+}
 
 
 /**
@@ -3451,7 +3451,7 @@ export function safeTransferFrom(
 ],
     params: [options.from, options.to, options.tokenId]
   });
-};
+}
 
 
 /**
@@ -3503,7 +3503,7 @@ export function setApprovalForAll(
 ],
     params: [options.operator, options.approved]
   });
-};
+}
 
 
 /**
@@ -3597,7 +3597,7 @@ export function setClaimConditions(
 ],
     params: [options.conditions, options.resetClaimEligibility]
   });
-};
+}
 
 
 /**
@@ -3642,7 +3642,7 @@ export function setContractURI(
 ],
     params: [options.uri]
   });
-};
+}
 
 
 /**
@@ -3694,7 +3694,7 @@ export function setDefaultRoyaltyInfo(
 ],
     params: [options.royaltyRecipient, options.royaltyBps]
   });
-};
+}
 
 
 /**
@@ -3746,7 +3746,7 @@ export function setFlatPlatformFeeInfo(
 ],
     params: [options.platformFeeRecipient, options.flatFee]
   });
-};
+}
 
 
 /**
@@ -3791,7 +3791,7 @@ export function setMaxTotalSupply(
 ],
     params: [options.maxTotalSupply]
   });
-};
+}
 
 
 /**
@@ -3836,7 +3836,7 @@ export function setOwner(
 ],
     params: [options.newOwner]
   });
-};
+}
 
 
 /**
@@ -3888,7 +3888,7 @@ export function setPlatformFeeInfo(
 ],
     params: [options.platformFeeRecipient, options.platformFeeBps]
   });
-};
+}
 
 
 /**
@@ -3933,7 +3933,7 @@ export function setPlatformFeeType(
 ],
     params: [options.feeType]
   });
-};
+}
 
 
 /**
@@ -3978,7 +3978,7 @@ export function setPrimarySaleRecipient(
 ],
     params: [options.saleRecipient]
   });
-};
+}
 
 
 /**
@@ -4037,7 +4037,7 @@ export function setRoyaltyInfoForToken(
 ],
     params: [options.tokenId, options.recipient, options.bps]
   });
-};
+}
 
 
 /**
@@ -4096,7 +4096,7 @@ export function transferFrom(
 ],
     params: [options.from, options.to, options.tokenId]
   });
-};
+}
 
 
 /**
@@ -4148,6 +4148,6 @@ export function updateBatchBaseURI(
 ],
     params: [options.index, options.uri]
   });
-};
+}
 
 

@@ -1,10 +1,12 @@
-import { ContractOptions, NFT, sendAndConfirmTransaction } from "thirdweb";
-import { LazyMintParams, burn, lazyMint, claimTo } from "thirdweb/extensions/erc721";
-import { multicall } from "../../thirdweb/11155111/erc721";
-import { getAdminAccount, allLandNfts, landContract, landStableContract } from "../../thirdweb/provider";
+import { ContractOptions, NFT, getContract, prepareContractCall, resolveMethod, sendAndConfirmTransaction } from "thirdweb";
+import { LazyMintParams, lazyMint, claimTo, burn } from "thirdweb/extensions/erc721";
+import { allLandNfts } from "../../providers/land-provider";
+import { adminAccount, adminSdk, thirdwebClient, landContract, landStableContract, testChain, thirdwebMultichainRegistry } from "../../providers/web3-provider";
 import { Land, Resource, LandEvent, isValidLand, LandNFTAttributes } from "../../thirdweb/types";
 import config from './config.json'
-import { batchUpdateMetadata } from "../erc721-scripts";
+import { batchUpdateMetadata, sendAndConfirmMulticall } from "../erc721-scripts";
+import { ThirdwebSDK } from "@thirdweb-dev/sdk";
+import { contractURI } from "thirdweb/extensions/common";
 
 /**
  * Burn, create and claim NFTs to the admin account
@@ -12,7 +14,6 @@ import { batchUpdateMetadata } from "../erc721-scripts";
 export async function resetLandNfts(contract?: Readonly<ContractOptions<[]>>) {
     const contractToUse = contract || landContract;
     const nfts: LazyMintParams['nfts'] = [];
-    const admin = await getAdminAccount();
 
     for (const configLand of config.lands) {
         const land: Land = {
@@ -47,41 +48,61 @@ export async function resetLandNfts(contract?: Readonly<ContractOptions<[]>>) {
         );
     }
 
-    const burnData = []
     console.log(allLandNfts);
 
-    for (const nft of allLandNfts) {
-        const burnTx = burn({
-            contract: contractToUse,
-            tokenId: nft.id
-        });
-        burnData.push(await (burnTx.data as () => Promise<`0x${string}`>)())
-    };
+    await burnByBatch(allLandNfts, contractToUse);
 
     const mintTx = lazyMint({
         contract: contractToUse,
         nfts
     });
-    const mintData = await (mintTx.data as () => Promise<`0x${string}`>)()
 
     const claimTx = claimTo({
         contract: contractToUse,
         quantity: BigInt(config.lands.length),
-        to: admin.address
+        to: adminAccount.address
     });
-    const claimData = await (claimTx.data as () => Promise<`0x${string}`>)()
 
-    const batchTx = multicall({
-        data: [...burnData, mintData, claimData],
-        contract: contractToUse
-    })
-
-    const batchResult = await sendAndConfirmTransaction({
-        account: admin,
-        transaction: batchTx
-    })
+    const batchResult = await sendAndConfirmMulticall([mintTx, claimTx], contractToUse)
 
     console.log(batchResult);
+}
+
+// TODO try to abstract the "burn" into an abstract function
+export async function burnByBatch(
+    nfts: NFT[],
+    contract: Readonly<ContractOptions<[]>>,
+    batchLength = 55
+) {
+    const burnTxList = []
+
+    for (const nft of nfts) {
+        const burnTx = burn({
+            contract: contract,
+            tokenId: nft.id
+        });
+
+        burnTxList.push(burnTx)
+
+        if (burnTxList.length === batchLength) {
+            console.log(burnTx);
+
+            await sendAndConfirmMulticall(burnTxList, contract);
+            burnTxList.length = 0;
+        }
+    }
+
+    if (burnTxList.length > 0) {
+        await sendAndConfirmMulticall(burnTxList, contract);
+    }
+}
+
+export async function claimLand(address: string, landId: bigint) {
+    // prepare NFT transfer transaction from admin to user
+
+    // prepare gas bill to user
+
+    // if gas is paid, send and confirm nft transfer transaction
 }
 
 /**
@@ -109,4 +130,50 @@ export async function outputLandJson() {
     }
 
     console.log(JSON.stringify(list))
+}
+
+export async function createNftdropContract() {
+    const sdk = ThirdwebSDK.fromSigner(adminSdk.getSigner(), testChain.rpc, thirdwebClient);
+    const contractAddress = await sdk.deployer.deployNFTDrop({
+        name: "Automatic NFT Drops",
+        trusted_forwarders: []
+    });
+    console.log("Deployed at", contractAddress);
+
+
+    const contractToAdd = getContract({
+        client: thirdwebClient,
+        chain: testChain,
+        address: contractAddress,
+    });
+
+    const metadataURI = await contractURI({
+        contract: contractToAdd,
+    });
+
+    /* @ts-ignore */
+    const tx = prepareContractCall({
+        contract: thirdwebMultichainRegistry,
+        method: resolveMethod("add"),
+        params: [
+            /* @ts-ignore */
+            adminAccount.address,
+            /* @ts-ignore */
+            contractToAdd.address,
+            /* @ts-ignore */
+            contractToAdd.chain.id,
+            /* @ts-ignore */
+            metadataURI || "",
+        ],
+    });
+
+    const result = await sendAndConfirmTransaction({
+        account: adminAccount,
+        transaction: tx,
+    });
+    console.log("Added to dashboard", result);
+
+    // TODO add to dashboard
+
+    return tx;
 }

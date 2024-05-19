@@ -2,7 +2,10 @@ import { useAtomValue } from "jotai";
 import "./App.css";
 import Game from "./game/Game";
 import Connect from "./thirdweb/auth/Connect";
-import { authWalletAtom } from "./thirdweb/provider";
+import { atom } from "jotai";
+import { Wallet } from "thirdweb/wallets";
+
+export const authWalletAtom = atom<Wallet | false>(false);
 
 function App() {
   const wallet = useAtomValue(authWalletAtom);

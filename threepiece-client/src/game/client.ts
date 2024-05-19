@@ -1,4 +1,5 @@
-import { adminAccount, allLands } from "../thirdweb/provider";
+import { allLands } from "../providers/land-provider";
+import { adminAccount } from "../providers/web3-provider";
 import { Land } from "../thirdweb/types";
 import { GameTile } from "./GameTile";
 
