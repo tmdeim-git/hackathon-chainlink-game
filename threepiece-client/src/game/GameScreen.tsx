@@ -6,6 +6,7 @@ import "../style/gameScreen.css";
 
 type props = {
   tileSelected: (tile: GameTile) => void;
+  ownerAddress?: string;
 };
 
 class GameScreen extends Component<props> {
@@ -21,9 +22,8 @@ class GameScreen extends Component<props> {
     mouseDown: false,
     zoom: 1,
     gameTiles: {},
-    selectedTile: null
+    selectedTile: null,
   };
-
   canvasRef: RefObject<HTMLCanvasElement>;
   animationFrameId: number | null;
   image: HTMLImageElement;
@@ -93,11 +93,12 @@ class GameScreen extends Component<props> {
       this.animationFrameId = requestAnimationFrame(renderCanvas);
     };
 
+    console.log(gameTilesDic);
     this.animationFrameId = requestAnimationFrame(renderCanvas);
     this.setState({
       gameTiles: gameTilesDic,
       mapWidth: ctx.canvas.width,
-      mapHeight: ctx.canvas.height
+      mapHeight: ctx.canvas.height,
     });
   }
 
@@ -121,7 +122,7 @@ class GameScreen extends Component<props> {
     this.setState({
       mouseX: e.clientX,
       mouseY: e.clientY,
-      mouseDown: true
+      mouseDown: true,
     });
   };
 
@@ -135,7 +136,7 @@ class GameScreen extends Component<props> {
 
   mouseEnter = () => {
     document.addEventListener("wheel", this.preventDefault, {
-      passive: false
+      passive: false,
     });
   };
 
@@ -181,7 +182,7 @@ class GameScreen extends Component<props> {
         mouseX: newMouseX,
         mouseY: newMouseY,
         offsetX: newOffsetX,
-        offsetY: newOffsetY
+        offsetY: newOffsetY,
       });
     }
   };
@@ -228,7 +229,7 @@ class GameScreen extends Component<props> {
     ) {
       this.setState({
         offsetX: newOffsetX,
-        offsetY: newOffsetY
+        offsetY: newOffsetY,
       });
     }
   };
@@ -260,7 +261,7 @@ class GameScreen extends Component<props> {
     this.setState({
       zoom: newZoom,
       offsetX,
-      offsetY
+      offsetY,
     });
   };
 
