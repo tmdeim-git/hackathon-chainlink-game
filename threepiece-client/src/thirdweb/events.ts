@@ -4,13 +4,31 @@ import {
     batchMetadataUpdateEvent,
     transferEvent,
 } from "./generated-contracts/nft-drop";
-import { landContract } from "../providers/web3-provider";
+import { landContract, vrfContract } from "../providers/web3-provider";
+import { requestSentEvent } from "./generated-contracts/vrf";
+
+let started: boolean = false; // avoid double event watch on hot reloads
 
 export function startEvent(onEvent?: (message: string) => void) {
-    startTokenCreatedEvent(onEvent);
-    startMetadataUpdateEvent(onEvent);
-    startTransferEvent(onEvent);
+    if (!started) {
+        startTokenCreatedEvent(onEvent);
+        startMetadataUpdateEvent(onEvent);
+        startTransferEvent(onEvent);
+        startVrfRequestEvent(onEvent);
+        started = true;
+    }
 }
+
+const startVrfRequestEvent = (onEvent?: (message: string) => void) =>
+    watchContractEvents({
+        onEvents(events) {
+            const event = events[0];
+            // onEvent && onEvent(`VRF Request sent`);
+            console.log(`VRF Request sent`, event);
+        },
+        events: [requestSentEvent()],
+        contract: vrfContract,
+    });
 
 const startTokenCreatedEvent = (onEvent?: (message: string) => void) =>
     watchContractEvents({
