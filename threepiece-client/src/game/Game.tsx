@@ -9,7 +9,10 @@ type GameState = {
   eventHistory: string[];
 };
 
-class Game extends Component<Record<string, never>, GameState> {
+type Props = {
+  ownerAddress?: string;
+};
+class Game extends Component<Props, GameState> {
   state = {
     selectedTile: null,
     eventHistory: [] as string[],
@@ -91,7 +94,10 @@ class Game extends Component<Record<string, never>, GameState> {
             </div>
           </div>
         </div>
-        <GameScreen tileSelected={this.handleSelectedTile} />
+        <GameScreen
+          tileSelected={this.handleSelectedTile}
+          ownerAddress={this.props.ownerAddress}
+        />
       </div>
     );
   };
