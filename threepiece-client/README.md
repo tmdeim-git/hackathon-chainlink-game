@@ -11,11 +11,12 @@
 5. [If its a different contract, Run `npx thirdweb generate chainId/contractAddress` and change the generated file name]
 6. DEBUG: if transaction reverts, ensure the contract is correctly subscribed
 
-# (if needed)Deploy the upkeep contract (automation compatible)
+# Automation setup
 1. `npm run deploy`
-2. https://automation.chain.link/polygon-amoy for parameters (must have funds)
+2. Add to https://automation.chain.link/polygon-amoy (must have funds)
 3. Change the contract variable in the .env
 4. [If its a different contract, Run `npx thirdweb generate chainId/contractAddress` and change the generated file name]
+5. Add Admin role to the automation forwarder in the VRF dashboard 
 
 # Useful docs
 Contract debug: https://remix.ethereum.org/
