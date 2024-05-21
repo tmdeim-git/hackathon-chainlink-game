@@ -1,10 +1,11 @@
 import { ConnectButton } from "thirdweb/react";
 import { testChain, thirdwebClient } from "../../providers/web3-provider";
-import { startEvent } from "../events";
+import { clientAddListener } from "../client-events";
 import { createWallet, inAppWallet } from "thirdweb/wallets";
 import { allLandNfts } from "../../providers/land-provider";
 import { useSetAtom } from "jotai";
 import { authWalletAtom } from "../../App";
+import { getRandomNumbersWithVrf } from "../../providers/backend/scripts/vrf-scripts";
 
 export const wallets = [
   inAppWallet(),
@@ -24,9 +25,8 @@ function Connect() {
       wallets={wallets}
       connectButton={{ label: "Play" }}
       onConnect={async (wallet) => {
-        setConnectedWallet(wallet);
-        startEvent();
         wallet.switchChain(testChain);
+        setConnectedWallet(wallet);
         console.log("TODO: Redirect to game...")
       }} />
   );

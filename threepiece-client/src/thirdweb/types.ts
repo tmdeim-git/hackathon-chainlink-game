@@ -6,10 +6,17 @@ export type LandNFT = NFT & {
   };
 };
 
-export enum LandEvent {
-  None = "none",
-  Raining = "raining"
+export namespace GameEvent {
+  export enum Land {
+    None = "none",
+    Raining = "raining"
+  }
+
+  export enum Game {
+    Lootbox = "lootbox"
+  }
 }
+
 
 export type LandNFTAttributes = [
   {
@@ -22,14 +29,14 @@ export type LandNFTAttributes = [
   },
   {
     readonly trait_type: "event";
-    value: LandEvent;
+    value: GameEvent.Land;
   }
 ];
 
 export interface Land {
   id: number;
   resources: Resource[];
-  event?: LandEvent;
+  event?: GameEvent.Land;
   nft?: LandNFT;
   ownerAddress?: string;
 }
@@ -75,26 +82,26 @@ export interface MetadataAttributes {
   value: any;
 }
 
-export function isValidLand(land: any): land is Land {
+export function isValidLand(land: Land): land is Land {
   const resources = land.resources;
   const landEvent = land.event;
 
   return (
-    isValidEnumArray(resources, Resource) &&
-    isValidEnumValue(landEvent, LandEvent)
+    arrayIsInEnum(resources, Resource) &&
+    isInEnum(landEvent, GameEvent.Land)
   );
 }
 
 // Generic type predicate function for array of enums
-export function isValidEnumArray<T extends string>(
+export function arrayIsInEnum<T extends string>(
   arr: string[],
-  enumValues: Record<string, T>
+  enumType: Record<string, T>
 ): arr is T[] {
-  return arr.every((value) => Object.values(enumValues).includes(value as T));
+  return arr.every((value) => isInEnum(value, enumType));
 }
 
 // Generic type predicate function for single enum value
-export function isValidEnumValue<T extends string>(
+export function isInEnum<T extends string>(
   value: string,
   enumValues: Record<string, T>
 ): value is T {

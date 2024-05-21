@@ -1,12 +1,13 @@
 import { ContractOptions, NFT, getContract, prepareContractCall, resolveMethod, sendAndConfirmTransaction } from "thirdweb";
 import { LazyMintParams, lazyMint, claimTo, burn } from "thirdweb/extensions/erc721";
-import { allLandNfts } from "../../providers/land-provider";
-import { adminAccount, adminSdk, thirdwebClient, landContract, landStableContract, testChain, thirdwebMultichainRegistry } from "../../providers/web3-provider";
-import { Land, Resource, LandEvent, isValidLand, LandNFTAttributes } from "../../thirdweb/types";
 import config from './config.json'
 import { batchUpdateMetadata, sendAndConfirmMulticall } from "../erc721-scripts";
 import { ThirdwebSDK } from "@thirdweb-dev/sdk";
 import { contractURI } from "thirdweb/extensions/common";
+import { Land, Resource, isValidLand, LandNFTAttributes, GameEvent } from "../../../../thirdweb/types";
+import { allLandNfts } from "../../../land-provider";
+import { landContract, testChain, thirdwebClient, thirdwebMultichainRegistry } from "../../../web3-provider";
+import { adminAccount, adminSdk } from "../../admin";
 
 /**
  * Burn, create and claim NFTs to the admin account
@@ -19,7 +20,7 @@ export async function resetLandNfts(contract?: Readonly<ContractOptions<[]>>) {
         const land: Land = {
             id: configLand.id,
             resources: configLand.resources as Resource[],
-            event: configLand.event as LandEvent
+            event: configLand.event as GameEvent.Land
         };
 
         if (!isValidLand(land))
@@ -106,13 +107,6 @@ export async function claimLand(address: string, landId: bigint) {
 }
 
 /**
- * Update literally every single NFT metadata from the STABLE contract with with the ones from the CURRENT contract
- */
-export async function batchUpdateStable(nftList: NFT[]) {
-    return await batchUpdateMetadata(nftList.map(n => n.metadata), landStableContract);
-}
-
-/**
  * Used to create the JSON for the initial lands
  */
 export async function outputLandJson() {
@@ -123,7 +117,7 @@ export async function outputLandJson() {
             const land: Land = {
                 id: i * config.cols + j,
                 resources: [Resource.Water],
-                event: LandEvent.None
+                event: GameEvent.Land.None
             }
             list.push(land)
         }

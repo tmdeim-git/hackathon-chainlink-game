@@ -8,15 +8,14 @@
 2. https://vrf.chain.link/polygon-amoy/ for the parameters
 3. Add the contract address to the VRF Subscription Consumers (must have funds)
 4. Change the contract variable in the .env
+5. [If its a different contract, Run `npx thirdweb generate chainId/contractAddress` and change the generated file name]
+6. DEBUG: if transaction reverts, ensure the contract is correctly subscribed
 
 # (if needed)Deploy the upkeep contract (automation compatible)
 1. `npm run deploy`
 2. https://automation.chain.link/polygon-amoy for parameters (must have funds)
 3. Change the contract variable in the .env
-
-
-# Considerations 
-[If its a different contract, Run `npx thirdweb generate chainId/contractAddress` and change the generated file name to erc721.ts]
+4. [If its a different contract, Run `npx thirdweb generate chainId/contractAddress` and change the generated file name]
 
 # Useful docs
 Contract debug: https://remix.ethereum.org/

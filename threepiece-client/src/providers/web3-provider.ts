@@ -1,8 +1,7 @@
 import { Chain, ContractOptions, createThirdwebClient, defineChain, getContract } from "thirdweb";
-import { Wallet, privateKeyToAccount } from "thirdweb/wallets";
-import { ThirdwebSDK } from "@thirdweb-dev/sdk";
+import { Wallet } from "thirdweb/wallets";
 import { getNFTs } from "thirdweb/extensions/erc721";
-import { polygonAmoy, sepolia } from "thirdweb/chains";
+import { polygonAmoy } from "thirdweb/chains";
 
 const polygonZkevmCardona: Chain = {
     id: 2442,
@@ -17,29 +16,17 @@ export const thirdwebClient = createThirdwebClient({
     clientId: import.meta.env.VITE_THIRDWEB_CLIENT_ID,
 });
 
-export const adminAccount = privateKeyToAccount({
-    client: thirdwebClient,
-    privateKey: import.meta.env.VITE_METAMASK_ADMIN_PRIVATE_KEY,
-});
-
 export const thirdwebMultichainRegistry = getContract({
     client: thirdwebClient,
     chain: defineChain(137), // don't touch this
     address: "0xcdAD8FA86e18538aC207872E8ff3536501431B73", // don't touch this
 });
 
-export const adminSdk = ThirdwebSDK.fromPrivateKey(import.meta.env.VITE_METAMASK_ADMIN_PRIVATE_KEY, sepolia.rpc, thirdwebClient);
 
 // CONTRACTS
 
 export const landContract = getContract({
     address: import.meta.env.VITE_LAND_CONTRACT,
-    chain: testChain,
-    client: thirdwebClient,
-});
-
-export const landStableContract = getContract({
-    address: import.meta.env.VITE_LAND_STABLE_CONTRACT,
     chain: testChain,
     client: thirdwebClient,
 });

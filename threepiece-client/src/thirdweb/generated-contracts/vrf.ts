@@ -63,24 +63,24 @@ export function coordinatorSetEvent() {
 
 
 /**
- * Creates an event object for the GameRandomEvent event.
+ * Creates an event object for the Log event.
  * @returns The prepared event object.
  * @example
  * ```
  * import { getContractEvents } from "thirdweb";
- * import { gameRandomEventEvent } from "TODO";
+ * import { logEvent } from "TODO";
  * 
  * const events = await getContractEvents({
  * contract,
  * events: [
- *  gameRandomEventEvent()
+ *  logEvent()
  * ],
  * });
  * ```
  */ 
-export function gameRandomEventEvent() {
+export function logEvent() {
   return prepareEvent({
-    signature: "event GameRandomEvent(uint256 requestId, string eventName, bool[] results)",
+    signature: "event Log(string log)",
   });
 };
   
@@ -160,24 +160,24 @@ export function ownershipTransferredEvent(filters: OwnershipTransferredEventFilt
 
 
 /**
- * Creates an event object for the RequestFulfilled event.
+ * Creates an event object for the VrfChanceEventRequest event.
  * @returns The prepared event object.
  * @example
  * ```
  * import { getContractEvents } from "thirdweb";
- * import { requestFulfilledEvent } from "TODO";
+ * import { vrfChanceEventRequestEvent } from "TODO";
  * 
  * const events = await getContractEvents({
  * contract,
  * events: [
- *  requestFulfilledEvent()
+ *  vrfChanceEventRequestEvent()
  * ],
  * });
  * ```
  */ 
-export function requestFulfilledEvent() {
+export function vrfChanceEventRequestEvent() {
   return prepareEvent({
-    signature: "event RequestFulfilled(uint256 requestId, uint256[] randomWords)",
+    signature: "event VrfChanceEventRequest(uint256 requestId, string eventName, uint8 chance, uint256 numberOfResultsWanted)",
   });
 };
   
@@ -185,24 +185,74 @@ export function requestFulfilledEvent() {
 
 
 /**
- * Creates an event object for the RequestSent event.
+ * Creates an event object for the VrfChanceEventResult event.
  * @returns The prepared event object.
  * @example
  * ```
  * import { getContractEvents } from "thirdweb";
- * import { requestSentEvent } from "TODO";
+ * import { vrfChanceEventResultEvent } from "TODO";
  * 
  * const events = await getContractEvents({
  * contract,
  * events: [
- *  requestSentEvent()
+ *  vrfChanceEventResultEvent()
  * ],
  * });
  * ```
  */ 
-export function requestSentEvent() {
+export function vrfChanceEventResultEvent() {
   return prepareEvent({
-    signature: "event RequestSent(uint256 requestId, uint32 numWords)",
+    signature: "event VrfChanceEventResult(uint256 requestId, string eventName, bool[] results)",
+  });
+};
+  
+
+
+
+/**
+ * Creates an event object for the VrfRngRequest event.
+ * @returns The prepared event object.
+ * @example
+ * ```
+ * import { getContractEvents } from "thirdweb";
+ * import { vrfRngRequestEvent } from "TODO";
+ * 
+ * const events = await getContractEvents({
+ * contract,
+ * events: [
+ *  vrfRngRequestEvent()
+ * ],
+ * });
+ * ```
+ */ 
+export function vrfRngRequestEvent() {
+  return prepareEvent({
+    signature: "event VrfRngRequest(uint256 requestId, uint32 numberOfResultsWanted, uint256 startRange, uint256 endRange)",
+  });
+};
+  
+
+
+
+/**
+ * Creates an event object for the VrfRngResult event.
+ * @returns The prepared event object.
+ * @example
+ * ```
+ * import { getContractEvents } from "thirdweb";
+ * import { vrfRngResultEvent } from "TODO";
+ * 
+ * const events = await getContractEvents({
+ * contract,
+ * events: [
+ *  vrfRngResultEvent()
+ * ],
+ * });
+ * ```
+ */ 
+export function vrfRngResultEvent() {
+  return prepareEvent({
+    signature: "event VrfRngResult(uint256 requestId, uint256[] numbersGenerated)",
   });
 };
   
@@ -210,6 +260,59 @@ export function requestSentEvent() {
 /**
 * Contract read functions
 */
+
+/**
+ * Represents the parameters for the "checkUpkeep" function.
+ */
+export type CheckUpkeepParams = {
+  arg_0: AbiParameterToPrimitiveType<{"internalType":"bytes","name":"","type":"bytes"}>
+};
+
+/**
+ * Calls the "checkUpkeep" function on the contract.
+ * @param options - The options for the checkUpkeep function.
+ * @returns The parsed result of the function call.
+ * @example
+ * ```
+ * import { checkUpkeep } from "TODO";
+ * 
+ * const result = await checkUpkeep({
+ *  arg_0: ...,
+ * });
+ * 
+ * ```
+ */
+export async function checkUpkeep(
+  options: BaseTransactionOptions<CheckUpkeepParams>
+) {
+  return readContract({
+    contract: options.contract,
+    method: [
+  "0x6e04ff0d",
+  [
+    {
+      "internalType": "bytes",
+      "name": "",
+      "type": "bytes"
+    }
+  ],
+  [
+    {
+      "internalType": "bool",
+      "name": "upkeepNeeded",
+      "type": "bool"
+    },
+    {
+      "internalType": "bytes",
+      "name": "performData",
+      "type": "bytes"
+    }
+  ]
+],
+    params: [options.arg_0]
+  });
+};
+
 
 
 
@@ -499,24 +602,43 @@ export async function s_requests(
       "type": "bool"
     },
     {
-      "internalType": "string",
-      "name": "eventName",
-      "type": "string"
+      "components": [
+        {
+          "internalType": "uint256",
+          "name": "numberOfResultsWanted",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "startRange",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "endRange",
+          "type": "uint256"
+        }
+      ],
+      "internalType": "struct RngUsingChainlinkVRF.Rng",
+      "name": "rng",
+      "type": "tuple"
     },
     {
-      "internalType": "bool",
-      "name": "isGameRandomEvent",
-      "type": "bool"
-    },
-    {
-      "internalType": "uint8",
-      "name": "chance",
-      "type": "uint8"
-    },
-    {
-      "internalType": "uint256",
-      "name": "numberOfResultsWanted",
-      "type": "uint256"
+      "components": [
+        {
+          "internalType": "string",
+          "name": "eventName",
+          "type": "string"
+        },
+        {
+          "internalType": "uint8",
+          "name": "chance",
+          "type": "uint8"
+        }
+      ],
+      "internalType": "struct RngUsingChainlinkVRF.ChanceEvent",
+      "name": "chanceEvent",
+      "type": "tuple"
     }
   ]
 ],
@@ -560,6 +682,41 @@ export async function s_vrfCoordinator(
 };
 
 
+
+
+/**
+ * Calls the "upkeepCounter" function on the contract.
+ * @param options - The options for the upkeepCounter function.
+ * @returns The parsed result of the function call.
+ * @example
+ * ```
+ * import { upkeepCounter } from "TODO";
+ * 
+ * const result = await upkeepCounter();
+ * 
+ * ```
+ */
+export async function upkeepCounter(
+  options: BaseTransactionOptions
+) {
+  return readContract({
+    contract: options.contract,
+    method: [
+  "0xa3d3c0d2",
+  [],
+  [
+    {
+      "internalType": "uint256",
+      "name": "",
+      "type": "uint256"
+    }
+  ]
+],
+    params: []
+  });
+};
+
+
 /**
 * Contract write functions
 */
@@ -592,6 +749,51 @@ export function acceptOwnership(
   []
 ],
     params: []
+  });
+};
+
+
+/**
+ * Represents the parameters for the "performUpkeep" function.
+ */
+export type PerformUpkeepParams = {
+  performData: AbiParameterToPrimitiveType<{"internalType":"bytes","name":"performData","type":"bytes"}>
+};
+
+/**
+ * Calls the "performUpkeep" function on the contract.
+ * @param options - The options for the "performUpkeep" function.
+ * @returns A prepared transaction object.
+ * @example
+ * ```
+ * import { performUpkeep } from "TODO";
+ * 
+ * const transaction = performUpkeep({
+ *  performData: ...,
+ * });
+ * 
+ * // Send the transaction
+ * ...
+ * 
+ * ```
+ */
+export function performUpkeep(
+  options: BaseTransactionOptions<PerformUpkeepParams>
+) {
+  return prepareContractCall({
+    contract: options.contract,
+    method: [
+  "0x4585e33b",
+  [
+    {
+      "internalType": "bytes",
+      "name": "performData",
+      "type": "bytes"
+    }
+  ],
+  []
+],
+    params: [options.performData]
   });
 };
 
@@ -822,23 +1024,88 @@ export function transferOwnership(
 
 
 /**
- * Represents the parameters for the "triggerGameRandomEvent" function.
+ * Represents the parameters for the "vrfRng" function.
  */
-export type TriggerGameRandomEventParams = {
+export type VrfRngParams = {
+  numberOfResultsWanted: AbiParameterToPrimitiveType<{"internalType":"uint32","name":"numberOfResultsWanted","type":"uint32"}>
+startRange: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"startRange","type":"uint256"}>
+endRange: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"endRange","type":"uint256"}>
+};
+
+/**
+ * Calls the "vrfRng" function on the contract.
+ * @param options - The options for the "vrfRng" function.
+ * @returns A prepared transaction object.
+ * @example
+ * ```
+ * import { vrfRng } from "TODO";
+ * 
+ * const transaction = vrfRng({
+ *  numberOfResultsWanted: ...,
+ *  startRange: ...,
+ *  endRange: ...,
+ * });
+ * 
+ * // Send the transaction
+ * ...
+ * 
+ * ```
+ */
+export function vrfRng(
+  options: BaseTransactionOptions<VrfRngParams>
+) {
+  return prepareContractCall({
+    contract: options.contract,
+    method: [
+  "0xa97c9b79",
+  [
+    {
+      "internalType": "uint32",
+      "name": "numberOfResultsWanted",
+      "type": "uint32"
+    },
+    {
+      "internalType": "uint256",
+      "name": "startRange",
+      "type": "uint256"
+    },
+    {
+      "internalType": "uint256",
+      "name": "endRange",
+      "type": "uint256"
+    }
+  ],
+  [
+    {
+      "internalType": "uint256",
+      "name": "requestId",
+      "type": "uint256"
+    }
+  ]
+],
+    params: [options.numberOfResultsWanted, options.startRange, options.endRange]
+  });
+};
+
+
+/**
+ * Represents the parameters for the "vrfTriggerChanceEvent" function.
+ */
+export type VrfTriggerChanceEventParams = {
   eventName: AbiParameterToPrimitiveType<{"internalType":"string","name":"eventName","type":"string"}>
 chance: AbiParameterToPrimitiveType<{"internalType":"uint8","name":"chance","type":"uint8"}>
 numberOfResultsWanted: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"numberOfResultsWanted","type":"uint256"}>
 };
 
 /**
- * Calls the "triggerGameRandomEvent" function on the contract.
- * @param options - The options for the "triggerGameRandomEvent" function.
+ * Calls the "vrfTriggerChanceEvent" function on the contract.
+ * @param options - The options for the "vrfTriggerChanceEvent" function.
  * @returns A prepared transaction object.
  * @example
  * ```
- * import { triggerGameRandomEvent } from "TODO";
+ * import { vrfTriggerChanceEvent } from "TODO";
  * 
- * const transaction = triggerGameRandomEvent({
+ * const transaction = vrfTriggerChanceEvent({
  *  eventName: ...,
  *  chance: ...,
  *  numberOfResultsWanted: ...,
@@ -849,13 +1116,13 @@ numberOfResultsWanted: AbiParameterToPrimitiveType<{"internalType":"uint256","na
  * 
  * ```
  */
-export function triggerGameRandomEvent(
-  options: BaseTransactionOptions<TriggerGameRandomEventParams>
+export function vrfTriggerChanceEvent(
+  options: BaseTransactionOptions<VrfTriggerChanceEventParams>
 ) {
   return prepareContractCall({
     contract: options.contract,
     method: [
-  "0x5c19eb31",
+  "0xd04a0a84",
   [
     {
       "internalType": "string",

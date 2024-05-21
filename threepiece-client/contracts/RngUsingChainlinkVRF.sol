@@ -7,21 +7,52 @@ import {VRFV2PlusClient} from "@chainlink/contracts/src/v0.8/vrf/dev/libraries/V
 import {AutomationCompatibleInterface} from "@chainlink/contracts/src/v0.8/automation/AutomationCompatible.sol";
 import "@thirdweb-dev/contracts/extension/ContractMetadata.sol";
 
-contract GameVRFRandomGameEvent is VRFConsumerBaseV2Plus, AutomationCompatibleInterface, ContractMetadata {
+contract RngUsingChainlinkVRF is
+    VRFConsumerBaseV2Plus,
+    AutomationCompatibleInterface,
+    ContractMetadata
+{
     event Log(string log);
-    event RequestSent(uint256 requestId, uint32 numberVrfWanted);
-    event RequestFulfilled(uint256 requestId, uint256[] randomWords);
-    event GameRandomEvent(uint256 requestId, string eventName, bool[] results);
+    event VrfRngRequest(
+        uint256 requestId,
+        uint32 numberOfResultsWanted,
+        uint256 startRange,
+        uint256 endRange
+    );
+    event VrfRngResult(uint256 requestId, uint256[] numbersGenerated);
+    event VrfChanceEventRequest(
+        uint256 requestId,
+        string eventName,
+        uint8 chance,
+        uint256 numberOfResultsWanted
+    );
+    event VrfChanceEventResult(
+        uint256 requestId,
+        string eventName,
+        bool[] results
+    );
+
+
 
     struct RequestStatus {
         bool fulfilled; // whether the request has been successfully fulfilled
         bool exists; // whether a requestId exists
         uint256[] randomWords;
-        string eventName;
-        bool isGameRandomEvent;
-        uint8 chance;
-        uint256 numberOfResultsWanted;
+        Rng rng;
+        ChanceEvent chanceEvent;
     }
+
+    struct Rng {
+        uint256 numberOfResultsWanted;
+        uint256 startRange;
+        uint256 endRange;
+    }
+
+    struct ChanceEvent {
+        string eventName;
+        uint8 chance;
+    }
+
 
     mapping(uint256 => RequestStatus) public s_requests; /* requestId --> requestStatus */
 
@@ -53,25 +84,65 @@ contract GameVRFRandomGameEvent is VRFConsumerBaseV2Plus, AutomationCompatibleIn
         deployer = msg.sender;
     }
 
-    // ================ RANDOM GAME GENERATION + CHAINLINK VRF ============
+    // ================ RANDOM CHANCE GENERATION ============
 
-    function triggerGameRandomEvent(
+    function vrfTriggerChanceEvent(
         string memory eventName,
         uint8 chance,
         uint256 numberOfResultsWanted
     ) public onlyOwner returns (uint256 requestId) {
-        require(
-            chance <= 100,
-            "Chance of success must be between 0 and 100"
-        );
+        require(chance <= 100, "Chance of success must be between 0 and 100");
         requestId = requestRandomWords();
+
+        // rng settings
         RequestStatus storage request = s_requests[requestId];
-        request.isGameRandomEvent = true;
-        request.eventName = eventName;
-        request.chance = chance;
-        request.numberOfResultsWanted = numberOfResultsWanted;
+        request.rng = Rng({
+            numberOfResultsWanted: numberOfResultsWanted,
+            startRange: 0,
+            endRange: 100
+        });
+
+        // chance random event request creation
+        request.chanceEvent = ChanceEvent({
+            eventName: eventName,
+            chance: chance
+        });
+
+        emit VrfChanceEventRequest(
+            requestId,
+            eventName,
+            chance,
+            numberOfResultsWanted
+        );
+
         return requestId;
     }
+
+    function vrfRng(
+        uint32 numberOfResultsWanted,
+        uint256 startRange,
+        uint256 endRange
+    ) public onlyOwner returns (uint256 requestId) {
+        requestId = requestRandomWords();
+
+        // rng settings
+        RequestStatus storage request = s_requests[requestId];
+        request.rng = Rng({
+            numberOfResultsWanted: numberOfResultsWanted,
+            startRange: startRange,
+            endRange: endRange
+        });
+
+        emit VrfRngRequest(
+            requestId,
+            numberOfResultsWanted,
+            startRange,
+            endRange
+        );
+        return requestId;
+    }
+
+    // ================ CHAINLINK VRF ============
 
     function requestRandomWords() public onlyOwner returns (uint256 requestId) {
         requestId = s_vrfCoordinator.requestRandomWords(
@@ -90,14 +161,11 @@ contract GameVRFRandomGameEvent is VRFConsumerBaseV2Plus, AutomationCompatibleIn
             randomWords: new uint256[](0),
             exists: true,
             fulfilled: false,
-            isGameRandomEvent: false,
-            chance: 0,
-            numberOfResultsWanted: 0,
-            eventName: ""
+            rng: Rng({numberOfResultsWanted: 0, startRange: 0, endRange: 0}),
+            chanceEvent: ChanceEvent({eventName: "", chance: 0})
         });
         requestIds.push(requestId);
         lastRequestId = requestId;
-        emit RequestSent(requestId, numberVrfWanted);
         return requestId; // requestID is a uint.
     }
 
@@ -109,43 +177,69 @@ contract GameVRFRandomGameEvent is VRFConsumerBaseV2Plus, AutomationCompatibleIn
         require(request.exists, "Request not found");
         request.fulfilled = true;
         request.randomWords = _randomWords;
-        emit RequestFulfilled(_requestId, _randomWords);
 
-        if (request.isGameRandomEvent) {
-            uint256 seed = request.randomWords[0];
+        // 1. do nothing with a request by default (no leak of seed)
 
-            bool[] memory eventResults = new bool[](
-                request.numberOfResultsWanted
+        // ---
+
+        // 2. emite rng results
+
+        Rng memory rng = request.rng;
+        if (rng.numberOfResultsWanted == 0) {
+            revert("Invalid RNG settings");
+        }
+        //
+        uint256 seed = request.randomWords[0];
+        uint256[] memory rngResults = new uint256[](rng.numberOfResultsWanted);
+
+        for (uint256 i = 0; i < rngResults.length; i++) {
+            rngResults[i] = generateRandomNumber(
+                seed,
+                i,
+                rng.startRange,
+                rng.endRange
             );
+        }
+        emit VrfRngResult(_requestId, rngResults);
+
+        if (bytes(request.chanceEvent.eventName).length > 0) {
+            // 3. emit chance results
+            ChanceEvent memory chanceEvent = request.chanceEvent;
+
+            bool[] memory eventResults = new bool[](rng.numberOfResultsWanted);
 
             for (uint256 i = 0; i < eventResults.length; i++) {
-                uint256 randomNumber = generateRandomNumber(seed, i, 0, 100);
-                eventResults[i] = isSuccessful(randomNumber, request.chance);
+                eventResults[i] = isSuccessful(
+                    rngResults[i],
+                    chanceEvent.chance
+                );
             }
 
-            emit GameRandomEvent(_requestId, request.eventName, eventResults);
+            emit VrfChanceEventResult(
+                _requestId,
+                chanceEvent.eventName,
+                eventResults
+            );
         }
     }
 
     // ============================================================================
-    
-    
 
     function generateRandomNumber(
         uint256 seed,
         uint256 index,
-        uint256 start,
-        uint256 end
+        uint256 startRange,
+        uint256 endRange
     ) internal pure returns (uint256) {
-        require(start < end, "Invalid range");
+        require(startRange < endRange, "Invalid range");
 
-        uint256 rangeSize = end - start;
+        uint256 rangeSize = endRange - startRange + 1; // inclusive
 
         uint256 randomNumber = uint256(
             keccak256(abi.encodePacked(seed, index))
         );
 
-        return start + (randomNumber % rangeSize);
+        return startRange + (randomNumber % rangeSize);
     }
 
     function isSuccessful(uint256 randomNumber, uint8 chance)
@@ -167,7 +261,13 @@ contract GameVRFRandomGameEvent is VRFConsumerBaseV2Plus, AutomationCompatibleIn
         return (request.fulfilled, request.randomWords);
     }
 
-    function _canSetContractURI() internal view virtual override returns (bool){
+    function _canSetContractURI()
+        internal
+        view
+        virtual
+        override
+        returns (bool)
+    {
         return msg.sender == deployer;
     }
 

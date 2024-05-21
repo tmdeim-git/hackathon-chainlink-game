@@ -1,18 +1,10 @@
-import { adminAccount, adminSdk, thirdwebClient, testChain } from "../providers/web3-provider";
-import {
-  ContractOptions,
-  NFT,
-  PreparedTransaction,
-  prepareContractCall,
-  resolveMethod,
-  sendAndConfirmTransaction,
-} from "thirdweb";
-import { MetadataAttributes } from "../thirdweb/types";
-import {
-  updateBatchBaseURI,
-} from "../thirdweb/generated-contracts/nft-drop";
+import { NFT, ContractOptions, sendAndConfirmTransaction, PreparedTransaction, resolveMethod } from "thirdweb";
 import { upload } from "thirdweb/storage";
-import { ThirdwebSDK } from "@thirdweb-dev/sdk";
+import { updateBatchBaseURI } from "../../../thirdweb/generated-contracts/nft-drop";
+import { MetadataAttributes } from "../../../thirdweb/types";
+import { thirdwebClient } from "../../web3-provider";
+import { adminAccount } from "../admin";
+
 /**
  * For every NFT, add a new attribute with a default value
  */

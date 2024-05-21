@@ -2,7 +2,7 @@ import { Component } from "react";
 import GameScreen from "./GameScreen";
 import { GameTile } from "./GameTile";
 import "../style/game.css";
-import { startEvent } from "../thirdweb/events";
+import { clientAddListener } from "../thirdweb/client-events";
 
 type GameState = {
   selectedTile: GameTile | null;
@@ -14,8 +14,8 @@ type Props = {
 };
 class Game extends Component<Props, GameState> {
   state = {
-    selectedTile: null as GameTile | null,
-    eventHistory: [] as string[],
+    selectedTile: null,
+    eventHistory: [],
   };
 
   componentDidMount(): void {
@@ -24,7 +24,7 @@ class Game extends Component<Props, GameState> {
         eventHistory: [...prev.eventHistory, message],
       }));
     };
-    startEvent(onEvent);
+    clientAddListener(onEvent);
   }
 
   handleSelectedTile = (tile: GameTile) => {
