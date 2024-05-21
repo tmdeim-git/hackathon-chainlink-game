@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import "./loginPage.css";
+import "../style/loginPage.css";
 import { useNavigate } from 'react-router-dom';
 import { useActiveWallet } from "thirdweb/react";
 

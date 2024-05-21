@@ -1,9 +1,8 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
-import { GamePage } from "./gamePage";
-import { LoginPage } from "./loginPage";
 import { Navbar } from "./Navbar";
-import { useActiveAccount } from "thirdweb/react";
+import { LoginPage } from "./pages/loginPage";
+import { GamePage } from "./pages/gamePage";
 
 function App() {
 
