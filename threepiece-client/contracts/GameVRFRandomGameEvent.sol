@@ -9,7 +9,7 @@ import "@thirdweb-dev/contracts/extension/ContractMetadata.sol";
 
 contract GameVRFRandomGameEvent is VRFConsumerBaseV2Plus, AutomationCompatibleInterface, ContractMetadata {
     event Log(string log);
-    event RequestSent(uint256 requestId, uint32 numWords);
+    event RequestSent(uint256 requestId, uint32 numberVrfWanted);
     event RequestFulfilled(uint256 requestId, uint256[] randomWords);
     event GameRandomEvent(uint256 requestId, string eventName, bool[] results);
 
@@ -31,9 +31,11 @@ contract GameVRFRandomGameEvent is VRFConsumerBaseV2Plus, AutomationCompatibleIn
     uint256 public lastRequestId;
 
     bytes32 immutable keyHash;
-    uint32 callbackGasLimit = 2500000;
+    uint32 callbackGasLimit = 2500000; // max 2500000
     uint16 requestConfirmations = 3;
-    uint32 numWords = 1;
+
+    // TODO: consider using chainlink vrf as the random number if we want less than the max (500), does it helps gas?
+    uint32 numberVrfWanted = 1;
 
     // for metadata updates
     address public deployer;
@@ -51,7 +53,8 @@ contract GameVRFRandomGameEvent is VRFConsumerBaseV2Plus, AutomationCompatibleIn
         deployer = msg.sender;
     }
 
-    // RNG GENERATION
+    // ================ RANDOM GAME GENERATION + CHAINLINK VRF ============
+
     function triggerGameRandomEvent(
         string memory eventName,
         uint8 chance,
@@ -69,7 +72,7 @@ contract GameVRFRandomGameEvent is VRFConsumerBaseV2Plus, AutomationCompatibleIn
         request.numberOfResultsWanted = numberOfResultsWanted;
         return requestId;
     }
-    
+
     function requestRandomWords() public onlyOwner returns (uint256 requestId) {
         requestId = s_vrfCoordinator.requestRandomWords(
             VRFV2PlusClient.RandomWordsRequest({
@@ -77,7 +80,7 @@ contract GameVRFRandomGameEvent is VRFConsumerBaseV2Plus, AutomationCompatibleIn
                 subId: s_subscriptionId,
                 requestConfirmations: requestConfirmations,
                 callbackGasLimit: callbackGasLimit,
-                numWords: numWords,
+                numberVrfWanted: numberVrfWanted,
                 extraArgs: VRFV2PlusClient._argsToBytes(
                     VRFV2PlusClient.ExtraArgsV1({nativePayment: false})
                 )
@@ -94,7 +97,7 @@ contract GameVRFRandomGameEvent is VRFConsumerBaseV2Plus, AutomationCompatibleIn
         });
         requestIds.push(requestId);
         lastRequestId = requestId;
-        emit RequestSent(requestId, numWords);
+        emit RequestSent(requestId, numberVrfWanted);
         return requestId; // requestID is a uint.
     }
 
@@ -123,6 +126,10 @@ contract GameVRFRandomGameEvent is VRFConsumerBaseV2Plus, AutomationCompatibleIn
             emit GameRandomEvent(_requestId, request.eventName, eventResults);
         }
     }
+
+    // ============================================================================
+    
+    
 
     function generateRandomNumber(
         uint256 seed,
