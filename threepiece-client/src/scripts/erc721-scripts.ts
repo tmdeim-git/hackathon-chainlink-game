@@ -77,13 +77,13 @@ export async function batchUpdateAttribute(
  * Update the metadata for a single NFT with the metadata given
  */
 export async function updateMetadata(
-  nftToChange: NFT,
   newMetadata: NFT["metadata"],
   nftList: NFT[],
+  nftIdToChange: number,
   contract: Readonly<ContractOptions<[]>>
 ) {
   const metadatas = nftList.map((n) => n.metadata);
-  metadatas[Number(nftToChange.id)] = newMetadata;
+  metadatas[nftIdToChange] = newMetadata;
   return await batchUpdateMetadata(metadatas, contract);
 }
 
