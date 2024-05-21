@@ -80,7 +80,7 @@ contract GameVRFRandomGameEvent is VRFConsumerBaseV2Plus, AutomationCompatibleIn
                 subId: s_subscriptionId,
                 requestConfirmations: requestConfirmations,
                 callbackGasLimit: callbackGasLimit,
-                numberVrfWanted: numberVrfWanted,
+                numWords: numberVrfWanted,
                 extraArgs: VRFV2PlusClient._argsToBytes(
                     VRFV2PlusClient.ExtraArgsV1({nativePayment: false})
                 )
