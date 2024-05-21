@@ -1,18 +1,26 @@
-import { useAtomValue } from "jotai";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
-import Game from "./game/Game";
-import Connect from "./thirdweb/auth/Connect";
+import { GamePage } from "./gamePage";
+import { LoginPage } from "./loginPage";
+import { Navbar } from "./Navbar";
+import { useAtomValue } from "jotai";
 import { authWalletAtom } from "./thirdweb/provider";
 
 function App() {
   const wallet = useAtomValue(authWalletAtom);
   const ownerAddress = wallet ? wallet.getAccount().address : undefined;
+
   return (
-    <div className="app">
-      <Game ownerAddress={ownerAddress} />
-      <Connect />
-    </div>
+    <Router>
+      <div className="app">
+        <Navbar />
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/game" element={ownerAddress ? <GamePage /> : <Navigate to="/login" />} />
+          <Route path="/" element={<Navigate to="/login" />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
-
 export default App;
