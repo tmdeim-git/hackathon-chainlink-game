@@ -1,6 +1,6 @@
-import { ConnectButton, useActiveWallet } from "thirdweb/react";
+import { ConnectButton, useActiveWallet, useConnect, useDisconnect, useSetActiveWallet, useSetActiveWalletConnectionStatus } from "thirdweb/react";
 import { sepolia } from "thirdweb/chains";
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from "react";
 import { testChain, thirdwebClient } from "../../providers/web3-provider";
 import { inAppWallet, createWallet } from "thirdweb/wallets";
@@ -15,16 +15,8 @@ const wallets = [
 ];
 
 function Connect() {
-    const connected = useActiveWallet() != null;
     const navigate = useNavigate();
-
-    // on disconnect
-    useEffect(() => {
-        if (!connected) {
-            navigate('/login');
-        }
-    }, [connected]);
-
+    const { pathname } = useLocation();
     return (
         <ConnectButton
             client={thirdwebClient}
@@ -32,6 +24,10 @@ function Connect() {
             connectButton={{ label: "Play" }}
             onConnect={async (wallet) => {
                 wallet.switchChain(testChain);
+                const setWallet = useSetActiveWallet();
+                setWallet(wallet);
+                if (pathname === "/login")
+                    navigate("/game")
             }}
         />
     );
