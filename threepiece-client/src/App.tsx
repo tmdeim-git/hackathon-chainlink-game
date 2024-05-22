@@ -36,8 +36,6 @@ function App() {
     let alreadyRedirected = false;
 
     if (shouldRedirect && status !== "connecting") {
-      console.log("test");
-
       if (status === "connected") {
         navigate(pathname === login ? game : pathname)
         console.log("User autoconnected, redirecting to game...");
@@ -52,7 +50,6 @@ function App() {
 
     if (autoConnecting && !alreadyRedirected) {
       shouldRedirect = true;
-      console.log("will redirect");
     }
   }, [status, autoConnecting]);
 
