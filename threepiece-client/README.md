@@ -13,10 +13,11 @@
 
 # Automation setup
 1. `npm run deploy`
-2. Add to https://automation.chain.link/polygon-amoy (must have funds)
+2. Add/edit contract address to https://automation.chain.link/polygon-amoy (must have funds)
 3. Change the contract variable in the .env
-4. [If its a different contract, Run `npx thirdweb generate chainId/contractAddress` and change the generated file name]
-5. Add Admin role to the automation forwarder in the VRF dashboard 
+4. Add Admin role to the automation forwarder in the VRF dashboard 
+5. [If its a different contract, Run `npx thirdweb generate chainId/contractAddress` and change the generated file name]
+
 
 # Useful docs
 Contract debug: https://remix.ethereum.org/
