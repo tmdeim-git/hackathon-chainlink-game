@@ -1,35 +1,36 @@
-import { ConnectButton } from "thirdweb/react";
+import { ConnectButton, useActiveWallet, useConnect, useDisconnect, useSetActiveWallet, useSetActiveWalletConnectionStatus } from "thirdweb/react";
+import { sepolia } from "thirdweb/chains";
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect } from "react";
 import { testChain, thirdwebClient } from "../../providers/web3-provider";
-import { clientAddListener } from "../client-events";
-import { createWallet, inAppWallet } from "thirdweb/wallets";
-import { allLandNfts } from "../../providers/land-provider";
-import { useSetAtom } from "jotai";
-import { authWalletAtom } from "../../App";
-import { getRandomNumbersWithVrf } from "../../providers/backend/scripts/vrf-scripts";
+import { inAppWallet, createWallet } from "thirdweb/wallets";
 
-export const wallets = [
-  inAppWallet(),
-  createWallet("io.metamask"),
-  createWallet("com.coinbase.wallet"),
-  createWallet("com.trustwallet.app"),
-  createWallet("app.phantom"),
-  createWallet("walletConnect"),
+const wallets = [
+    inAppWallet(),
+    createWallet("io.metamask"),
+    createWallet("com.coinbase.wallet"),
+    createWallet("com.trustwallet.app"),
+    createWallet("app.phantom"),
+    createWallet("walletConnect"),
 ];
 
-allLandNfts
 function Connect() {
-  const setConnectedWallet = useSetAtom(authWalletAtom);
-  return (
-    <ConnectButton
-      client={thirdwebClient}
-      wallets={wallets}
-      connectButton={{ label: "Play" }}
-      onConnect={async (wallet) => {
-        wallet.switchChain(testChain);
-        setConnectedWallet(wallet);
-        console.log("TODO: Redirect to game...")
-      }} />
-  );
+    const navigate = useNavigate();
+    const { pathname } = useLocation();
+    return (
+        <ConnectButton
+            client={thirdwebClient}
+            wallets={wallets}
+            connectButton={{ label: "Play" }}
+            onConnect={async (wallet) => {
+                wallet.switchChain(testChain);
+                const setWallet = useSetActiveWallet();
+                setWallet(wallet);
+                if (pathname === "/login")
+                    navigate("/game")
+            }}
+        />
+    );
 }
 
 export default Connect;
