@@ -22,7 +22,7 @@ class GameScreen extends Component<props> {
     mouseDown: false,
     zoom: 1,
     gameTiles: {} as Record<string, GameTile>,
-    selectedTile: null as GameTile | null,
+    selectedTile: null as GameTile | null
   };
   canvasRef: RefObject<HTMLCanvasElement>;
   animationFrameId: number | null;
@@ -122,7 +122,7 @@ class GameScreen extends Component<props> {
     this.setState({
       gameTiles: gameTilesDic,
       mapWidth: ctx.canvas.width,
-      mapHeight: ctx.canvas.height,
+      mapHeight: ctx.canvas.height
     });
   }
 
@@ -141,7 +141,7 @@ class GameScreen extends Component<props> {
     this.setState({
       mouseX: e.clientX,
       mouseY: e.clientY,
-      mouseDown: true,
+      mouseDown: true
     });
   };
 
@@ -155,7 +155,7 @@ class GameScreen extends Component<props> {
 
   mouseEnter = () => {
     document.addEventListener("wheel", this.preventDefault, {
-      passive: false,
+      passive: false
     });
   };
 
@@ -168,10 +168,11 @@ class GameScreen extends Component<props> {
 
   mouseHover = (e) => {
     const rect = this.canvasRef.current.getBoundingClientRect();
-    const mouseX = e.clientX - rect.x;
-    const mouseY = e.clientY - rect.y;
+    const mouseX = e.clientX - rect.x - this.state.offsetX;
+    const mouseY = e.clientY - rect.y - this.state.offsetY;
+    console.log(mouseX);
     const tileDic = this.state.gameTiles;
-    const tileSize = tileDic[1]._size;
+    const tileSize = tileDic[1]._size * this.state.zoom;
     const i = Math.floor(mouseY / tileSize);
     const j = Math.floor(mouseX / tileSize);
     const newId = i * 15 + j + 1;
@@ -200,7 +201,7 @@ class GameScreen extends Component<props> {
         mouseX: newMouseX,
         mouseY: newMouseY,
         offsetX: newOffsetX,
-        offsetY: newOffsetY,
+        offsetY: newOffsetY
       });
     }
   };
@@ -247,7 +248,7 @@ class GameScreen extends Component<props> {
     ) {
       this.setState({
         offsetX: newOffsetX,
-        offsetY: newOffsetY,
+        offsetY: newOffsetY
       });
     }
   };
@@ -279,7 +280,7 @@ class GameScreen extends Component<props> {
     this.setState({
       zoom: newZoom,
       offsetX,
-      offsetY,
+      offsetY
     });
   };
 
