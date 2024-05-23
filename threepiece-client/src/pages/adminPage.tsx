@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { Box, Typography, Button, TextField, Alert } from "@mui/material";
 import { landContract } from "../providers/web3-provider";
 import { resetLands } from "../providers/scripts-provider";
+import { useActiveAccount } from "thirdweb/react";
 
 export function AdminPage() {
   const [resetLoading, setResetLoading] = useState(false);
+  const account = useActiveAccount();
 
   // State variables for each section
   const [updateContractAddress, setUpdateContractAddress] = useState("");
@@ -20,7 +22,7 @@ export function AdminPage() {
   // Handle reset lands
   const handleResetLands = async () => {
     setResetLoading(true);
-    await resetLands();
+    await resetLands(account);
     setResetLoading(false);
   };
 

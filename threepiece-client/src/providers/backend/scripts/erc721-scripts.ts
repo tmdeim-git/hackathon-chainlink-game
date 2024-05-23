@@ -1,4 +1,4 @@
-import { NFT, ContractOptions, sendAndConfirmTransaction, PreparedTransaction, resolveMethod } from "thirdweb";
+import { NFT, ContractOptions, sendAndConfirmTransaction, PreparedTransaction, resolveMethod, prepareContractCall } from "thirdweb";
 import { upload } from "thirdweb/storage";
 import { updateBatchBaseURI } from "../../../thirdweb/generated-contracts/nft-drop";
 import { MetadataAttributes } from "../../../thirdweb/types";
