@@ -21,7 +21,7 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
           <h3 className="resource-element-title"> {r.resourceType} </h3>
           <div> time: {r.productionTimeSeconds / 60} min</div>
           <div>amount: {r.Amount}</div>
-          <ResourceProduction resource={r} />
+          <ResourceProduction resource={r} land={selectedTile?._land} />
         </div>
       );
     });

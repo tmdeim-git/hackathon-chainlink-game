@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { LinearProgress, Box, Typography, Button } from "@mui/material";
-import { Resource } from "../thirdweb/types";
+import { Land, Resource } from "../thirdweb/types";
+import { startProduction } from "../providers/scripts-provider";
 
 const CountdownLoadingBar = ({ endTime }) => {
   const [progress, setProgress] = useState(0);
@@ -55,7 +56,13 @@ const CountdownLoadingBar = ({ endTime }) => {
   );
 };
 
-const ResourceProduction = ({ resource }: { resource: Resource }) => {
+const ResourceProduction = ({
+  resource,
+  land
+}: {
+  resource: Resource;
+  land: Land;
+}) => {
   const end = () =>
     new Date(Date.now() + resource.productionTimeSeconds * 1000);
   const [endTime, setEndTime] = useState(end());
@@ -71,6 +78,7 @@ const ResourceProduction = ({ resource }: { resource: Resource }) => {
 
   const startCountdown = () => {
     setProducting(true);
+    startProduction(land, resource.resourceType);
     setKey((prevKey) => prevKey + 1); // Change the key to trigger remount
   };
 
