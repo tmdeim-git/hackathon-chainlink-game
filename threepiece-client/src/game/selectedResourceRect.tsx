@@ -1,10 +1,10 @@
 import { GameTile } from "./GameTile";
 import "../style/selectedResourceRect.css";
+import ResourceProduction from "../components/CountdownLoadingBar";
 
 const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
   const admin = false;
   const getTileId = (): number => {
-    console.log(selectedTile);
     return selectedTile?._land.id || null;
   };
 
@@ -21,10 +21,7 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
           <h3 className="resource-element-title"> {r.resourceType} </h3>
           <div> time: {r.productionTimeSeconds / 60} min</div>
           <div>amount: {r.Amount}</div>
-          <button className="resource-element-button">
-            <div>start</div>
-            <div>production</div>
-          </button>
+          <ResourceProduction resource={r} />
         </div>
       );
     });
