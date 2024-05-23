@@ -170,7 +170,6 @@ class GameScreen extends Component<props> {
     const rect = this.canvasRef.current.getBoundingClientRect();
     const mouseX = e.clientX - rect.x - this.state.offsetX;
     const mouseY = e.clientY - rect.y - this.state.offsetY;
-    console.log(mouseX);
     const tileDic = this.state.gameTiles;
     const tileSize = tileDic[1]._size * this.state.zoom;
     const i = Math.floor(mouseY / tileSize);
