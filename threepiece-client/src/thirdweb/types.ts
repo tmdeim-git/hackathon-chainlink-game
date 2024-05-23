@@ -51,9 +51,9 @@ export abstract class Item {
 
 export interface Resource {
   resourceType: ResourceType;
-  productionRate: number;
-  maximumAmmount: number;
-  currentAmmount: number;
+  productionTimeSeconds: number;
+  productionEndDate?: Date;
+  Amount: number;
 }
 
 export enum ResourceType {

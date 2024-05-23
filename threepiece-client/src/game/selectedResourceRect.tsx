@@ -1,6 +1,8 @@
 import { GameTile } from "./GameTile";
+import "../style/selectedResourceRect.css";
 
 const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
+  const admin = false;
   const getTileId = (): number => {
     console.log(selectedTile);
     return selectedTile?._land.id || null;
@@ -8,22 +10,28 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
 
   const getRessourceType = (): any => {
     return selectedTile?._land.resources.map((r) => {
+      return <option value={r.resourceType}>{r.resourceType}</option>;
+    });
+  };
+
+  const getRessources = () => {
+    return selectedTile?._land.resources.map((r) => {
       return (
-        <div>
-          <div> Type: {r.resourceType} </div>
-          <div> Rate: {r.productionRate} / min</div>
-          <div>
-            amount: {r.currentAmmount} / {r.maximumAmmount}
-          </div>
+        <div className="resource-element">
+          <h3 className="resource-element-title"> {r.resourceType} </h3>
+          <div> time: {r.productionTimeSeconds / 60} min</div>
+          <div>amount: {r.Amount}</div>
+          <button className="resource-element-button">
+            <div>start</div>
+            <div>production</div>
+          </button>
         </div>
       );
     });
   };
 
   const getOwner = (): string => {
-    console.log(selectedTile);
     if (selectedTile) {
-      console.log("bla bla");
       return selectedTile._isUnclaimedTile
         ? "Nobody"
         : selectedTile._land.ownerAddress;
@@ -32,11 +40,14 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
 
   return (
     <div className="tile-info-rect">
-      <h2>TILE INFO</h2>
-      <div>Tile ID : {getTileId()}</div>
-      <div>Resources :</div>
-      {getRessourceType()}
-      <div>Owned By : {getOwner()}</div>
+      <h2 className="tile-info-title">TILE INFO</h2>
+      <div className="tile-info">
+        <div>Tile ID : {getTileId()}</div>
+        <div>Owned By : {getOwner()}</div>
+        {admin && <div>Token ID : </div>}
+        <h3 className="resources-title">Resources :</h3>
+        <div className="resource-table">{getRessources()}</div>
+      </div>
     </div>
   );
 };
