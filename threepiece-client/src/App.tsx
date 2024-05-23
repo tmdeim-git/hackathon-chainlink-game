@@ -1,10 +1,10 @@
-import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate, useLocation, Routes, Route, Navigate } from "react-router-dom";
+import { useActiveWalletConnectionStatus, useIsAutoConnecting } from "thirdweb/react";
 import "./App.css";
-import { Navbar } from "./Navbar";
-import { LoginPage } from "./pages/loginPage";
+import { Navbar } from "./components/Navbar";
 import { GamePage } from "./pages/gamePage";
-import { useEffect, useState } from "react";
-import { useActiveWallet, useActiveWalletConnectionStatus, useConnect, useIsAutoConnecting } from "thirdweb/react";
+import { LoginPage } from "./pages/loginPage";
 
 let shouldRedirect = false;
 let wasConnected = false;

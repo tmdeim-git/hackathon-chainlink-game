@@ -171,6 +171,8 @@ class GameScreen extends Component<props> {
     const mouseX = e.clientX - rect.x - this.state.offsetX;
     const mouseY = e.clientY - rect.y - this.state.offsetY;
     const tileDic = this.state.gameTiles;
+    if (!tileDic[1])
+      return
     const tileSize = tileDic[1]._size * this.state.zoom;
     const i = Math.floor(mouseY / tileSize);
     const j = Math.floor(mouseX / tileSize);
