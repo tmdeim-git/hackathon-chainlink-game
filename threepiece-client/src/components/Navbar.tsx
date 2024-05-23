@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, Box } from "@mui/material";
-import Connect from './thirdweb/auth/Connect';
+import { AppBar, Toolbar, Box, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
+import Connect from "../thirdweb/auth/Connect";
 
 export function Navbar() {
 
