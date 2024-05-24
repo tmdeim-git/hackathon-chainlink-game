@@ -8,54 +8,46 @@ import { landContract } from "./web3-provider";
 import { ContractOptions } from "thirdweb";
 import { Account } from "thirdweb/wallets";
 
-export async function startProduction(
-  account: Account,
-  land: Land,
-  resource: ResourceType
-) {
-  if (account.address === adminAddress) {
-    const metadata = land.nft.metadata;
-    const newAttributeValue = metadata.attributes[1].value.map((r) => {
-      if (r.resourceType === resource && !r.productionEndDate) {
-        r.productionEndDate = new Date(
-          new Date().getTime() + r.productionTimeSeconds * 1000
-        );
-      }
-
-      return r;
-    });
-    metadata.attributes[1].value = newAttributeValue;
-    return await updateMetadata(
-      metadata,
-      allLandNfts,
-      Number(land.nft.id),
-      landContract
-    );
-  }
+export async function startProduction(land: Land, resource: ResourceType) {
+  const metadata = land.nft.metadata;
+  let endDate;
+  const newAttributeValue = metadata.attributes[1].value.map((r) => {
+    if (r.resourceType === resource && !r.productionEndDate) {
+      endDate = new Date(
+        new Date().getTime() + r.productionTimeSeconds * 1000
+      ).toISOString();
+      r.productionEndDate = endDate;
+    }
+    return r;
+  });
+  metadata.attributes[1].value = newAttributeValue;
+  await updateMetadata(
+    metadata,
+    allLandNfts,
+    Number(land.nft.id),
+    landContract
+  );
+  return endDate;
 }
 
-export async function endProduction(
-  account: Account,
-  land: Land,
-  resource: ResourceType
-) {
-  if (account.address === adminAddress) {
-    const metadata = land.nft.metadata;
-    const newAttributeValue = metadata.attributes[1].value.map((r) => {
-      if (r.resourceType === resource && !r.productionEndDate) {
-        r.productionEndDate = null;
-      }
+export async function endProduction(land: Land, resource: ResourceType) {
+  console.log(land);
 
-      return r;
-    });
-    metadata.attributes[1].value = newAttributeValue;
-    return await updateMetadata(
-      metadata,
-      allLandNfts,
-      Number(land.nft.id),
-      landContract
-    );
-  }
+  const metadata = land.nft.metadata;
+  const newAttributeValue = metadata.attributes[1].value.map((r) => {
+    if (r.resourceType === resource && r.productionEndDate) {
+      r.productionEndDate = null;
+    }
+
+    return r;
+  });
+  metadata.attributes[1].value = newAttributeValue;
+  return await updateMetadata(
+    metadata,
+    allLandNfts,
+    Number(land.nft.id),
+    landContract
+  );
 }
 
 export async function resetLands(account: Account) {

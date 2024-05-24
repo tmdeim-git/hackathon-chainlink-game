@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { LinearProgress, Box, Typography, Button } from "@mui/material";
 import { Land, Resource } from "../thirdweb/types";
-import { startProduction } from "../providers/scripts-provider";
+import { endProduction, startProduction } from "../providers/scripts-provider";
+import { useActiveAccount } from "thirdweb/react";
 
-const CountdownLoadingBar = ({ endTime }) => {
+const CountdownLoadingBar = ({ startTime, endTime }) => {
   const [progress, setProgress] = useState(0);
   const [remainingTime, setRemainingTime] = useState("");
 
   useEffect(() => {
-    const totalDuration = endTime.getTime() - new Date().getTime();
+    const totalDuration = endTime.getTime() - startTime.getTime();
 
     let interval;
 
@@ -63,23 +64,28 @@ const ResourceProduction = ({
   resource: Resource;
   land: Land;
 }) => {
-  const end = () =>
-    new Date(Date.now() + resource.productionTimeSeconds * 1000);
-  const [endTime, setEndTime] = useState(end());
+  const end = new Date(resource.productionEndDate?.getTime());
+  const [endTime, setEndTime] = useState(end);
   const [producting, setProducting] = useState(
-    resource.productionEndDate === null
+    resource.productionEndDate !== null
   );
   const [key, setKey] = useState(0);
   const liveTime = useLiveTime();
+  const activeAcount = useActiveAccount();
 
-  const resetCountdown = () => {
+  const resetCountdown = async () => {
+    await endProduction(land, resource.resourceType);
     setProducting(false);
   };
 
-  const startCountdown = () => {
+  const startCountdown = async () => {
+    const endDate = new Date(
+      await startProduction(land, resource.resourceType)
+    );
+    setEndTime(endDate);
     setProducting(true);
-    startProduction(land, resource.resourceType);
     setKey((prevKey) => prevKey + 1); // Change the key to trigger remount
+    console.log("production started");
   };
 
   return (
@@ -96,7 +102,15 @@ const ResourceProduction = ({
       {producting && (
         <div className="App" style={{ padding: "20px" }}>
           {endTime.getTime() - liveTime.getTime() > 0 ? (
-            <CountdownLoadingBar key={key} endTime={endTime} />
+            <CountdownLoadingBar
+              key={key}
+              endTime={endTime}
+              startTime={
+                new Date(
+                  endTime.getTime() - resource.productionTimeSeconds * 1000
+                )
+              }
+            />
           ) : (
             <Button
               variant="contained"
