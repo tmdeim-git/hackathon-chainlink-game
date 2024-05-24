@@ -8,7 +8,8 @@ interface ImportMetaEnv {
   readonly VITE_MARKETPLACE_CONTRACT: string;
   readonly VITE_QUICKNODE_URL: string;
   readonly VITE_METAMASK_ADMIN_PRIVATE_KEY: string;
-  readonly VITE_VRF_CONTRACT: string
+  readonly VITE_VRF_CONTRACT: string;
+  readonly vITE_MARKETPLACE_CONTRACT: string;
   // Add more variables here as needed
 }
 

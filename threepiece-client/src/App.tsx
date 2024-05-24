@@ -8,13 +8,10 @@ import {
 import "./App.css";
 import { Navbar } from "./components/Navbar";
 import { LoginPage } from "./pages/loginPage";
-import { GamePage } from "./pages/gamePage";
+import Marketplace from "./pages/Marketplace";
 import { useEffect } from "react";
-import {
-  useActiveWalletConnectionStatus,
-  useIsAutoConnecting
-} from "thirdweb/react";
-import { AdminPage } from "./pages/adminPage";
+import { useActiveWalletConnectionStatus, useIsAutoConnecting } from "thirdweb/react";
+import { GamePage } from "./pages/gamePage";
 import { clientAddListener } from "./thirdweb/client-events";
 
 let shouldRedirect = false;
@@ -71,7 +68,8 @@ function App() {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/game" element={<GamePage />} />
-        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/admin" element={<div>HELLO WORLD</div>} />
+        <Route path="/marketplace" element={<Marketplace />} />
         <Route path="/" element={<Navigate to="/login" />} />
       </Routes>
     </div>
