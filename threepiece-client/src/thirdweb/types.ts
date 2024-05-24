@@ -97,7 +97,7 @@ export function arrayIsInEnum<T extends string>(
   arr: string[],
   enumType: Record<string, T>
 ): arr is T[] {
-  return arr.every((value) => isInEnum(value, enumType));
+  return arr?.every((value) => isInEnum(value, enumType));
 }
 
 // Generic type predicate function for single enum value
@@ -105,5 +105,5 @@ export function isInEnum<T extends string>(
   value: string,
   enumValues: Record<string, T>
 ): value is T {
-  return Object.values(enumValues).includes(value as T);
+  return Object.values(enumValues)?.includes(value as T);
 }
