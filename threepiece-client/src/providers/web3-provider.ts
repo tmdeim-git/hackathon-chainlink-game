@@ -38,16 +38,16 @@ export const vrfContract = getContract({
 });
 
 export async function getAllLandNFTs() {
-    const landNfts = await getMyNFTs(landContract);
+    const landNfts = await getTheNFTs(landContract);
     console.log(landNfts);
 
     return landNfts;
 }
 
-async function getMyNFTs(contract: Readonly<ContractOptions<[]>>) {
+async function getTheNFTs(contract: Readonly<ContractOptions<[]>>) {
     return (await getNFTs({
         contract: contract,
-        count: 5000,
+        count: Number.MAX_SAFE_INTEGER,
         includeOwners: true
     })).filter(n => n.owner)
 

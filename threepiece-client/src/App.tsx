@@ -1,10 +1,21 @@
-import { useEffect } from "react";
-import { useNavigate, useLocation, Routes, Route, Navigate } from "react-router-dom";
-import { useActiveWalletConnectionStatus, useIsAutoConnecting } from "thirdweb/react";
+import {
+  Routes,
+  Route,
+  Navigate,
+  useNavigate,
+  useLocation
+} from "react-router-dom";
 import "./App.css";
 import { Navbar } from "./components/Navbar";
-import { GamePage } from "./pages/gamePage";
 import { LoginPage } from "./pages/loginPage";
+import { GamePage } from "./pages/gamePage";
+import { useEffect } from "react";
+import {
+  useActiveWalletConnectionStatus,
+  useIsAutoConnecting
+} from "thirdweb/react";
+import { AdminPage } from "./pages/adminPage";
+import { clientAddListener } from "./thirdweb/client-events";
 
 let shouldRedirect = false;
 let wasConnected = false;
@@ -13,9 +24,10 @@ function App() {
   const autoConnecting = useIsAutoConnecting();
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const login = '/login';
-  const game = '/game';
+  const login = "/login";
+  const game = "/game";
 
+  clientAddListener();
 
   useEffect(() => {
     console.log({
@@ -28,8 +40,8 @@ function App() {
       wasConnected = true;
     }
     // disconnect redirects only if he was connected before
-    if (wasConnected && status === 'disconnected') {
-      navigate(login)
+    if (wasConnected && status === "disconnected") {
+      navigate(login);
     }
 
     // Auto redirect only if an auton connection got triggered
@@ -37,10 +49,10 @@ function App() {
 
     if (shouldRedirect && status !== "connecting") {
       if (status === "connected") {
-        navigate(pathname === login ? game : pathname)
+        navigate(pathname === login ? game : pathname);
         console.log("User autoconnected, redirecting to game...");
       } else if (status === "disconnected") {
-        navigate(login)
+        navigate(login);
         console.log("User not connected, redirecting to login...");
       }
 
@@ -59,7 +71,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/game" element={<GamePage />} />
-        <Route path="/admin" element={<div>HELLO WORLD</div>} />
+        <Route path="/admin" element={<AdminPage />} />
         <Route path="/" element={<Navigate to="/login" />} />
       </Routes>
     </div>
