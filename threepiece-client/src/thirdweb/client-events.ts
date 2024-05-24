@@ -13,7 +13,7 @@ type Listener = (message: string) => void;
 let started: boolean = false;
 const listeners: Listener[] = []
 
-export function clientAddListener(callback?: (message: string) => void) {
+export function clientAddListener(callback: (message: string) => void = () => {}) {
     if (!started) {
         startTokenCreatedEvent();
         startMetadataUpdateEvent();
@@ -22,7 +22,6 @@ export function clientAddListener(callback?: (message: string) => void) {
         console.log("started events");
         started = true;
     }
-
     backendAddListener(callback);
     listeners.push(callback);
 }

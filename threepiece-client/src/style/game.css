@@ -1,19 +1,8 @@
-.tile-info-rect {
-  font-family: "Comic Sans MS";
-  width: 400px;
-  height: 300px;
-  background-image: linear-gradient(
-    to bottom right,
-    rgb(26, 63, 131),
-    rgb(1, 122, 28)
-  );
-}
-
 .game-page {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 20px 40px 40px 40px;
+  
 }
 
 .event-history {
