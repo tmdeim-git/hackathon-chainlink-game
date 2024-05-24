@@ -1,14 +1,5 @@
-import {
-  ConnectButton,
-  useActiveWallet,
-  useConnect,
-  useDisconnect,
-  useSetActiveWallet,
-  useSetActiveWalletConnectionStatus
-} from "thirdweb/react";
-import { sepolia } from "thirdweb/chains";
+import { ConnectButton, useSetActiveWallet } from "thirdweb/react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import { testChain, thirdwebClient } from "../../providers/web3-provider";
 import { inAppWallet, createWallet } from "thirdweb/wallets";
 

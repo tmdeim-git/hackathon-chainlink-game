@@ -17,6 +17,7 @@ type GameState = {
 type Props = {
   ownerAddress?: string;
 };
+
 class Game extends Component<Props, GameState> {
   state = {
     selectedTile: null,

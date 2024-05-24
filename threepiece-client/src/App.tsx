@@ -9,13 +9,13 @@ import "./App.css";
 import { Navbar } from "./components/Navbar";
 import { LoginPage } from "./pages/loginPage";
 import { GamePage } from "./pages/gamePage";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
-  useActiveWallet,
   useActiveWalletConnectionStatus,
-  useConnect,
   useIsAutoConnecting
 } from "thirdweb/react";
+import { AdminPage } from "./pages/adminPage";
+import { clientAddListener } from "./thirdweb/client-events";
 
 let shouldRedirect = false;
 let wasConnected = false;
@@ -26,6 +26,8 @@ function App() {
   const { pathname } = useLocation();
   const login = "/login";
   const game = "/game";
+
+  clientAddListener();
 
   useEffect(() => {
     console.log({
@@ -69,7 +71,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/game" element={<GamePage />} />
-        <Route path="/admin" element={<div>HELLO WORLD</div>} />
+        <Route path="/admin" element={<AdminPage />} />
         <Route path="/" element={<Navigate to="/login" />} />
       </Routes>
     </div>
