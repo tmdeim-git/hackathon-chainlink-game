@@ -1,0 +1,77 @@
+.tile-info-title {
+  border-bottom: 4px solid black;
+  flex: 0 1 auto;
+  margin: 0px;
+}
+
+.tile-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+.resources-title {
+  border-top: 4px solid black;
+  border-bottom: 4px solid black;
+  margin-bottom: 0px;
+}
+
+.tile-info-rect {
+  border: 4px solid black;
+  border-radius: 15px;
+  font-family: "Comic Sans MS";
+  width: 400px;
+  height: 300px;
+  display: flex;
+  flex-flow: column;
+  background-image: linear-gradient(
+    to bottom right,
+    rgb(26, 63, 131),
+    rgb(1, 122, 28)
+  );
+}
+
+.resource-table {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0;
+  margin: 0;
+}
+
+.resource-element {
+  margin: 0;
+  padding: 0;
+  flex-grow: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.resource-element-title {
+  margin: 0px;
+}
+
+.resource-element-button {
+  margin-top: 5px;
+  height: 35%;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+}
+.resource-element-button:hover {
+  background-color: rgb(26, 63, 131);
+}
+
+div.resource-element {
+  border-right: 4px solid black;
+}
+
+div.resource-element:last-child {
+  border-right: none;
+}

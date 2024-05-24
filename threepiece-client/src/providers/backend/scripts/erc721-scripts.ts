@@ -1,4 +1,11 @@
-import { NFT, ContractOptions, sendAndConfirmTransaction, PreparedTransaction, resolveMethod, prepareContractCall } from "thirdweb";
+import {
+  NFT,
+  ContractOptions,
+  sendAndConfirmTransaction,
+  PreparedTransaction,
+  resolveMethod,
+  prepareContractCall
+} from "thirdweb";
 import { upload } from "thirdweb/storage";
 import { getBaseURICount, updateBatchBaseURI } from "../../../thirdweb/generated-contracts/nft-drop";
 import { MetadataAttributes } from "../../../thirdweb/types";
@@ -92,7 +99,7 @@ export async function batchUpdateMetadata(
 ) {
   const uri = await upload({
     client: thirdwebClient,
-    files: Object.values(metadatas),
+    files: Object.values(metadatas)
   });
 
   const newNftsRepo = uri[0].substring(0, uri[0].lastIndexOf("/")) + "/";
@@ -108,7 +115,7 @@ export async function batchUpdateMetadata(
 
   const result = await sendAndConfirmTransaction({
     account: adminAccount,
-    transaction: updateMetadataTx,
+    transaction: updateMetadataTx
   });
 
   console.log(result);
@@ -116,7 +123,7 @@ export async function batchUpdateMetadata(
   return result;
 }
 
-// ============== MULTICALL FUNCTIONS ============== 
+// ============== MULTICALL FUNCTIONS ==============
 
 export async function sendAndConfirmMulticall(
   listTx: Readonly<PreparedTransaction[]>,
@@ -125,9 +132,8 @@ export async function sendAndConfirmMulticall(
   const dataList: `0x${string}`[] = [];
 
   for (const tx of listTx) {
-    const txData = await (
-      tx.data as () => Promise<`0x${string}`>
-    )()
+    const txData = await (tx.data as () => Promise<`0x${string}`>)();
+
     dataList.push(txData);
   }
 
@@ -137,14 +143,14 @@ export async function sendAndConfirmMulticall(
     method: resolveMethod("multicall"),
     params: [
       // @ts-ignore error ts(2322)
-      dataList,
-    ],
+      dataList
+    ]
   });
   console.log(batchTx);
 
   const batchResult = await sendAndConfirmTransaction({
     account: adminAccount,
-    transaction: batchTx,
+    transaction: batchTx
   });
 
   console.log(batchResult);

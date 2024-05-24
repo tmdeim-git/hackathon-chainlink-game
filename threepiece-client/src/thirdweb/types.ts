@@ -17,7 +17,6 @@ export namespace GameEvent {
   }
 }
 
-
 export type LandNFTAttributes = [
   {
     readonly trait_type: "id";
@@ -50,7 +49,14 @@ export abstract class Item {
   name: string;
 }
 
-export enum Resource {
+export interface Resource {
+  resourceType: ResourceType;
+  productionTimeSeconds: number;
+  productionEndDate?: Date;
+  Amount: number;
+}
+
+export enum ResourceType {
   Sand = "sand",
   Seawater = "seawater",
   Water = "water",
@@ -59,37 +65,19 @@ export enum Resource {
   Ore = "ore"
 }
 
-/*
-export interface Resource {
-    resourceType: ResourceType,
-    ProductionRate: number,
-    MaximumAmmount: number,
-    CurrentAmmount: number
-}
-
-export enum ResourceType {
-    Sand = 'sand',
-    Seawater = 'seawater',
-    Water = 'water',
-    Wood = 'wood',
-    Soil = 'soil',
-    Ore = 'ore',
-}
-*/
-
 export interface MetadataAttributes {
   trait_type: string;
-  value: any;
+  value: string | number | Array<object>
 }
 
 export function isValidLand(land: Land): land is Land {
   const resources = land.resources;
   const landEvent = land.event;
-
-  return (
-    arrayIsInEnum(resources, Resource) &&
-    isInEnum(landEvent, GameEvent.Land)
-  );
+  let resourceInEnum = true;
+  resources.forEach((r) => {
+    if (!isInEnum(r.resourceType, ResourceType)) resourceInEnum = false;
+  });
+  return resourceInEnum && isInEnum(landEvent, GameEvent.Land);
 }
 
 // Generic type predicate function for array of enums
