@@ -67,7 +67,7 @@ export enum ResourceType {
 
 export interface MetadataAttributes {
   trait_type: string;
-  value: any;
+  value: string | number | Array<object>
 }
 
 export function isValidLand(land: Land): land is Land {
