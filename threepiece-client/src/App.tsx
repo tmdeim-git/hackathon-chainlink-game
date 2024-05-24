@@ -3,7 +3,7 @@ import {
   Route,
   Navigate,
   useNavigate,
-  useLocation,
+  useLocation
 } from "react-router-dom";
 import "./App.css";
 import { Navbar } from "./components/Navbar";
@@ -12,7 +12,7 @@ import { GamePage } from "./pages/gamePage";
 import { useEffect } from "react";
 import {
   useActiveWalletConnectionStatus,
-  useIsAutoConnecting,
+  useIsAutoConnecting
 } from "thirdweb/react";
 import { AdminPage } from "./pages/adminPage";
 import { clientAddListener } from "./thirdweb/client-events";
@@ -33,7 +33,7 @@ function App() {
     console.log({
       status,
       autoConnecting,
-      pathname,
+      pathname
     });
 
     if (status === "connected") {

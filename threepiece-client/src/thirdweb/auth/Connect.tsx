@@ -9,7 +9,7 @@ const wallets = [
   createWallet("com.coinbase.wallet"),
   createWallet("com.trustwallet.app"),
   createWallet("app.phantom"),
-  createWallet("walletConnect"),
+  createWallet("walletConnect")
 ];
 
 function Connect() {

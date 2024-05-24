@@ -20,7 +20,7 @@ export function Navbar() {
             display: "flex",
             alignItems: "center",
             flexGrow: 1,
-            justifyContent: "space-between",
+            justifyContent: "space-between"
           }}
         >
           <Link
@@ -38,7 +38,7 @@ export function Navbar() {
               variant="contained"
               sx={{
                 fontSize: "16px",
-                margin: "auto",
+                margin: "auto"
               }}
             >
               Admin dashboard
