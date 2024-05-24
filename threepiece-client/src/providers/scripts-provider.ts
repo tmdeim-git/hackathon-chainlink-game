@@ -31,8 +31,6 @@ export async function startProduction(land: Land, resource: ResourceType) {
 }
 
 export async function endProduction(land: Land, resource: ResourceType) {
-  console.log(land);
-
   const metadata = land.nft.metadata;
   const newAttributeValue = metadata.attributes[1].value.map((r) => {
     if (r.resourceType === resource && r.productionEndDate) {
