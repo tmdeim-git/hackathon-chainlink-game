@@ -15,6 +15,7 @@ import {
   useIsAutoConnecting,
 } from "thirdweb/react";
 import { AdminPage } from "./pages/adminPage";
+import { clientAddListener } from "./thirdweb/client-events";
 
 let shouldRedirect = false;
 let wasConnected = false;
@@ -25,6 +26,8 @@ function App() {
   const { pathname } = useLocation();
   const login = "/login";
   const game = "/game";
+
+  clientAddListener();
 
   useEffect(() => {
     console.log({

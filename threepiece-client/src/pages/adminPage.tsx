@@ -1,11 +1,24 @@
 import React, { useState } from "react";
 import { Box, Typography, Button, TextField, Alert } from "@mui/material";
-import { landContract } from "../providers/web3-provider";
-import { resetLands } from "../providers/scripts-provider";
+import {
+  landContract,
+  testChain,
+  thirdwebClient,
+} from "../providers/web3-provider";
+import {
+  batchUpdateAttributeLand,
+  resetLands,
+} from "../providers/scripts-provider";
 import { useActiveAccount } from "thirdweb/react";
+import { MetadataAttributes } from "../thirdweb/types";
+import { getContract } from "thirdweb";
 
 export function AdminPage() {
   const [resetLoading, setResetLoading] = useState(false);
+  const [updateLoading, setUpdateLoading] = useState(false);
+  const [addLoading, setAddLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+
   const account = useActiveAccount();
 
   // State variables for each section
@@ -71,9 +84,7 @@ export function AdminPage() {
   };
 
   // Button click handlers with validation
-  const handleBatchUpdate = (e) => {
-    e.target.disabled = true;
-    console.log("String test", e.target.disabled);
+  const handleBatchUpdate = async (e) => {
     const isValid = updateAttributeName && updateNewValue;
     if (!isValid) {
       setError(
@@ -86,6 +97,22 @@ export function AdminPage() {
     } else {
       setError("");
     }
+    setUpdateLoading(true);
+    const contract = updateContractAddress
+      ? getContract({
+          client: thirdwebClient,
+          chain: testChain,
+          address: updateContractAddress,
+        })
+      : landContract;
+
+    const newAttributes: MetadataAttributes = {
+      trait_type: updateAttributeName,
+      value: updateNewValue,
+    };
+    await batchUpdateAttributeLand(account, contract, newAttributes);
+    setUpdateLoading(false);
+
     console.log("BATCH UPDATE ADD BUTTON CLICKED");
     console.log(
       "Contract Address:",
@@ -143,7 +170,7 @@ export function AdminPage() {
         </Alert>
       )}
       {resetLoading ? (
-        "loading"
+        "Loading..."
       ) : (
         <Button
           onClick={handleResetLands}
@@ -244,14 +271,18 @@ export function AdminPage() {
               },
             }}
           />
-          <Button
-            onClick={handleBatchUpdate}
-            variant="contained"
-            color="primary"
-            sx={{ padding: "10px 20px" }}
-          >
-            Update
-          </Button>
+          {updateLoading ? (
+            "Loading..."
+          ) : (
+            <Button
+              onClick={handleBatchUpdate}
+              variant="contained"
+              color="primary"
+              sx={{ padding: "10px 20px" }}
+            >
+              Update
+            </Button>
+          )}
         </Box>
         <Box
           sx={{
