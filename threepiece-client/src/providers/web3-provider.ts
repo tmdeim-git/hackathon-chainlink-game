@@ -1,5 +1,4 @@
 import { Chain, ContractOptions, createThirdwebClient, defineChain, getContract } from "thirdweb";
-import { Wallet } from "thirdweb/wallets";
 import { getNFTs } from "thirdweb/extensions/erc721";
 import { polygonAmoy } from "thirdweb/chains";
 

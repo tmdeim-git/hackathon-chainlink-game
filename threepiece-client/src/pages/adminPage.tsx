@@ -1,155 +1,24 @@
-import React, { useState } from "react";
-import { Box, Typography, Button, TextField, Alert } from "@mui/material";
-import {
-  landContract,
-  testChain,
-  thirdwebClient,
-} from "../providers/web3-provider";
-import {
-  batchUpdateAttributeLand,
-  resetLands,
-} from "../providers/scripts-provider";
+import { useState } from "react";
+import { Box, Typography, Alert, CircularProgress } from "@mui/material";
 import { useActiveAccount } from "thirdweb/react";
-import { MetadataAttributes } from "../thirdweb/types";
-import { getContract } from "thirdweb";
+import { allLandNfts } from "../providers/land-provider";
+import ResetLandsButton from "../components/ResetLandsButton";
+import { resetLands } from "../providers/scripts-provider";
+import AddAttributes from "../components/AddAttributes";
+import AttributesTable from "../components/AttributesTable";
+import DeleteAttributes from "../components/DeleteAttributes";
+import UpdateAttributes from "../components/UpdateAttributes";
 
 export function AdminPage() {
   const [resetLoading, setResetLoading] = useState(false);
-  const [updateLoading, setUpdateLoading] = useState(false);
-  const [addLoading, setAddLoading] = useState(false);
-  const [deleteLoading, setDeleteLoading] = useState(false);
-
   const account = useActiveAccount();
-
-  // State variables for each section
-  const [updateContractAddress, setUpdateContractAddress] = useState("");
-  const [updateAttributeName, setUpdateAttributeName] = useState("");
-  const [updateNewValue, setUpdateNewValue] = useState("");
-
-  const [addContractAddress, setAddContractAddress] = useState("");
-  const [addAttributeName, setAddAttributeName] = useState("");
-
-  const [deleteContractAddress, setDeleteContractAddress] = useState("");
-  const [deleteAttributeName, setDeleteAttributeName] = useState("");
+  const [error, setError] = useState("");
 
   // Handle reset lands
   const handleResetLands = async () => {
     setResetLoading(true);
     await resetLands(account);
     setResetLoading(false);
-  };
-
-  // State for error messages and input errors
-  const [error, setError] = useState("");
-  const [updateInputErrors, setUpdateInputErrors] = useState({
-    attributeName: false,
-    newValue: false,
-  });
-  const [addInputError, setAddInputError] = useState(false);
-  const [deleteInputError, setDeleteInputError] = useState(false);
-
-  // Handler functions for update section
-  const handleUpdateContractAddressChange = (event) => {
-    setUpdateContractAddress(event.target.value);
-  };
-
-  const handleUpdateAttributeNameChange = (event) => {
-    setUpdateAttributeName(event.target.value);
-    setUpdateInputErrors({ ...updateInputErrors, attributeName: false });
-  };
-
-  const handleUpdateNewValueChange = (event) => {
-    setUpdateNewValue(event.target.value);
-    setUpdateInputErrors({ ...updateInputErrors, newValue: false });
-  };
-
-  // Handler functions for add section
-  const handleAddContractAddressChange = (event) => {
-    setAddContractAddress(event.target.value);
-  };
-
-  const handleAddAttributeNameChange = (event) => {
-    setAddAttributeName(event.target.value);
-    setAddInputError(false);
-  };
-
-  // Handler functions for delete section
-  const handleDeleteContractAddressChange = (event) => {
-    setDeleteContractAddress(event.target.value);
-  };
-
-  const handleDeleteAttributeNameChange = (event) => {
-    setDeleteAttributeName(event.target.value);
-    setDeleteInputError(false);
-  };
-
-  // Button click handlers with validation
-  const handleBatchUpdate = async (e) => {
-    const isValid = updateAttributeName && updateNewValue;
-    if (!isValid) {
-      setError(
-        "All fields except Contract Address must be filled for Batch Update."
-      );
-      setUpdateInputErrors({
-        attributeName: !updateAttributeName,
-        newValue: !updateNewValue,
-      });
-    } else {
-      setError("");
-    }
-    setUpdateLoading(true);
-    const contract = updateContractAddress
-      ? getContract({
-          client: thirdwebClient,
-          chain: testChain,
-          address: updateContractAddress,
-        })
-      : landContract;
-
-    const newAttributes: MetadataAttributes = {
-      trait_type: updateAttributeName,
-      value: updateNewValue,
-    };
-    await batchUpdateAttributeLand(account, contract, newAttributes);
-    setUpdateLoading(false);
-
-    console.log("BATCH UPDATE ADD BUTTON CLICKED");
-    console.log(
-      "Contract Address:",
-      updateContractAddress || landContract.address
-    );
-  };
-
-  const handleBatchAdd = () => {
-    if (!addAttributeName) {
-      setError(
-        "All fields except Contract Address must be filled for Batch Add."
-      );
-      setAddInputError(true);
-    } else {
-      setError("");
-    }
-    console.log("BATCH ADD ATTRIBUTE ADD BUTTON CLICKED");
-    console.log(
-      "Contract Address:",
-      addContractAddress || landContract.address
-    );
-  };
-
-  const handleBatchDelete = () => {
-    if (!deleteAttributeName) {
-      setError(
-        "All fields except Contract Address must be filled for Batch Delete."
-      );
-      setDeleteInputError(true);
-    } else {
-      setError("");
-    }
-    console.log("BATCH DELETE ATTRIBUTE DELETE BUTTON CLICKED");
-    console.log(
-      "Contract Address:",
-      deleteContractAddress || landContract.address
-    );
   };
 
   return (
@@ -170,255 +39,20 @@ export function AdminPage() {
         </Alert>
       )}
       {resetLoading ? (
-        "Loading..."
+        <CircularProgress color="error" sx={{ marginBottom: "20px" }} />
       ) : (
-        <Button
-          onClick={handleResetLands}
-          variant="contained"
-          color="error"
-          sx={{ marginBottom: "20px", fontSize: "16px", padding: "10px 20px" }}
-        >
-          RESET LANDS
-        </Button>
+        <ResetLandsButton onReset={handleResetLands} />
       )}
       <Box
         sx={{ display: "flex", justifyContent: "space-between", width: "80%" }}
       >
-        <Box
-          sx={{
-            backgroundColor: "#1a1a1a",
-            padding: "20px",
-            borderRadius: "10px",
-            width: "30%",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Typography variant="h6" component="h3" sx={{ marginBottom: "20px" }}>
-            BATCH UPDATE ATTRIBUTE
-          </Typography>
-          <TextField
-            label="Contract address"
-            placeholder={landContract.address}
-            variant="filled"
-            fullWidth
-            InputLabelProps={{ shrink: true }}
-            value={updateContractAddress}
-            onChange={handleUpdateContractAddressChange}
-            sx={{
-              marginBottom: "10px",
-              backgroundColor: "#333",
-              borderRadius: "5px",
-              input: { color: "white" },
-              ".MuiFilledInput-root": { backgroundColor: "#333" },
-              ".MuiFilledInput-root::before": { borderBottom: "none" },
-              ".MuiFilledInput-root:hover::before": { borderBottom: "none" },
-              ".MuiFilledInput-root.Mui-focused::before": {
-                borderBottom: "none",
-              },
-            }}
-          />
-          <TextField
-            label="Attribute name"
-            variant="filled"
-            fullWidth
-            InputLabelProps={{ shrink: true }}
-            placeholder="Enter attribute name"
-            value={updateAttributeName}
-            onChange={handleUpdateAttributeNameChange}
-            error={updateInputErrors.attributeName}
-            helperText={
-              updateInputErrors.attributeName
-                ? "Attribute name is required"
-                : ""
-            }
-            sx={{
-              marginBottom: "10px",
-              backgroundColor: "#333",
-              borderRadius: "5px",
-              input: { color: "white" },
-              ".MuiFilledInput-root": { backgroundColor: "#333" },
-              ".MuiFilledInput-root::before": { borderBottom: "none" },
-              ".MuiFilledInput-root:hover::before": { borderBottom: "none" },
-              ".MuiFilledInput-root.Mui-focused::before": {
-                borderBottom: "none",
-              },
-            }}
-          />
-          <TextField
-            label="New value"
-            variant="filled"
-            fullWidth
-            InputLabelProps={{ shrink: true }}
-            placeholder="Enter new value"
-            value={updateNewValue}
-            onChange={handleUpdateNewValueChange}
-            error={updateInputErrors.newValue}
-            helperText={
-              updateInputErrors.newValue ? "New value is required" : ""
-            }
-            sx={{
-              marginBottom: "10px",
-              backgroundColor: "#333",
-              borderRadius: "5px",
-              input: { color: "white" },
-              ".MuiFilledInput-root": { backgroundColor: "#333" },
-              ".MuiFilledInput-root::before": { borderBottom: "none" },
-              ".MuiFilledInput-root:hover::before": { borderBottom: "none" },
-              ".MuiFilledInput-root.Mui-focused::before": {
-                borderBottom: "none",
-              },
-            }}
-          />
-          {updateLoading ? (
-            "Loading..."
-          ) : (
-            <Button
-              onClick={handleBatchUpdate}
-              variant="contained"
-              color="primary"
-              sx={{ padding: "10px 20px" }}
-            >
-              Update
-            </Button>
-          )}
-        </Box>
-        <Box
-          sx={{
-            backgroundColor: "#1a1a1a",
-            padding: "20px",
-            borderRadius: "10px",
-            width: "30%",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Typography variant="h6" component="h3" sx={{ marginBottom: "20px" }}>
-            BATCH ADD ATTRIBUTE
-          </Typography>
-          <TextField
-            label="Contract address"
-            placeholder={landContract.address}
-            variant="filled"
-            fullWidth
-            InputLabelProps={{ shrink: true }}
-            value={addContractAddress}
-            onChange={handleAddContractAddressChange}
-            sx={{
-              marginBottom: "10px",
-              backgroundColor: "#333",
-              borderRadius: "5px",
-              input: { color: "white" },
-              ".MuiFilledInput-root": { backgroundColor: "#333" },
-              ".MuiFilledInput-root::before": { borderBottom: "none" },
-              ".MuiFilledInput-root:hover::before": { borderBottom: "none" },
-              ".MuiFilledInput-root.Mui-focused::before": {
-                borderBottom: "none",
-              },
-            }}
-          />
-          <TextField
-            label="New attribute name"
-            variant="filled"
-            fullWidth
-            InputLabelProps={{ shrink: true }}
-            placeholder="Enter new attribute name"
-            value={addAttributeName}
-            onChange={handleAddAttributeNameChange}
-            error={addInputError}
-            helperText={addInputError ? "Attribute name is required" : ""}
-            sx={{
-              marginBottom: "10px",
-              backgroundColor: "#333",
-              borderRadius: "5px",
-              input: { color: "white" },
-              ".MuiFilledInput-root": { backgroundColor: "#333" },
-              ".MuiFilledInput-root::before": { borderBottom: "none" },
-              ".MuiFilledInput-root:hover::before": { borderBottom: "none" },
-              ".MuiFilledInput-root.Mui-focused::before": {
-                borderBottom: "none",
-              },
-            }}
-          />
-          <Button
-            onClick={handleBatchAdd}
-            variant="contained"
-            color="primary"
-            sx={{ padding: "10px 20px" }}
-          >
-            Add
-          </Button>
-        </Box>
-        <Box
-          sx={{
-            backgroundColor: "#1a1a1a",
-            padding: "20px",
-            borderRadius: "10px",
-            width: "30%",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Typography variant="h6" component="h3" sx={{ marginBottom: "20px" }}>
-            BATCH DELETE ATTRIBUTE
-          </Typography>
-          <TextField
-            label="Contract address"
-            placeholder={landContract.address}
-            variant="filled"
-            fullWidth
-            InputLabelProps={{ shrink: true }}
-            value={deleteContractAddress}
-            onChange={handleDeleteContractAddressChange}
-            sx={{
-              marginBottom: "10px",
-              backgroundColor: "#333",
-              borderRadius: "5px",
-              input: { color: "white" },
-              ".MuiFilledInput-root": { backgroundColor: "#333" },
-              ".MuiFilledInput-root::before": { borderBottom: "none" },
-              ".MuiFilledInput-root:hover::before": { borderBottom: "none" },
-              ".MuiFilledInput-root.Mui-focused::before": {
-                borderBottom: "none",
-              },
-            }}
-          />
-          <TextField
-            label="Attribute name"
-            variant="filled"
-            fullWidth
-            InputLabelProps={{ shrink: true }}
-            placeholder="Enter attribute name"
-            value={deleteAttributeName}
-            onChange={handleDeleteAttributeNameChange}
-            error={deleteInputError}
-            helperText={deleteInputError ? "Attribute name is required" : ""}
-            sx={{
-              marginBottom: "10px",
-              backgroundColor: "#333",
-              borderRadius: "5px",
-              input: { color: "white" },
-              ".MuiFilledInput-root": { backgroundColor: "#333" },
-              ".MuiFilledInput-root::before": { borderBottom: "none" },
-              ".MuiFilledInput-root:hover::before": { borderBottom: "none" },
-              ".MuiFilledInput-root.Mui-focused::before": {
-                borderBottom: "none",
-              },
-            }}
-          />
-          <Button
-            onClick={handleBatchDelete}
-            variant="contained"
-            color="error"
-            sx={{ padding: "10px 20px" }}
-          >
-            Delete
-          </Button>
-        </Box>
+        <UpdateAttributes setError={setError} account={account} />
+        <AddAttributes setError={setError} account={account} />
+        <DeleteAttributes setError={setError} account={account} />
       </Box>
+      <AttributesTable rows={allLandNfts} />
     </Box>
   );
 }
+
+export default AdminPage;
