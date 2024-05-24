@@ -7,7 +7,7 @@ import {
   prepareContractCall
 } from "thirdweb";
 import { upload } from "thirdweb/storage";
-import { updateBatchBaseURI } from "../../../thirdweb/generated-contracts/nft-drop";
+import { getBaseURICount, updateBatchBaseURI } from "../../../thirdweb/generated-contracts/nft-drop";
 import { MetadataAttributes } from "../../../thirdweb/types";
 import { thirdwebClient } from "../../web3-provider";
 import { adminAccount } from "../admin";
@@ -60,6 +60,7 @@ export async function batchUpdateAttribute(
   contract: Readonly<ContractOptions<[]>>
 ) {
   const metadatas = nftList.map((n) => n.metadata);
+  console.log("Before...", metadatas);
 
   for (const { attributes } of metadatas) {
     const attributesArr = attributes as unknown as Array<MetadataAttributes>;
@@ -68,6 +69,9 @@ export async function batchUpdateAttribute(
     );
     attributes[indexOfTrait] = updatedAttributes;
   }
+
+  console.log("Updating...", metadatas);
+  
 
   return await batchUpdateMetadata(metadatas, contract);
 }
@@ -99,11 +103,14 @@ export async function batchUpdateMetadata(
   });
 
   const newNftsRepo = uri[0].substring(0, uri[0].lastIndexOf("/")) + "/";
-
+  console.log(newNftsRepo);
+  
   const updateMetadataTx = updateBatchBaseURI({
     contract: contract,
-    index: 0n,
-    uri: newNftsRepo
+    index: (await getBaseURICount({
+      contract: contract
+    })) - 1n,
+    uri: newNftsRepo,
   });
 
   const result = await sendAndConfirmTransaction({
