@@ -100,7 +100,7 @@ export async function resetLandNfts(contract?: Readonly<ContractOptions<[]>>) {
 }
 
 // TODO try to abstract the "burn" into an abstract function
-export async function burnByBatch(
+async function burnByBatch(
   nfts: NFT[],
   contract: Readonly<ContractOptions<[]>>,
   batchLength = 55
