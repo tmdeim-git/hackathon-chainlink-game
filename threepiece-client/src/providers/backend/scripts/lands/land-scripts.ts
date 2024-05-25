@@ -46,7 +46,7 @@ export async function resetLandNfts(contract?: Readonly<ContractOptions<[]>>) {
   for (const configLand of config.lands) {
     const land: Land = {
       id: configLand.id,
-      resources: configLand.resources as Resource[],
+      resources: configLand.resources as any,
       event: configLand.event as GameEvent.Land
     };
 
@@ -147,9 +147,8 @@ export async function outputLandJson() {
         resources: [
           {
             resourceType: ResourceType.Water,
-            productionRate: 45,
-            maximumAmmount: 2500,
-            currentAmmount: 0
+            productionTimeSeconds: 45,
+            Amount: 2500,
           }
         ],
         event: GameEvent.Land.None

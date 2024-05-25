@@ -2,7 +2,7 @@ import { ContractOptions } from "thirdweb";
 import { Account } from "thirdweb/wallets";
 import { Land, ResourceType, MetadataAttributes } from "../thirdweb/types";
 import { adminAddress } from "./backend/admin";
-import { updateMetadata, batchUpdateAttribute, batchAddAttribute } from "./backend/scripts/erc721-scripts";
+import { updateMetadata, batchUpdateAttribute, batchAddAttribute, batchRemoveAttribute } from "./backend/scripts/erc721-scripts";
 import { resetLandNfts } from "./backend/scripts/lands/land-scripts";
 import { allLandNfts } from "./land-provider";
 import { landContract } from "./web3-provider";
@@ -65,20 +65,16 @@ export async function batchUpdateAttributeLand(
   }
 }
 
-export async function batchAddAttributes(newAttributes: MetadataAttributes,account: Account,contract: Readonly<ContractOptions<[]>> ){
-    if(account.address ===adminAddress) {
-        const nftList = allLandNfts;
-        return await batchAddAttribute(newAttributes,nftList,contract);
-    }
+export async function batchAddAttributes(newAttributes: MetadataAttributes, account: Account, contract: Readonly<ContractOptions<[]>>) {
+  if (account.address === adminAddress) {
+    const nftList = allLandNfts;
+    return await batchAddAttribute(newAttributes, nftList, contract);
+  }
 
 }
 
-export async function batchDeleteAttributes(newAttributes: MetadataAttributes,account: Account,contract: Readonly<ContractOptions<[]>> ){
-    if(account.address ===adminAddress) {
-        return await batchDeleteAttributes(newAttributes,account,contract);
-    }
-
+export async function batchDeleteAttributes(newAttributes: MetadataAttributes, account: Account, contract: Readonly<ContractOptions<[]>>) {
+  if (account.address === adminAddress) {
+    return await batchRemoveAttribute(newAttributes.trait_type, allLandNfts, contract);
+  }
 }
-
-
-

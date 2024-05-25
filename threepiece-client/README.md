@@ -1,6 +1,6 @@
 # Create NFT contract
 1. Add contract in https://thirdweb.com/thirdweb.eth/DropERC721 OR write your own in `/contracts` and run `npm run deploy`
-2. Add claim phase for Owner
+2. Add claim phase for Owner (claim-conditions)
 3. Change the contract variable in the .env
    
 # Deploy RNG VRF contract and setup automation
