@@ -2,6 +2,8 @@ import { ConnectButton, useSetActiveWallet } from "thirdweb/react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { testChain, thirdwebClient } from "../../providers/web3-provider";
 import { inAppWallet, createWallet } from "thirdweb/wallets";
+import { useSetAtom } from "jotai";
+import { currentOwnerAtom } from "../../providers/store";
 
 const wallets = [
   inAppWallet(),
@@ -9,20 +11,22 @@ const wallets = [
   createWallet("com.coinbase.wallet"),
   createWallet("com.trustwallet.app"),
   createWallet("app.phantom"),
-  createWallet("walletConnect")
+  createWallet("walletConnect"),
 ];
 
 function Connect() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const setOwnerAddress = useSetAtom(currentOwnerAtom);
+  const setWallet = useSetActiveWallet();
   return (
     <ConnectButton
       client={thirdwebClient}
       wallets={wallets}
       connectButton={{ label: "Play" }}
       onConnect={async (wallet) => {
+        setOwnerAddress(wallet.getAccount().address);
         wallet.switchChain(testChain);
-        const setWallet = useSetActiveWallet();
         setWallet(wallet);
         if (pathname === "/login") navigate("/game");
       }}

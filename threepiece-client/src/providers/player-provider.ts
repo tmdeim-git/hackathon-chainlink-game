@@ -7,21 +7,40 @@ import {
   sendAndConfirmMulticall,
   updateMetadata,
 } from "./backend/scripts/erc721-scripts";
-import { atom, getDefaultStore } from "jotai";
+import { atom, useAtomValue } from "jotai";
 import { adminAccount } from "./backend/admin";
+import { selectAtom } from "jotai/utils";
+import { store } from "./store";
+import { useMemo } from "react";
 
 const allPlayersNfts = await getAllPlayerNFTs();
-const playerStore = getDefaultStore();
 
 const allPlayersNftsAtom = atom(allPlayersNfts);
+
 const allPlayersAtom = atom((get) => {
   const allPlayersNfts = get(allPlayersNftsAtom);
   return nftsToPlayer(allPlayersNfts);
 });
 
-export function getCurrentPlayerInfo(playerAddress: string) {
-  const allPlayers = playerStore.get(allPlayersAtom);
-  return allPlayers.find((land) => land.ownerAddress == playerAddress);
+export function useGetPlayersNft() {
+  return useAtomValue(allPlayersNftsAtom);
+}
+export function useGetPlayers() {
+  return useAtomValue(allPlayersAtom);
+}
+
+const getCurrentPlayerInfo = (playerAddress: string, player: Player[]) =>
+  player.find((player) => player.ownerAddress === playerAddress);
+
+export function useGetPlayer(playerAddress: string) {
+  const playerAtom = useMemo(
+    () =>
+      selectAtom(allPlayersAtom, (players) =>
+        players.find((player) => player.ownerAddress === playerAddress)
+      ),
+    [playerAddress]
+  );
+  return useAtomValue(playerAtom);
 }
 
 function nftsToPlayer(nfts: NFT[]) {
@@ -47,7 +66,8 @@ export async function createNewPlayerNft(
   playerAddress: string,
   level?: number
 ) {
-  if (getCurrentPlayerInfo(playerAddress)) {
+  const playerInfo = store.get(allPlayersAtom);
+  if (getCurrentPlayerInfo(playerAddress, playerInfo)) {
     throw new Error("Player already exists");
   }
   if (adminAccount.address === playerAddress) {
@@ -81,11 +101,13 @@ export async function createNewPlayerNft(
     playerContract
   );
   console.log(batchResult);
-  playerStore.set(allPlayersNftsAtom, await getAllPlayerNFTs());
+  store.set(allPlayersNftsAtom, await getAllPlayerNFTs());
 }
 
 export async function findOrCreatePlayerNft(playerAddress: string) {
-  const playerInfo = getCurrentPlayerInfo(playerAddress);
+  const players = store.get(allPlayersAtom);
+
+  const playerInfo = getCurrentPlayerInfo(playerAddress, players);
   if (playerInfo) {
     return playerInfo;
   }
@@ -94,11 +116,13 @@ export async function findOrCreatePlayerNft(playerAddress: string) {
   }
   console.info("Player not found, creating new player...");
   await createNewPlayerNft(playerAddress);
-  return getCurrentPlayerInfo(playerAddress);
+  const newPlayers = store.get(allPlayersAtom);
+  return getCurrentPlayerInfo(playerAddress, newPlayers);
 }
 
 export async function incrementePlayerLevelNft(playerAddress: string) {
-  const playerInfo = getCurrentPlayerInfo(playerAddress);
+  const players = store.get(allPlayersAtom);
+  const playerInfo = getCurrentPlayerInfo(playerAddress, players);
 
   await batchUpdateAttribute(
     {
@@ -108,24 +132,23 @@ export async function incrementePlayerLevelNft(playerAddress: string) {
     [playerInfo.nft],
     playerContract
   );
-  playerStore.set(allPlayersNftsAtom, await getAllPlayerNFTs());
+  store.set(allPlayersNftsAtom, await getAllPlayerNFTs());
 }
 
 export async function changePlayerNameNft(
   playerAddress: string,
   newName: string
 ) {
-  const playerInfo = getCurrentPlayerInfo(playerAddress);
-  const allplayersNfts = playerStore.get(allPlayersNftsAtom);
-  const nft = playerInfo.nft;
+  const playersNft = store.get(allPlayersNftsAtom);
+  const nft = playersNft.find((nft) => nft.owner === playerAddress);
   await updateMetadata(
     {
       ...nft.metadata,
       name: newName,
     },
-    allplayersNfts,
+    playersNft,
     Number(nft.id),
     playerContract
   );
-  playerStore.set(allPlayersNftsAtom, await getAllPlayerNFTs());
+  store.set(allPlayersNftsAtom, await getAllPlayerNFTs());
 }

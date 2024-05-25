@@ -17,7 +17,9 @@ import {
 } from "thirdweb/react";
 import { AdminPage } from "./pages/adminPage";
 import { clientAddListener } from "./thirdweb/client-events";
-import {findOrCreatePlayerNft } from "./providers/player-provider";
+import { findOrCreatePlayerNft } from "./providers/player-provider";
+import { Provider } from "jotai";
+import { store } from "./providers/store";
 
 let shouldRedirect = false;
 let wasConnected = false;
@@ -75,15 +77,17 @@ function App() {
   }, [status, autoConnecting, wallet]);
 
   return (
-    <div className="app">
-      <Navbar />
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/game" element={<GamePage />} />
-        <Route path="/admin" element={<AdminPage />} />
-        <Route path="/" element={<Navigate to="/login" />} />
-      </Routes>
-    </div>
+    <Provider store={store}>
+      <div className="app">
+        <Navbar />
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/game" element={<GamePage />} />
+          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/" element={<Navigate to="/login" />} />
+        </Routes>
+      </div>
+    </Provider>
   );
 }
 export default App;

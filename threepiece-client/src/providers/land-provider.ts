@@ -3,19 +3,40 @@ import {
   Land,
   LandNFT,
   LandNFTAttributes,
-  isValidLand
+  isValidLand,
 } from "../thirdweb/types";
 import { getAllLandNFTs } from "./web3-provider";
+import { atom, useAtomValue } from "jotai";
+import { selectAtom } from "jotai/utils";
+import { useMemo } from "react";
 
 // NOTE: This part should usually be protected in an API
 export const allLandNfts = await getAllLandNFTs();
-export const allLands = nftsToLands(allLandNfts);
 
-export async function getUserLands(ownerAddress: string) {
-  const ownedLands = allLands.filter(
-    (land) => land.ownerAddress == ownerAddress
+const landsNftsAtom = atom(allLandNfts);
+
+export const allLandsAtom = atom((get) => {
+  const allLandNfts = get(landsNftsAtom);
+  return nftsToLands(allLandNfts);
+});
+
+export function useGetLandsNft() {
+  return useAtomValue(landsNftsAtom);
+}
+
+export function useGetLands() {
+  return useAtomValue(allLandsAtom);
+}
+
+export function useGetPlayerLands(ownerAddress: string) {
+  const playerLandsAtom = useMemo(
+    () =>
+      selectAtom(allLandsAtom, (lands) =>
+        lands.filter((land) => land.ownerAddress === ownerAddress)
+      ),
+    [ownerAddress]
   );
-  return ownedLands;
+  return useAtomValue(playerLandsAtom);
 }
 
 function nftsToLands(nfts: NFT[]) {
@@ -36,10 +57,10 @@ function nftsToLands(nfts: NFT[]) {
         return {
           ...l,
           productionEndDate:
-            l?.productionEndDate && new Date(l.productionEndDate)
+            l?.productionEndDate && new Date(l.productionEndDate),
         };
       }),
-      event: landNftAttributes?.[2]?.value
+      event: landNftAttributes?.[2]?.value,
     };
 
     if (!isValidLand(land)) {
