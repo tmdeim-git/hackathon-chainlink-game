@@ -44,7 +44,7 @@ function nftsToLands(nfts: NFT[]) {
 
     if (!isValidLand(land)) {
       console.log(landNftAttributes);
-      throw new Error("Problem parsing NFT " + nft.id);
+      console.log("Problem parsing NFT " + nft.id);
     }
 
     lands.push(land);
