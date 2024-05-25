@@ -7,13 +7,13 @@ import {
   sendAndConfirmMulticall,
   updateMetadata,
 } from "./backend/scripts/erc721-scripts";
+import { adminAccount } from "./backend/admin";
 
 export const allplayersNfts = await getAllPlayerNFTs();
 export const allPlayers = nftsToPlayer(allplayersNfts);
 
 export function getCurrentPlayerInfo(playerAddress: string) {
-  const player = allPlayers.find((land) => land.ownerAddress == playerAddress);
-  return player;
+  return allPlayers.find((land) => land.ownerAddress == playerAddress);
 }
 
 function nftsToPlayer(nfts: NFT[]) {
@@ -39,6 +39,12 @@ export async function createNewPlayerNft(
   playerAddress: string,
   level?: number
 ) {
+  if (getCurrentPlayerInfo(playerAddress)) {
+    throw new Error("Player already exists");
+  }
+  if(adminAccount.address === playerAddress) {
+    throw new Error("Admin can't be a player NFT");
+  }
   const value = level || 1;
   const attributes: PlayerNFTAttributes = [
     {
