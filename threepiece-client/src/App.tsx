@@ -3,7 +3,7 @@ import {
   Route,
   Navigate,
   useNavigate,
-  useLocation
+  useLocation,
 } from "react-router-dom";
 import "./App.css";
 import { Navbar } from "./components/Navbar";
@@ -11,16 +11,19 @@ import { LoginPage } from "./pages/loginPage";
 import { GamePage } from "./pages/gamePage";
 import { useEffect } from "react";
 import {
+  useActiveAccount,
   useActiveWalletConnectionStatus,
-  useIsAutoConnecting
+  useIsAutoConnecting,
 } from "thirdweb/react";
 import { AdminPage } from "./pages/adminPage";
 import { clientAddListener } from "./thirdweb/client-events";
+import {findOrCreatePlayerNft } from "./providers/player-provider";
 
 let shouldRedirect = false;
 let wasConnected = false;
 function App() {
   const status = useActiveWalletConnectionStatus();
+  const wallet = useActiveAccount();
   const autoConnecting = useIsAutoConnecting();
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -33,10 +36,16 @@ function App() {
     console.log({
       status,
       autoConnecting,
-      pathname
+      pathname,
     });
 
+    const setPlayerInfo = async () => {
+      const playerInfo = await findOrCreatePlayerNft(wallet?.address);
+      console.log("Player info", playerInfo);
+    };
+
     if (status === "connected") {
+      setPlayerInfo();
       wasConnected = true;
     }
     // disconnect redirects only if he was connected before
@@ -63,7 +72,7 @@ function App() {
     if (autoConnecting && !alreadyRedirected) {
       shouldRedirect = true;
     }
-  }, [status, autoConnecting]);
+  }, [status, autoConnecting, wallet]);
 
   return (
     <div className="app">

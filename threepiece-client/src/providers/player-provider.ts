@@ -7,12 +7,20 @@ import {
   sendAndConfirmMulticall,
   updateMetadata,
 } from "./backend/scripts/erc721-scripts";
+import { atom, getDefaultStore } from "jotai";
 import { adminAccount } from "./backend/admin";
 
-export const allplayersNfts = await getAllPlayerNFTs();
-export const allPlayers = nftsToPlayer(allplayersNfts);
+const allPlayersNfts = await getAllPlayerNFTs();
+const playerStore = getDefaultStore();
+
+const allPlayersNftsAtom = atom(allPlayersNfts);
+const allPlayersAtom = atom((get) => {
+  const allPlayersNfts = get(allPlayersNftsAtom);
+  return nftsToPlayer(allPlayersNfts);
+});
 
 export function getCurrentPlayerInfo(playerAddress: string) {
+  const allPlayers = playerStore.get(allPlayersAtom);
   return allPlayers.find((land) => land.ownerAddress == playerAddress);
 }
 
@@ -42,7 +50,7 @@ export async function createNewPlayerNft(
   if (getCurrentPlayerInfo(playerAddress)) {
     throw new Error("Player already exists");
   }
-  if(adminAccount.address === playerAddress) {
+  if (adminAccount.address === playerAddress) {
     throw new Error("Admin can't be a player NFT");
   }
   const value = level || 1;
@@ -73,6 +81,20 @@ export async function createNewPlayerNft(
     playerContract
   );
   console.log(batchResult);
+  playerStore.set(allPlayersNftsAtom, await getAllPlayerNFTs());
+}
+
+export async function findOrCreatePlayerNft(playerAddress: string) {
+  const playerInfo = getCurrentPlayerInfo(playerAddress);
+  if (playerInfo) {
+    return playerInfo;
+  }
+  if (adminAccount.address === playerAddress) {
+    throw new Error("Admin can't be a player NFT");
+  }
+  console.info("Player not found, creating new player...");
+  await createNewPlayerNft(playerAddress);
+  return getCurrentPlayerInfo(playerAddress);
 }
 
 export async function incrementePlayerLevelNft(playerAddress: string) {
@@ -86,6 +108,7 @@ export async function incrementePlayerLevelNft(playerAddress: string) {
     [playerInfo.nft],
     playerContract
   );
+  playerStore.set(allPlayersNftsAtom, await getAllPlayerNFTs());
 }
 
 export async function changePlayerNameNft(
@@ -93,6 +116,7 @@ export async function changePlayerNameNft(
   newName: string
 ) {
   const playerInfo = getCurrentPlayerInfo(playerAddress);
+  const allplayersNfts = playerStore.get(allPlayersNftsAtom);
   const nft = playerInfo.nft;
   await updateMetadata(
     {
@@ -103,4 +127,5 @@ export async function changePlayerNameNft(
     Number(nft.id),
     playerContract
   );
+  playerStore.set(allPlayersNftsAtom, await getAllPlayerNFTs());
 }
