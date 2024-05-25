@@ -11,9 +11,9 @@ import { selectAtom } from "jotai/utils";
 import { useMemo } from "react";
 
 // NOTE: This part should usually be protected in an API
-export const allLandNfts = await getAllLandNFTs();
+const allLandNfts = await getAllLandNFTs();
 
-const landsNftsAtom = atom(allLandNfts);
+export const landsNftsAtom = atom(allLandNfts);
 
 export const allLandsAtom = atom((get) => {
   const allLandNfts = get(landsNftsAtom);

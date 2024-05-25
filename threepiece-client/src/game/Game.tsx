@@ -6,7 +6,6 @@ import { clientAddListener } from "../thirdweb/client-events";
 import SelectedResourceRect from "./selectedResourceRect";
 import { batchUpdateAttribute } from "../providers/backend/scripts/erc721-scripts";
 import { ResourceType } from "../thirdweb/types";
-import { allLandNfts } from "../providers/land-provider";
 import { landContract } from "../providers/web3-provider";
 
 type GameState = {
