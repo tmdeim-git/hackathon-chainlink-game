@@ -11,9 +11,11 @@ type Props = {
 
 const GameScreenBoycottage: React.FC<Props> = (props: Props) => {
   const { tileSelected } = props;
+  const canvasSize: number = 0.55;
+  const canvasAspectRation = 11 / 15.0;
+  const width = window.innerWidth * canvasSize;
+  const height = window.innerWidth * canvasSize * canvasAspectRation;
 
-  const width = 641;
-  const height = 470;
   const lines = 11;
   const cols = 15;
   return (
