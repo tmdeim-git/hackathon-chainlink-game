@@ -12,8 +12,8 @@ type Props = {
 const GameScreenBoy: React.FC<Props> = (props: Props) => {
   const { tileSelected } = props;
 
-  const width = 1339;
-  const height = 982;
+  const width = 641;
+  const height = 470;
   const lines = 11;
   const cols = 15;
   return (
