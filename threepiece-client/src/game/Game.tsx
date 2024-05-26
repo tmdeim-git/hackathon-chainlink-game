@@ -4,7 +4,7 @@ import { GameTile } from "./GameTile";
 import "../style/game.css";
 import { clientAddListener } from "../thirdweb/client-events";
 import SelectedResourceRect from "./selectedResourceRect";
-import GameScreenBoy from "./GameScreen BoyCottage";
+import GameScreenBoycottage from "./GameScreen BoyCottage";
 import { useActiveWallet } from "thirdweb/react";
 
 const Game: React.FC = () => {
@@ -47,7 +47,7 @@ const Game: React.FC = () => {
         tileSelected={handleSelectedTile}
         ownerAddress={ownerAddress}
       />
-      {/* <GameScreenBoy tileSelected={handleSelectedTile} /> */}
+      {/* <GameScreenBoycottage tileSelected={handleSelectedTile} /> */}
     </div>
   );
 };

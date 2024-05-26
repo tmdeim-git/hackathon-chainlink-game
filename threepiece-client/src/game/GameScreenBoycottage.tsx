@@ -9,7 +9,7 @@ type Props = {
   tileSelected: (tile: GameTile) => void;
 };
 
-const GameScreenBoy: React.FC<Props> = (props: Props) => {
+const GameScreenBoycottage: React.FC<Props> = (props: Props) => {
   const { tileSelected } = props;
 
   const width = 641;
@@ -38,4 +38,4 @@ const GameScreenBoy: React.FC<Props> = (props: Props) => {
   );
 };
 
-export default GameScreenBoy;
+export default GameScreenBoycottage;
