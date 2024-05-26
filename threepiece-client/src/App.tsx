@@ -3,16 +3,20 @@ import {
   Route,
   Navigate,
   useNavigate,
-  useLocation
+  useLocation,
 } from "react-router-dom";
 import "./App.css";
 import { Navbar } from "./components/Navbar";
 import { LoginPage } from "./pages/loginPage";
 import Marketplace from "./pages/Marketplace";
 import { useEffect } from "react";
-import { useActiveWalletConnectionStatus, useIsAutoConnecting } from "thirdweb/react";
+import {
+  useActiveWalletConnectionStatus,
+  useIsAutoConnecting,
+} from "thirdweb/react";
 import { GamePage } from "./pages/gamePage";
 import { clientAddListener } from "./thirdweb/client-events";
+import AdminPage from "./pages/adminPage";
 
 let shouldRedirect = false;
 let wasConnected = false;
@@ -30,7 +34,7 @@ function App() {
     console.log({
       status,
       autoConnecting,
-      pathname
+      pathname,
     });
 
     if (status === "connected") {
@@ -68,7 +72,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/game" element={<GamePage />} />
-        <Route path="/admin" element={<div>HELLO WORLD</div>} />
+        <Route path="/admin" element={<AdminPage />} />
         <Route path="/marketplace" element={<Marketplace />} />
         <Route path="/" element={<Navigate to="/login" />} />
       </Routes>

@@ -39,6 +39,161 @@ export function tradeStatusChangeEvent() {
 * Contract read functions
 */
 
+
+
+/**
+ * Calls the "activeTradeCounter" function on the contract.
+ * @param options - The options for the activeTradeCounter function.
+ * @returns The parsed result of the function call.
+ * @example
+ * ```
+ * import { activeTradeCounter } from "TODO";
+ * 
+ * const result = await activeTradeCounter();
+ * 
+ * ```
+ */
+export async function activeTradeCounter(
+  options: BaseTransactionOptions
+) {
+  return readContract({
+    contract: options.contract,
+    method: [
+  "0x8112740c",
+  [],
+  [
+    {
+      "internalType": "uint256",
+      "name": "",
+      "type": "uint256"
+    }
+  ]
+],
+    params: []
+  });
+};
+
+
+/**
+ * Represents the parameters for the "activeTrades" function.
+ */
+export type ActiveTradesParams = {
+  arg_0: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"","type":"uint256"}>
+};
+
+/**
+ * Calls the "activeTrades" function on the contract.
+ * @param options - The options for the activeTrades function.
+ * @returns The parsed result of the function call.
+ * @example
+ * ```
+ * import { activeTrades } from "TODO";
+ * 
+ * const result = await activeTrades({
+ *  arg_0: ...,
+ * });
+ * 
+ * ```
+ */
+export async function activeTrades(
+  options: BaseTransactionOptions<ActiveTradesParams>
+) {
+  return readContract({
+    contract: options.contract,
+    method: [
+  "0x4be52276",
+  [
+    {
+      "internalType": "uint256",
+      "name": "",
+      "type": "uint256"
+    }
+  ],
+  [
+    {
+      "internalType": "address",
+      "name": "poster",
+      "type": "address"
+    },
+    {
+      "internalType": "uint256",
+      "name": "item",
+      "type": "uint256"
+    },
+    {
+      "internalType": "uint256",
+      "name": "price",
+      "type": "uint256"
+    },
+    {
+      "internalType": "bytes32",
+      "name": "status",
+      "type": "bytes32"
+    }
+  ]
+],
+    params: [options.arg_0]
+  });
+};
+
+
+
+
+/**
+ * Calls the "getAll" function on the contract.
+ * @param options - The options for the getAll function.
+ * @returns The parsed result of the function call.
+ * @example
+ * ```
+ * import { getAll } from "TODO";
+ * 
+ * const result = await getAll();
+ * 
+ * ```
+ */
+export async function getAll(
+  options: BaseTransactionOptions
+) {
+  return readContract({
+    contract: options.contract,
+    method: [
+  "0x53ed5143",
+  [],
+  [
+    {
+      "components": [
+        {
+          "internalType": "address",
+          "name": "poster",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "item",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "price",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "status",
+          "type": "bytes32"
+        }
+      ],
+      "internalType": "struct NFTMarketplace.Trade[]",
+      "name": "",
+      "type": "tuple[]"
+    }
+  ]
+],
+    params: []
+  });
+};
+
+
 /**
  * Represents the parameters for the "getTrade" function.
  */
@@ -102,6 +257,76 @@ export async function getTrade(
 };
 
 
+/**
+ * Represents the parameters for the "getTradesByOwner" function.
+ */
+export type GetTradesByOwnerParams = {
+  owner: AbiParameterToPrimitiveType<{"internalType":"address","name":"owner","type":"address"}>
+};
+
+/**
+ * Calls the "getTradesByOwner" function on the contract.
+ * @param options - The options for the getTradesByOwner function.
+ * @returns The parsed result of the function call.
+ * @example
+ * ```
+ * import { getTradesByOwner } from "TODO";
+ * 
+ * const result = await getTradesByOwner({
+ *  owner: ...,
+ * });
+ * 
+ * ```
+ */
+export async function getTradesByOwner(
+  options: BaseTransactionOptions<GetTradesByOwnerParams>
+) {
+  return readContract({
+    contract: options.contract,
+    method: [
+  "0xe847948a",
+  [
+    {
+      "internalType": "address",
+      "name": "owner",
+      "type": "address"
+    }
+  ],
+  [
+    {
+      "components": [
+        {
+          "internalType": "address",
+          "name": "poster",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "item",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "price",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "status",
+          "type": "bytes32"
+        }
+      ],
+      "internalType": "struct NFTMarketplace.Trade[]",
+      "name": "",
+      "type": "tuple[]"
+    }
+  ]
+],
+    params: [options.owner]
+  });
+};
+
+
 
 
 /**
@@ -129,6 +354,41 @@ export async function itemToken(
       "internalType": "contract IERC721",
       "name": "",
       "type": "address"
+    }
+  ]
+],
+    params: []
+  });
+};
+
+
+
+
+/**
+ * Calls the "tradeCounter" function on the contract.
+ * @param options - The options for the tradeCounter function.
+ * @returns The parsed result of the function call.
+ * @example
+ * ```
+ * import { tradeCounter } from "TODO";
+ * 
+ * const result = await tradeCounter();
+ * 
+ * ```
+ */
+export async function tradeCounter(
+  options: BaseTransactionOptions
+) {
+  return readContract({
+    contract: options.contract,
+    method: [
+  "0x660d15b5",
+  [],
+  [
+    {
+      "internalType": "uint256",
+      "name": "",
+      "type": "uint256"
     }
   ]
 ],
@@ -208,7 +468,7 @@ export async function trades(
  * Represents the parameters for the "cancelTrade" function.
  */
 export type CancelTradeParams = {
-  trade: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"_trade","type":"uint256"}>
+  item: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"_item","type":"uint256"}>
 };
 
 /**
@@ -220,7 +480,7 @@ export type CancelTradeParams = {
  * import { cancelTrade } from "TODO";
  * 
  * const transaction = cancelTrade({
- *  trade: ...,
+ *  item: ...,
  * });
  * 
  * // Send the transaction
@@ -238,13 +498,13 @@ export function cancelTrade(
   [
     {
       "internalType": "uint256",
-      "name": "_trade",
+      "name": "_item",
       "type": "uint256"
     }
   ],
   []
 ],
-    params: [options.trade]
+    params: [options.item]
   });
 };
 
@@ -253,7 +513,7 @@ export function cancelTrade(
  * Represents the parameters for the "executeTrade" function.
  */
 export type ExecuteTradeParams = {
-  trade: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"_trade","type":"uint256"}>
+  item: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"_item","type":"uint256"}>
 };
 
 /**
@@ -265,7 +525,7 @@ export type ExecuteTradeParams = {
  * import { executeTrade } from "TODO";
  * 
  * const transaction = executeTrade({
- *  trade: ...,
+ *  item: ...,
  * });
  * 
  * // Send the transaction
@@ -283,13 +543,13 @@ export function executeTrade(
   [
     {
       "internalType": "uint256",
-      "name": "_trade",
+      "name": "_item",
       "type": "uint256"
     }
   ],
   []
 ],
-    params: [options.trade]
+    params: [options.item]
   });
 };
 
@@ -342,6 +602,51 @@ export function openTrade(
   []
 ],
     params: [options.item, options.price]
+  });
+};
+
+
+/**
+ * Represents the parameters for the "removeTrade" function.
+ */
+export type RemoveTradeParams = {
+  item: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"_item","type":"uint256"}>
+};
+
+/**
+ * Calls the "removeTrade" function on the contract.
+ * @param options - The options for the "removeTrade" function.
+ * @returns A prepared transaction object.
+ * @example
+ * ```
+ * import { removeTrade } from "TODO";
+ * 
+ * const transaction = removeTrade({
+ *  item: ...,
+ * });
+ * 
+ * // Send the transaction
+ * ...
+ * 
+ * ```
+ */
+export function removeTrade(
+  options: BaseTransactionOptions<RemoveTradeParams>
+) {
+  return prepareContractCall({
+    contract: options.contract,
+    method: [
+  "0xe08405c7",
+  [
+    {
+      "internalType": "uint256",
+      "name": "_item",
+      "type": "uint256"
+    }
+  ],
+  []
+],
+    params: [options.item]
   });
 };
 

@@ -27,14 +27,18 @@ contract NFTMarketplace {
         bytes32 status; // Open, Executed, Cancelled
     }
 
-    mapping(uint256 => Trade) public trades;
 
-    uint256 tradeCounter;
+    mapping(uint256 => Trade) public trades;
+    mapping(uint256 => Trade) public activeTrades;
+
+    uint256 public tradeCounter;
+    uint256 public activeTradeCounter;
 
     constructor(address _currencyTokenAddress, address _itemTokenAddress) {
         currencyToken = IERC20(_currencyTokenAddress);
         itemToken = IERC721(_itemTokenAddress);
         tradeCounter = 0;
+        activeTradeCounter = 0;
     }
 
     /**
@@ -48,6 +52,12 @@ contract NFTMarketplace {
         return (trade.poster, trade.item, trade.price, trade.status);
     }
 
+
+    function removeTrade(uint256 _item) public {
+        // Resetting the trade to its default value (i.e., a new Trade struct with default values)
+        delete activeTrades[_item];
+    }
+    
     /**
     * @dev Returns the total trades.
     @return trades The total trades.
@@ -61,13 +71,11 @@ contract NFTMarketplace {
         return ret;
     }
 
-    function getTradesByOwner(
-        address owner
-    ) public view returns (Trade[] memory) {
-        Trade[] memory ret = new Trade[](tradeCounter);
-        for (uint i = 0; i < tradeCounter; i++) {
-            if (owner == trades[i].poster) {
-                ret[i] = trades[i];
+    function getTradesByOwner(address owner) public view returns (Trade[] memory) {
+        Trade[] memory ret = new Trade[](activeTradeCounter);
+        for (uint i = 0; i < activeTradeCounter; i++) {
+            if (owner == activeTrades[i].poster) {
+                ret[i] = activeTrades[i];
             }
         }
         return ret;
@@ -85,7 +93,12 @@ contract NFTMarketplace {
             price: _price,
             status: "Open"
         });
+        
+        activeTrades[_item] = trades[tradeCounter];
         tradeCounter += 1;
+        if (activeTradeCounter <= _item) {
+            activeTradeCounter = _item + 1;
+        }
         emit TradeStatusChange(tradeCounter - 1, "Open");
     }
 
@@ -93,30 +106,44 @@ contract NFTMarketplace {
      * @dev Executes a trade. Must have approved this contract to transfer the
      * amount of currency specified to the poster. Transfers ownership of the
      * item to the filler.
-     * @param _trade The id of an existing trade
+     * @param _item The id of an existing trade
      */
-    function executeTrade(uint256 _trade) public virtual {
-        Trade memory trade = trades[_trade];
+    function executeTrade(uint256 _item) public virtual {
+        Trade memory trade = activeTrades[_item];
         require(trade.status == "Open", "Trade is not Open.");
         currencyToken.transferFrom(msg.sender, trade.poster, trade.price);
         itemToken.transferFrom(address(this), msg.sender, trade.item);
-        trades[_trade].status = "Executed";
-        emit TradeStatusChange(_trade, "Executed");
+        uint index = 0;
+        for (uint i = 0; i < tradeCounter; i++) {
+            if (trade.item == trades[i].item && trades[i].status == "Open") {
+                index = i;
+            }
+        }
+        trades[index].status = "Executed";
+        emit TradeStatusChange(index, "Executed");
+        removeTrade(trade.item);
     }
 
     /**
      * @dev Cancels a trade by the poster.
-     * @param _trade The trade to be cancelled.
+     * @param _item The trade to be cancelled.
      */
-    function cancelTrade(uint256 _trade) public virtual {
-        Trade memory trade = trades[_trade];
+    function cancelTrade(uint256 _item) public virtual {
+        Trade memory trade = activeTrades[_item];
+        uint index = 0;
+        for (uint i = 0; i < tradeCounter; i++) {
+            if (trade.item == trades[i].item && trades[i].status == "Open") {
+                index = i;
+            }
+        }
         require(
             msg.sender == trade.poster,
             "Trade can be cancelled only by poster."
         );
         require(trade.status == "Open", "Trade is not Open.");
         itemToken.transferFrom(address(this), trade.poster, trade.item);
-        trades[_trade].status = "Cancelled";
-        emit TradeStatusChange(_trade, "Cancelled");
+        trades[index].status = "Cancelled";
+        emit TradeStatusChange(index, "Cancelled");
+        removeTrade(trade.item);
     }
 }
