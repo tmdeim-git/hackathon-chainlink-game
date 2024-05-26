@@ -39,6 +39,22 @@ export function useGetPlayerLands(ownerAddress: string) {
   return useAtomValue(playerLandsAtom);
 }
 
+export function useGetPlayerLandsHeight() {
+  const landsHeightAtom = useMemo(
+    () => selectAtom(allLandsAtom, (lands) => lands.length),
+    []
+  );
+  return useAtomValue(landsHeightAtom);
+}
+
+export function useGetLandIds(): number[] {
+  const gameTilesAtom = useMemo(
+    () => selectAtom(allLandsAtom, (lands) => lands.map((land) => land.id)),
+    []
+  );
+  return useAtomValue(gameTilesAtom);
+}
+
 function nftsToLands(nfts: NFT[]) {
   const lands: Land[] = [];
 

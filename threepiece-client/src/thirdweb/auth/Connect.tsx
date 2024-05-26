@@ -2,8 +2,6 @@ import { ConnectButton, useSetActiveWallet } from "thirdweb/react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { testChain, thirdwebClient } from "../../providers/web3-provider";
 import { inAppWallet, createWallet } from "thirdweb/wallets";
-import { useSetAtom } from "jotai";
-import { currentOwnerAtom } from "../../providers/store";
 
 const wallets = [
   inAppWallet(),
@@ -17,7 +15,6 @@ const wallets = [
 function Connect() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const setOwnerAddress = useSetAtom(currentOwnerAtom);
   const setWallet = useSetActiveWallet();
   return (
     <ConnectButton
@@ -25,7 +22,6 @@ function Connect() {
       wallets={wallets}
       connectButton={{ label: "Play" }}
       onConnect={async (wallet) => {
-        setOwnerAddress(wallet.getAccount().address);
         wallet.switchChain(testChain);
         setWallet(wallet);
         if (pathname === "/login") navigate("/game");

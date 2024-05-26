@@ -1,8 +1,11 @@
+import { selectAtom } from "jotai/utils";
 import { adminAddress } from "../providers/backend/admin";
 import { allLandsAtom } from "../providers/land-provider";
 import { store } from "../providers/store";
 import { Land } from "../thirdweb/types";
 import { GameTile } from "./GameTile";
+import { useMemo } from "react";
+import { useAtomValue } from "jotai";
 
 export function getGameTiles(): GameTile[] {
   const result: GameTile[] = [];
@@ -18,3 +21,17 @@ export function getGameTiles(): GameTile[] {
 
   return result;
 }
+
+export function useGetGameTilesById(tileId: number): GameTile {
+  const gameTilesAtom = useMemo(
+    () =>
+      selectAtom(allLandsAtom, () =>
+        getGameTiles().find((tile) => tile._land.id === tileId)
+      ),
+    [tileId]
+  );
+  const result = useAtomValue(gameTilesAtom);
+  return result;
+}
+
+

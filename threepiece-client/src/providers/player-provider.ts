@@ -15,7 +15,7 @@ import { useMemo } from "react";
 
 const allPlayersNfts = await getAllPlayerNFTs();
 
-const allPlayersNftsAtom = atom(allPlayersNfts);
+export const allPlayersNftsAtom = atom(allPlayersNfts);
 
 const allPlayersAtom = atom((get) => {
   const allPlayersNfts = get(allPlayersNftsAtom);

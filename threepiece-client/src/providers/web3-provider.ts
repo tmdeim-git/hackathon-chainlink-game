@@ -63,6 +63,8 @@ export async function getAllPlayerNFTs(): Promise<PlayerNFT[]> {
   return playerNfts as PlayerNFT[];
 }
 
+
+
 async function getTheNFTs(contract: Readonly<ContractOptions<[]>>) {
   return (
     await getNFTs({
