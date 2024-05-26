@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from "react";
-import GameScreen from "./GameScreen";
 import { GameTile } from "./GameTile";
 import "../style/game.css";
 import { clientAddListener } from "../thirdweb/client-events";
 import SelectedResourceRect from "./selectedResourceRect";
 import GameScreenBoycottage from "./GameScreenBoycottage";
-import { useActiveWallet } from "thirdweb/react";
 
 const Game: React.FC = () => {
   const [selectedTile, setSelectedTile] = useState<GameTile>();
   const [eventHistory, setEventHistory] = useState<string[]>([]);
-  const wallet = useActiveWallet();
-  const ownerAddress = wallet?.getAccount().address;
   useEffect(() => {
     const onEvent = (message: string) => {
       setEventHistory((prev) => [...prev, message]);
@@ -43,10 +39,6 @@ const Game: React.FC = () => {
           </div>
         </div>
       </div>
-      {/* <GameScreen
-        tileSelected={handleSelectedTile}
-        ownerAddress={ownerAddress}
-      /> */}
       <GameScreenBoycottage tileSelected={handleSelectedTile} />
     </div>
   );
