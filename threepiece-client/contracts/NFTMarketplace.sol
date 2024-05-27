@@ -163,7 +163,7 @@ contract NFTMarketplace {
      * @param _spender The contract address to be approved.
      * @param _amount The amount of tokens to be approved.
      */
-    function approve(address _spender, uint256 _amount) public {
+    function approveCurrencyToken(address _spender, uint256 _amount) public {
         currencyToken.approve(_spender, _amount);
     }
 }

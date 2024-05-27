@@ -135,7 +135,7 @@ export default function NftCard({
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose}>Cancel</Button>
-            <Button type="submit" onClick={async ()=>{await createLandTrade(wallet, land.nft, formJson)}}>Confirm</Button>
+            <Button type="submit" onClick={async ()=>{await createLandTrade(wallet, land.nft, 1000n)}}>Confirm</Button>
           </DialogActions>
         </Dialog>
       </ImageList>
