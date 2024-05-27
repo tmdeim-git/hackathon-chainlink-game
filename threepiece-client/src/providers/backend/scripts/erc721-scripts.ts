@@ -29,7 +29,7 @@ export async function batchAddAttribute(
     attributes[Object.keys(attributes).length] = newAttr;
   }
 
-  return await batchUpdateMetadata(metadatas, contract);
+  return await batchUpdateMetadata(metadatas, contract, nftList[0].id);
 }
 
 /**
@@ -43,15 +43,13 @@ export async function batchRemoveAttribute(
   const metadatas = nftList.map((n) => n.metadata);
 
   for (const { attributes } of metadatas) {
-    const attributesArr = attributes as unknown as Array<MetadataAttributes>;
-    const indexOfTrait = attributesArr.findIndex(
+    const indexOfTrait = (attributes as any).findIndex(
       (e) => e.trait_type === trait_type
     );
-    attributesArr.splice(indexOfTrait, 1);
-    attributes[indexOfTrait] = attributesArr[indexOfTrait];
+    (attributes as any).splice(indexOfTrait, 1);
   }
 
-  return await batchUpdateMetadata(metadatas, contract);
+  return await batchUpdateMetadata(metadatas, contract, nftList[0].id);
 }
 
 /**
@@ -75,7 +73,7 @@ export async function batchUpdateAttribute(
 
   console.log("Updating...", metadatas);
 
-  return await batchUpdateMetadata(metadatas, contract);
+  return await batchUpdateMetadata(metadatas, contract, nftList[0].id);
 }
 
 /**
@@ -89,7 +87,7 @@ export async function updateMetadata(
 ) {
   const metadatas = nftList.map((n) => n.metadata);
   metadatas[nftIdToChange] = newMetadata;
-  return await batchUpdateMetadata(metadatas, contract);
+  return await batchUpdateMetadata(metadatas, contract, nftList[0].id);
 }
 
 /**
@@ -97,13 +95,16 @@ export async function updateMetadata(
  */
 export async function batchUpdateMetadata(
   metadatas: NFT["metadata"][],
-  contract: Readonly<ContractOptions<[]>>
+  contract: Readonly<ContractOptions<[]>>,
+  startIndex: bigint
 ) {
   const uri = await upload({
     client: thirdwebClient,
     files: Object.values(metadatas),
+    rewriteFileNames: {
+      fileStartNumber: Number(startIndex)
+    }
   });
-
   const newNftsRepo = uri[0].substring(0, uri[0].lastIndexOf("/")) + "/";
   console.log(newNftsRepo);
 
@@ -114,6 +115,7 @@ export async function batchUpdateMetadata(
         contract: contract,
       })) - 1n,
     uri: newNftsRepo,
+
   });
 
   const result = await sendAndConfirmTransaction({
