@@ -1,6 +1,4 @@
 import Button from "@mui/material/Button";
-import { getUserLands } from "../providers/land-provider";
-import { useActiveAccount } from "thirdweb/react";
 import { Land } from "../thirdweb/types";
 import { useState } from "react";
 import ImageList from "@mui/material/ImageList";
@@ -10,10 +8,8 @@ import {
   cancelListing,
   createLandTrade,
   executeLandTrade,
-  getListedNFTsByOwner,
 } from "../providers/backend/scripts/marketplace/marketplace-scripts";
 import { Account } from "thirdweb/wallets";
-import { adminAccount } from "../providers/backend/admin";
 import {
   Dialog,
   DialogTitle,
@@ -25,11 +21,11 @@ import {
 
 export default function NftCard({
   lands,
-  wallet,
+  account,
   type,
 }: {
   lands: Land[];
-  wallet: Account;
+  account: Account;
   type: string;
 }) {
   const [open, setOpen] = useState(false);
@@ -68,38 +64,38 @@ export default function NftCard({
                     <Button
                       aria-label={`info about ${land.nft.metadata.name}`}
                       variant="contained"
-                      /*onClick={async () =>
+                      onClick={async () =>
                         type === "owned"
-                          ? await createLandTrade(wallet, land.nft, 1000n)
+                          ? await createLandTrade(account, land.nft, 1000n)
                           : type === "listed"
-                          ? await cancelListing(wallet, land.nft.id)
-                          : await executeLandTrade(wallet, land.nft)
-                      }*/
-                      onClick={
-                        type === "owned"
-                          ? () => {
-                              setLand(land);
-                              handleClickOpen();
-                            }
-                          : () => {}
+                            ? await cancelListing(account, land.nft.id)
+                            : await executeLandTrade(account, land.nft)
                       }
+                      // onClick={
+                      //   type === "owned"
+                      //     ? () => {
+                      //       setLand(land);
+                      //       handleClickOpen();
+                      //     }
+                      //     : () => { }
+                      // }
                       key={land.id}
                     >
                       {type === "owned"
                         ? "List"
                         : type === "listed"
-                        ? "Cancel Listing"
-                        : "Buy NFT"}
+                          ? "Cancel Listing"
+                          : "Buy NFT"}
                     </Button>
                   </>
                 }
               />
             </ImageListItem>
           ))) || (
-          <div style={{ height: "300px", width: "100vw", textAlign: "center" }}>
-            You don't have any NFTs.
-          </div>
-        )}
+            <div style={{ height: "300px", width: "100vw", textAlign: "center" }}>
+              You don't have any NFTs.
+            </div>
+          )}
         <Dialog
           open={open}
           onClose={handleClose}
@@ -135,7 +131,7 @@ export default function NftCard({
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose}>Cancel</Button>
-            <Button type="submit" onClick={async ()=>{await createLandTrade(wallet, land.nft, 1000n)}}>Confirm</Button>
+            <Button type="submit" onClick={async () => { await createLandTrade(account, land.nft, 1000n) }}>Confirm</Button>
           </DialogActions>
         </Dialog>
       </ImageList>

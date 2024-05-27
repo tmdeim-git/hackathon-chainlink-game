@@ -13,16 +13,17 @@ import {
 import { vrfChanceEventRequestEvent } from "./generated-contracts/vrf";
 import { GameEvent, isInEnum } from "./types";
 import { addBackendListener as backendAddListener } from "../providers/backend/backend-events";
-import { store, updateInfo } from "../providers/store";
+import { store, refreshNfts } from "../providers/store";
 import { landsNftsAtom } from "../providers/land-provider";
 import { allPlayersNftsAtom } from "../providers/player-provider";
+import { tradeStatusChangeEvent } from "./generated-contracts/marketplace";
 
 type Listener = (message: string) => void;
 let started: boolean = false;
 const listeners: Listener[] = [];
 
 export function clientAddListener(
-  callback: (message: string) => void = () => {}
+  callback: (message: string) => void = () => { }
 ) {
   if (!started) {
     startTokenCreatedEvent();
@@ -39,7 +40,7 @@ export function clientAddListener(
 const startVrfRequestEvent = () =>
   watchContractEvents({
     onEvents(events) {
-      updateInfo();
+      refreshNfts();
       const { args } = events[0];
       // callback && callback(`VRF Request sent`);
       console.log(`Event received:`, args);
@@ -56,7 +57,7 @@ const startVrfRequestEvent = () =>
 const startTokenCreatedEvent = () =>
   watchContractEvents({
     onEvents(events) {
-      updateInfo();
+      refreshNfts();
       const event = events[0];
       const id = event.args.startTokenId;
       console.log(`Token lazy minted`, event);
@@ -70,7 +71,7 @@ const startTokenCreatedEvent = () =>
 const startMetadataUpdateEvent = () =>
   watchContractEvents({
     onEvents(events) {
-      updateInfo();
+      refreshNfts();
       const event = events[0];
       const id = event.args._fromTokenId;
       console.log(`Token metadata updated`, event);
@@ -84,7 +85,7 @@ const startMetadataUpdateEvent = () =>
 const startTransferEvent = () =>
   watchContractEvents({
     onEvents(events) {
-      updateInfo();
+      refreshNfts();
       const event = events[0];
       let message: string = `A tile has been transfered from ${event.args.from} to ${event.args.to}`;
       if (event.args.from == "0x0000000000000000000000000000000000000000") {
@@ -100,5 +101,18 @@ const startTransferEvent = () =>
       listeners.forEach((callback) => callback(message));
     },
     events: [transferEvent()],
+    contract: landContract,
+  });
+
+const startMarketplaceEvents = () =>
+  watchContractEvents({
+    onEvents(events) {
+      refreshNfts();
+      const event = events[0];
+      let message: string = `Marketplace trade event!`;
+      refreshNfts();
+      listeners.forEach((callback) => callback(message));
+    },
+    events: [tradeStatusChangeEvent()],
     contract: landContract,
   });

@@ -74,7 +74,7 @@ export function Navbar() {
             )}
           </div>
           <div>
-            {pathname !== "/login" && pathname !== "/admin" && (
+            {pathname === "/game" && (
               <Typography
                 variant="h6"
                 component="div"

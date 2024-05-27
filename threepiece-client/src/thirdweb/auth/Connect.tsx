@@ -2,6 +2,7 @@ import { ConnectButton, useSetActiveWallet } from "thirdweb/react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { testChain, thirdwebClient } from "../../providers/web3-provider";
 import { inAppWallet, createWallet } from "thirdweb/wallets";
+import { refreshNfts } from "../../providers/store";
 
 const wallets = [
   inAppWallet(),
@@ -24,6 +25,7 @@ function Connect() {
       onConnect={async (wallet) => {
         wallet.switchChain(testChain);
         setWallet(wallet);
+        refreshNfts();
         if (pathname === "/login") navigate("/game");
       }}
     />

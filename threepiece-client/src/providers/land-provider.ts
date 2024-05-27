@@ -55,7 +55,7 @@ export function useGetLandIds(): number[] {
   return useAtomValue(gameTilesAtom);
 }
 
-function nftsToLands(nfts: NFT[]) {
+export function nftsToLands(nfts: NFT[]) {
   const lands: Land[] = [];
 
   for (const nft of nfts) {

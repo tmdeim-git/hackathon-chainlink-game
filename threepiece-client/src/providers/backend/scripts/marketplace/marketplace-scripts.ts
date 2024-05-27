@@ -48,16 +48,9 @@ export async function createLandTrade(
   return result;
 }
 
-export async function getListedNFTsByOwner(owner: string) {
-  const trades = await getTradesByOwner({
-    owner: owner,
-    contract: marketplaceLandContract,
-  });
-
-  return trades;
-}
-
 export async function cancelListing(account: Account, tradeId: bigint) {
+  console.log(account.address, tradeId);
+  
   const tx = cancelTrade({
     item: tradeId,
     contract: marketplaceLandContract,
@@ -69,15 +62,6 @@ export async function cancelListing(account: Account, tradeId: bigint) {
   });
 
   return result;
-}
-
-export async function getListedByIndex(index: bigint) {
-  const listedTrades = await activeTrades({
-    arg_0: BigInt(index),
-    contract: marketplaceLandContract,
-  });
-
-  return listedTrades;
 }
 
 export async function executeLandTrade(account: Account, nft: LandNFT) {

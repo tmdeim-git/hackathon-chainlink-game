@@ -7,7 +7,7 @@ import {
 } from "../../thirdweb/generated-contracts/vrf";
 import { vrfContract } from "../web3-provider";
 import { GameEvent, isInEnum } from "../../thirdweb/types";
-import { store, updateInfo } from "../store";
+import { store, refreshNfts } from "../store";
 import { landsNftsAtom } from "../land-provider";
 
 type Listener = (message: string) => void;
@@ -49,7 +49,7 @@ const unwatch = watchContractEvents({
     if (message)
       // no message for some events
       listeners.forEach((callback) => callback(message));
-    updateInfo();
+    refreshNfts();
   },
   events: [vrfChanceEventResultEvent()],
   contract: vrfContract,

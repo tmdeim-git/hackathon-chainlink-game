@@ -15,7 +15,6 @@ const GameTiles: React.FC<Props> = (props: Props) => {
   const landIds = useGetLandIds();
   const spacesBetweenLines = height / lines;
   const spacesBetweenColumns = width / cols;
-  console.log("landIds", landIds);
   return (
     <Group>
       {landIds.map((id, index) => (
