@@ -6,14 +6,20 @@ export type LandNFT = NFT & {
   };
 };
 
+export type PlayerNFT = NFT & {
+  metadata: {
+    attributes?: PlayerNFTAttributes;
+  };
+};
+
 export namespace GameEvent {
   export enum Land {
     None = "none",
-    Raining = "raining"
+    Raining = "raining",
   }
 
   export enum Game {
-    Lootbox = "lootbox"
+    Lootbox = "lootbox",
   }
 }
 
@@ -32,12 +38,25 @@ export type LandNFTAttributes = [
   }
 ];
 
+export type PlayerNFTAttributes = [
+  {
+    readonly trait_type: "level";
+    value: number;
+  }
+];
+
 export interface Land {
   id: number;
   resources: Resource[];
   event?: GameEvent.Land;
   nft?: LandNFT;
   ownerAddress?: string;
+}
+
+export interface Player {
+  nft?: PlayerNFT;
+  ownerAddress?: string;
+  level: number;
 }
 
 export interface Owner {
@@ -62,12 +81,12 @@ export enum ResourceType {
   Water = "water",
   Wood = "wood",
   Soil = "soil",
-  Ore = "ore"
+  Ore = "ore",
 }
 
 export interface MetadataAttributes {
   trait_type: string;
-  value: string | number | Array<object>
+  value: string | number | Array<object>;
 }
 
 export function isValidLand(land: Land): land is Land {

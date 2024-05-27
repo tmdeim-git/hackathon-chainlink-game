@@ -1,71 +1,47 @@
-import { Component } from "react";
-import GameScreen from "./GameScreen";
+import React, { useEffect, useState } from "react";
 import { GameTile } from "./GameTile";
 import "../style/game.css";
 import { clientAddListener } from "../thirdweb/client-events";
 import SelectedResourceRect from "./selectedResourceRect";
-import { batchUpdateAttribute } from "../providers/backend/scripts/erc721-scripts";
-import { ResourceType } from "../thirdweb/types";
-import { allLandNfts } from "../providers/land-provider";
-import { landContract } from "../providers/web3-provider";
+import GameScreenBoycottage from "./GameScreenBoycottage";
 
-type GameState = {
-  selectedTile: GameTile | null;
-  eventHistory: string[];
-};
-
-type Props = {
-  ownerAddress?: string;
-};
-
-class Game extends Component<Props, GameState> {
-  state = {
-    selectedTile: null,
-    eventHistory: []
-  };
-
-  componentDidMount(): void {
+const Game: React.FC = () => {
+  const [selectedTile, setSelectedTile] = useState<GameTile>();
+  const [eventHistory, setEventHistory] = useState<string[]>([]);
+  useEffect(() => {
     const onEvent = (message: string) => {
-      this.setState((prev) => ({
-        eventHistory: [...prev.eventHistory, message]
-      }));
+      setEventHistory((prev) => [...prev, message]);
     };
     clientAddListener(onEvent);
-  }
+  }, []);
 
-  handleSelectedTile = (tile: GameTile) => {
+  const handleSelectedTile = (tile: GameTile) => {
     console.log("selected");
-    this.setState({ selectedTile: tile });
+    setSelectedTile(tile);
   };
-
-  render = () => {
-    return (
-      <div className="game-page">
-        <div>
-          <SelectedResourceRect selectedTile={this.state.selectedTile} />
-          <div className="event-history">
-            <p className="event-name">Event history:</p>
-            <div className="event-history-table">
-              {this.state.eventHistory.map((info, i) => (
-                <p
-                  key={i}
-                  style={{
-                    paddingLeft: "20px"
-                  }}
-                >
-                  {`- ${info}`}
-                </p>
-              ))}
-            </div>
+  return (
+    <div className="game-page">
+      <div>
+        <SelectedResourceRect selectedTile={selectedTile} />
+        <div className="event-history">
+          <p className="event-name">Event history:</p>
+          <div className="event-history-table">
+            {eventHistory.map((info, i) => (
+              <p
+                key={i}
+                style={{
+                  paddingLeft: "20px",
+                }}
+              >
+                {`- ${info}`}
+              </p>
+            ))}
           </div>
         </div>
-        <GameScreen
-          tileSelected={this.handleSelectedTile}
-          ownerAddress={this.props.ownerAddress}
-        />
       </div>
-    );
-  };
-}
+      <GameScreenBoycottage tileSelected={handleSelectedTile} />
+    </div>
+  );
+};
 
 export default Game;

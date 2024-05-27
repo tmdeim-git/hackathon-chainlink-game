@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Box, Typography, Alert, CircularProgress } from "@mui/material";
 import { useActiveAccount } from "thirdweb/react";
-import { allLandNfts } from "../providers/land-provider";
+import { useGetLandsNft } from "../providers/land-provider";
 import ResetLandsButton from "../components/ResetLandsButton";
 import { resetLands } from "../providers/scripts-provider";
 import AddAttributes from "../components/AddAttributes";
@@ -20,6 +20,8 @@ export function AdminPage() {
     await resetLands(account);
     setResetLoading(false);
   };
+
+  const allLandNfts = useGetLandsNft();
 
   return (
     <Box

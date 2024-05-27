@@ -9,12 +9,13 @@ const wallets = [
   createWallet("com.coinbase.wallet"),
   createWallet("com.trustwallet.app"),
   createWallet("app.phantom"),
-  createWallet("walletConnect")
+  createWallet("walletConnect"),
 ];
 
 function Connect() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const setWallet = useSetActiveWallet();
   return (
     <ConnectButton
       client={thirdwebClient}
@@ -22,7 +23,6 @@ function Connect() {
       connectButton={{ label: "Play" }}
       onConnect={async (wallet) => {
         wallet.switchChain(testChain);
-        const setWallet = useSetActiveWallet();
         setWallet(wallet);
         if (pathname === "/login") navigate("/game");
       }}

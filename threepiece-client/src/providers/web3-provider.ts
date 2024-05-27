@@ -1,6 +1,13 @@
-import { Chain, ContractOptions, createThirdwebClient, defineChain, getContract } from "thirdweb";
+import {
+  Chain,
+  ContractOptions,
+  createThirdwebClient,
+  defineChain,
+  getContract,
+} from "thirdweb";
 import { getNFTs } from "thirdweb/extensions/erc721";
 import { polygonAmoy } from "thirdweb/chains";
+import { LandNFT, PlayerNFT } from "../thirdweb/types";
 
 const polygonZkevmCardona: Chain = {
   id: 2442,
@@ -30,6 +37,12 @@ export const landContract = getContract({
   client: thirdwebClient,
 });
 
+export const playerContract = getContract({
+  address: import.meta.env.VITE_PLAYER_CONTRACT,
+  chain: testChain,
+  client: thirdwebClient,
+});
+
 export const vrfContract = getContract({
   address: import.meta.env.VITE_VRF_CONTRACT,
   chain: polygonAmoy,
@@ -42,12 +55,22 @@ export const marketplaceLandContract = getContract({
   client: thirdwebClient,
 });
 
-export async function getAllLandNFTs() {
-  const landNfts = await getTheNFTs(landContract);
-  console.log(landNfts);
 
-  return landNfts;
+export async function getAllLandNFTs(): Promise<LandNFT[]> {
+  const landNfts = await getTheNFTs(landContract);
+  console.log("landNfts", landNfts);
+
+  return landNfts as LandNFT[];
 }
+
+export async function getAllPlayerNFTs(): Promise<PlayerNFT[]> {
+  const playerNfts = await getTheNFTs(playerContract);
+  console.log("playerNfts", playerNfts);
+
+  return playerNfts as PlayerNFT[];
+}
+
+
 
 async function getTheNFTs(contract: Readonly<ContractOptions<[]>>) {
   return (

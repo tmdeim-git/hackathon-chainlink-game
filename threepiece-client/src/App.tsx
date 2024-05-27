@@ -11,17 +11,22 @@ import { LoginPage } from "./pages/loginPage";
 import Marketplace from "./pages/Marketplace";
 import { useEffect } from "react";
 import {
+  useActiveAccount,
   useActiveWalletConnectionStatus,
   useIsAutoConnecting,
 } from "thirdweb/react";
 import { GamePage } from "./pages/gamePage";
 import { clientAddListener } from "./thirdweb/client-events";
+import { Provider } from "jotai";
 import AdminPage from "./pages/adminPage";
+import { findOrCreatePlayerNft } from "./providers/player-provider";
+import { store } from "./providers/store";
 
 let shouldRedirect = false;
 let wasConnected = false;
 function App() {
   const status = useActiveWalletConnectionStatus();
+  const wallet = useActiveAccount();
   const autoConnecting = useIsAutoConnecting();
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -37,7 +42,13 @@ function App() {
       pathname,
     });
 
+    const setPlayerInfo = async () => {
+      const playerInfo = await findOrCreatePlayerNft(wallet?.address);
+      console.log("Player info", playerInfo);
+    };
+
     if (status === "connected") {
+      setPlayerInfo();
       wasConnected = true;
     }
     // disconnect redirects only if he was connected before
@@ -64,19 +75,21 @@ function App() {
     if (autoConnecting && !alreadyRedirected) {
       shouldRedirect = true;
     }
-  }, [status, autoConnecting]);
+  }, [status, autoConnecting, wallet]);
 
   return (
-    <div className="app">
-      <Navbar />
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/game" element={<GamePage />} />
-        <Route path="/admin" element={<AdminPage />} />
-        <Route path="/marketplace" element={<Marketplace />} />
-        <Route path="/" element={<Navigate to="/login" />} />
-      </Routes>
-    </div>
+    <Provider store={store}>
+      <div className="app">
+        <Navbar />
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/game" element={<GamePage />} />
+          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/marketplace" element={<Marketplace />} />
+          <Route path="/" element={<Navigate to="/login" />} />
+        </Routes>
+      </div>
+    </Provider>
   );
 }
 export default App;

@@ -4,10 +4,13 @@ import {
   sendAndConfirmTransaction,
   PreparedTransaction,
   resolveMethod,
-  prepareContractCall
+  prepareContractCall,
 } from "thirdweb";
 import { upload } from "thirdweb/storage";
-import { getBaseURICount, updateBatchBaseURI } from "../../../thirdweb/generated-contracts/nft-drop";
+import {
+  getBaseURICount,
+  updateBatchBaseURI,
+} from "../../../thirdweb/generated-contracts/nft-drop";
 import { MetadataAttributes } from "../../../thirdweb/types";
 import { thirdwebClient } from "../../web3-provider";
 import { adminAccount } from "../admin";
@@ -71,7 +74,6 @@ export async function batchUpdateAttribute(
   }
 
   console.log("Updating...", metadatas);
-  
 
   return await batchUpdateMetadata(metadatas, contract);
 }
@@ -99,23 +101,24 @@ export async function batchUpdateMetadata(
 ) {
   const uri = await upload({
     client: thirdwebClient,
-    files: Object.values(metadatas)
+    files: Object.values(metadatas),
   });
 
   const newNftsRepo = uri[0].substring(0, uri[0].lastIndexOf("/")) + "/";
   console.log(newNftsRepo);
-  
+
   const updateMetadataTx = updateBatchBaseURI({
     contract: contract,
-    index: (await getBaseURICount({
-      contract: contract
-    })) - 1n,
+    index:
+      (await getBaseURICount({
+        contract: contract,
+      })) - 1n,
     uri: newNftsRepo,
   });
 
   const result = await sendAndConfirmTransaction({
     account: adminAccount,
-    transaction: updateMetadataTx
+    transaction: updateMetadataTx,
   });
 
   console.log(result);
@@ -143,14 +146,14 @@ export async function sendAndConfirmMulticall(
     method: resolveMethod("multicall"),
     params: [
       // @ts-ignore error ts(2322)
-      dataList
-    ]
+      dataList,
+    ],
   });
   console.log(batchTx);
 
   const batchResult = await sendAndConfirmTransaction({
     account: adminAccount,
-    transaction: batchTx
+    transaction: batchTx,
   });
 
   console.log(batchResult);

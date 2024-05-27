@@ -15,9 +15,12 @@
     "@emotion/styled": "^11.11.5",
     "@mui/material": "^5.15.18",
     "@thirdweb-dev/sdk": "^4.0.85",
+    "jotai": "^2.8.1",
+    "konva": "^9.3.11",
     "npm": "^10.8.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-konva": "^18.2.10",
     "react-router-dom": "^6.23.1",
     "thirdweb": "^5.16.0"
   },

@@ -4,18 +4,18 @@ import {
   getContract,
   prepareContractCall,
   resolveMethod,
-  sendAndConfirmTransaction
+  sendAndConfirmTransaction,
 } from "thirdweb";
 import {
   LazyMintParams,
   lazyMint,
   claimTo,
-  burn
+  burn,
 } from "thirdweb/extensions/erc721";
 import config from "./config.json";
 import {
   batchUpdateMetadata,
-  sendAndConfirmMulticall
+  sendAndConfirmMulticall,
 } from "../erc721-scripts";
 import { ThirdwebSDK } from "@thirdweb-dev/sdk";
 import { contractURI } from "thirdweb/extensions/common";
@@ -25,16 +25,17 @@ import {
   isValidLand,
   LandNFTAttributes,
   GameEvent,
-  ResourceType
+  ResourceType,
 } from "../../../../thirdweb/types";
-import { allLandNfts } from "../../../land-provider";
 import {
   landContract,
   testChain,
   thirdwebClient,
-  thirdwebMultichainRegistry
+  thirdwebMultichainRegistry,
 } from "../../../web3-provider";
 import { adminAccount, adminSdk } from "../../admin";
+import { landsNftsAtom } from "../../../land-provider";
+import { store } from "../../../store";
 
 /**
  * Burn, create and claim NFTs to the admin account
@@ -46,8 +47,8 @@ export async function resetLandNfts(contract?: Readonly<ContractOptions<[]>>) {
   for (const configLand of config.lands) {
     const land: Land = {
       id: configLand.id,
-      resources: configLand.resources as Resource[],
-      event: configLand.event as GameEvent.Land
+      resources: configLand.resources as any,
+      event: configLand.event as GameEvent.Land,
     };
 
     if (!isValidLand(land))
@@ -56,39 +57,40 @@ export async function resetLandNfts(contract?: Readonly<ContractOptions<[]>>) {
     const attributes: LandNFTAttributes = [
       {
         trait_type: "id",
-        value: land.id + 1
+        value: land.id + 1,
       },
       {
         trait_type: "resources",
-        value: land.resources
+        value: land.resources,
       },
       {
         trait_type: "event",
-        value: land.event
-      }
+        value: land.event,
+      },
     ];
 
     nfts.push({
       name: `ThreePiece Land #${land.id + 1}`,
       description: "A land full of mystery...",
       image: "ipfs://QmcJoG6Sgh3Mhv94tXANDrjom7JVv3adpW5igX9VbaHyYN",
-      attributes: attributes
+      attributes: attributes,
     });
   }
 
+  const allLandNfts = store.get(landsNftsAtom);
   console.log(allLandNfts);
 
   await burnByBatch(allLandNfts, contractToUse);
 
   const mintTx = lazyMint({
     contract: contractToUse,
-    nfts
+    nfts,
   });
 
   const claimTx = claimTo({
     contract: contractToUse,
     quantity: BigInt(config.lands.length),
-    to: adminAccount.address
+    to: adminAccount.address,
   });
 
   const batchResult = await sendAndConfirmMulticall(
@@ -110,7 +112,7 @@ async function burnByBatch(
   for (const nft of nfts) {
     const burnTx = burn({
       contract: contract,
-      tokenId: nft.id
+      tokenId: nft.id,
     });
 
     burnTxList.push(burnTx);
@@ -147,12 +149,11 @@ export async function outputLandJson() {
         resources: [
           {
             resourceType: ResourceType.Water,
-            productionRate: 45,
-            maximumAmmount: 2500,
-            currentAmmount: 0
-          }
+            productionTimeSeconds: 45,
+            Amount: 2500,
+          },
         ],
-        event: GameEvent.Land.None
+        event: GameEvent.Land.None,
       };
       list.push(land);
     }
@@ -169,18 +170,18 @@ export async function createNftdropContract() {
   );
   const contractAddress = await sdk.deployer.deployNFTDrop({
     name: "Automatic NFT Drops",
-    trusted_forwarders: []
+    trusted_forwarders: [],
   });
   console.log("Deployed at", contractAddress);
 
   const contractToAdd = getContract({
     client: thirdwebClient,
     chain: testChain,
-    address: contractAddress
+    address: contractAddress,
   });
 
   const metadataURI = await contractURI({
-    contract: contractToAdd
+    contract: contractToAdd,
   });
 
   /* @ts-ignore */
@@ -195,13 +196,13 @@ export async function createNftdropContract() {
       /* @ts-ignore */
       contractToAdd.chain.id,
       /* @ts-ignore */
-      metadataURI || ""
-    ]
+      metadataURI || "",
+    ],
   });
 
   const result = await sendAndConfirmTransaction({
     account: adminAccount,
-    transaction: tx
+    transaction: tx,
   });
   console.log("Added to dashboard", result);
 
