@@ -17,7 +17,7 @@ import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 contract NFTMarketplace {
     event TradeStatusChange(uint256 ad, bytes32 status);
 
-    IERC20 currencyToken;
+    IERC20 public currencyToken;
     IERC721 public itemToken;
 
     struct Trade {
@@ -26,7 +26,6 @@ contract NFTMarketplace {
         uint256 price;
         bytes32 status; // Open, Executed, Cancelled
     }
-
 
     mapping(uint256 => Trade) public trades;
     mapping(uint256 => Trade) public activeTrades;
@@ -52,12 +51,11 @@ contract NFTMarketplace {
         return (trade.poster, trade.item, trade.price, trade.status);
     }
 
-
     function removeTrade(uint256 _item) public {
         // Resetting the trade to its default value (i.e., a new Trade struct with default values)
         delete activeTrades[_item];
     }
-    
+
     /**
     * @dev Returns the total trades.
     @return trades The total trades.
@@ -71,7 +69,9 @@ contract NFTMarketplace {
         return ret;
     }
 
-    function getTradesByOwner(address owner) public view returns (Trade[] memory) {
+    function getTradesByOwner(
+        address owner
+    ) public view returns (Trade[] memory) {
         Trade[] memory ret = new Trade[](activeTradeCounter);
         for (uint i = 0; i < activeTradeCounter; i++) {
             if (owner == activeTrades[i].poster) {
@@ -93,7 +93,7 @@ contract NFTMarketplace {
             price: _price,
             status: "Open"
         });
-        
+
         activeTrades[_item] = trades[tradeCounter];
         tradeCounter += 1;
         if (activeTradeCounter <= _item) {
@@ -145,5 +145,25 @@ contract NFTMarketplace {
         trades[index].status = "Cancelled";
         emit TradeStatusChange(index, "Cancelled");
         removeTrade(trade.item);
+    }
+
+    /**
+     * @notice Call this function to approve this contract to manage your ERC721 tokens.
+     * @dev This must be called from the frontend by the token owner before a trade can be opened.
+     * @param _operator The contract address to be approved.
+     * @param _approved Boolean value for the approval status.
+     */
+    function setApprovalForAllNFT(address _operator, bool _approved) public {
+        itemToken.setApprovalForAll(_operator, _approved);
+    }
+
+    /**
+     * @notice Call this function to approve this contract to spend your ERC20 tokens.
+     * @dev This must be called from the frontend by the token owner before executing a trade.
+     * @param _spender The contract address to be approved.
+     * @param _amount The amount of tokens to be approved.
+     */
+    function approve(address _spender, uint256 _amount) public {
+        currencyToken.approve(_spender, _amount);
     }
 }

@@ -140,6 +140,41 @@ export async function activeTrades(
 
 
 /**
+ * Calls the "currencyToken" function on the contract.
+ * @param options - The options for the currencyToken function.
+ * @returns The parsed result of the function call.
+ * @example
+ * ```
+ * import { currencyToken } from "TODO";
+ * 
+ * const result = await currencyToken();
+ * 
+ * ```
+ */
+export async function currencyToken(
+  options: BaseTransactionOptions
+) {
+  return readContract({
+    contract: options.contract,
+    method: [
+  "0x6b2fa374",
+  [],
+  [
+    {
+      "internalType": "contract IERC20",
+      "name": "",
+      "type": "address"
+    }
+  ]
+],
+    params: []
+  });
+};
+
+
+
+
+/**
  * Calls the "getAll" function on the contract.
  * @param options - The options for the getAll function.
  * @returns The parsed result of the function call.
@@ -465,6 +500,58 @@ export async function trades(
 */
 
 /**
+ * Represents the parameters for the "approveCurrencyToken" function.
+ */
+export type ApproveCurrencyTokenParams = {
+  spender: AbiParameterToPrimitiveType<{"internalType":"address","name":"_spender","type":"address"}>
+amount: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"_amount","type":"uint256"}>
+};
+
+/**
+ * Calls the "approveCurrencyToken" function on the contract.
+ * @param options - The options for the "approveCurrencyToken" function.
+ * @returns A prepared transaction object.
+ * @example
+ * ```
+ * import { approveCurrencyToken } from "TODO";
+ * 
+ * const transaction = approveCurrencyToken({
+ *  spender: ...,
+ *  amount: ...,
+ * });
+ * 
+ * // Send the transaction
+ * ...
+ * 
+ * ```
+ */
+export function approveCurrencyToken(
+  options: BaseTransactionOptions<ApproveCurrencyTokenParams>
+) {
+  return prepareContractCall({
+    contract: options.contract,
+    method: [
+  "0x3ee3369d",
+  [
+    {
+      "internalType": "address",
+      "name": "_spender",
+      "type": "address"
+    },
+    {
+      "internalType": "uint256",
+      "name": "_amount",
+      "type": "uint256"
+    }
+  ],
+  []
+],
+    params: [options.spender, options.amount]
+  });
+};
+
+
+/**
  * Represents the parameters for the "cancelTrade" function.
  */
 export type CancelTradeParams = {
@@ -647,6 +734,58 @@ export function removeTrade(
   []
 ],
     params: [options.item]
+  });
+};
+
+
+/**
+ * Represents the parameters for the "setApprovalForAllNFT" function.
+ */
+export type SetApprovalForAllNFTParams = {
+  operator: AbiParameterToPrimitiveType<{"internalType":"address","name":"_operator","type":"address"}>
+approved: AbiParameterToPrimitiveType<{"internalType":"bool","name":"_approved","type":"bool"}>
+};
+
+/**
+ * Calls the "setApprovalForAllNFT" function on the contract.
+ * @param options - The options for the "setApprovalForAllNFT" function.
+ * @returns A prepared transaction object.
+ * @example
+ * ```
+ * import { setApprovalForAllNFT } from "TODO";
+ * 
+ * const transaction = setApprovalForAllNFT({
+ *  operator: ...,
+ *  approved: ...,
+ * });
+ * 
+ * // Send the transaction
+ * ...
+ * 
+ * ```
+ */
+export function setApprovalForAllNFT(
+  options: BaseTransactionOptions<SetApprovalForAllNFTParams>
+) {
+  return prepareContractCall({
+    contract: options.contract,
+    method: [
+  "0x0ddb0a42",
+  [
+    {
+      "internalType": "address",
+      "name": "_operator",
+      "type": "address"
+    },
+    {
+      "internalType": "bool",
+      "name": "_approved",
+      "type": "bool"
+    }
+  ],
+  []
+],
+    params: [options.operator, options.approved]
   });
 };
 

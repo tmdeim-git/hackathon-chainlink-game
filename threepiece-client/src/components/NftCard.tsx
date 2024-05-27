@@ -14,6 +14,14 @@ import {
 } from "../providers/backend/scripts/marketplace/marketplace-scripts";
 import { Account } from "thirdweb/wallets";
 import { adminAccount } from "../providers/backend/admin";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  TextField,
+  DialogActions,
+} from "@mui/material";
 
 export default function NftCard({
   lands,
@@ -24,6 +32,17 @@ export default function NftCard({
   wallet: Account;
   type: string;
 }) {
+  const [open, setOpen] = useState(false);
+
+  const [land, setLand] = useState<Land>(lands[0]);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
     <div style={{ height: "50%", position: "relative" }}>
       <ImageList
@@ -49,12 +68,20 @@ export default function NftCard({
                     <Button
                       aria-label={`info about ${land.nft.metadata.name}`}
                       variant="contained"
-                      onClick={async () =>
+                      /*onClick={async () =>
                         type === "owned"
                           ? await createLandTrade(wallet, land.nft, 1000n)
                           : type === "listed"
                           ? await cancelListing(wallet, land.nft.id)
-                          : await executeLandTrade(adminAccount, land.nft)
+                          : await executeLandTrade(wallet, land.nft)
+                      }*/
+                      onClick={
+                        type === "owned"
+                          ? () => {
+                              setLand(land);
+                              handleClickOpen();
+                            }
+                          : () => {}
                       }
                       key={land.id}
                     >
@@ -73,6 +100,44 @@ export default function NftCard({
             You don't have any NFTs.
           </div>
         )}
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          PaperProps={{
+            component: "form",
+            onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
+              event.preventDefault();
+              const formData = new FormData(event.currentTarget);
+              const formJson = Object.fromEntries((formData as any).entries());
+              const price = formJson.price;
+              console.log(price);
+              handleClose();
+            },
+          }}
+        >
+          <DialogTitle>Buy NFT {land?.nft.metadata.name}</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              To List your NFT, you need to enter a price and confirm the
+              transaction in your wallet.
+            </DialogContentText>
+            <TextField
+              autoFocus
+              required
+              margin="dense"
+              id="name"
+              name="price"
+              label="Price (in LINK)"
+              type="price"
+              fullWidth
+              variant="standard"
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button type="submit" onClick={async ()=>{await createLandTrade(wallet, land.nft, formJson)}}>Confirm</Button>
+          </DialogActions>
+        </Dialog>
       </ImageList>
     </div>
   );
