@@ -38,10 +38,12 @@ const start = () => watchContractEvents({
       }
 
       if (eventName === GameEvent.Land.Raining) {
-        results.forEach((result, index) => {
+        allLandNfts.forEach((nftToModify, index) => {
+          const result = results[index];
+          // TODO: process raining
           if (result) {
-            const nftToModify = allLandNfts[index];
-            // TODO: process raining
+            // await batchUpdateMetadata(metadatas, contract, nftList[0].id)
+            console.log("RAINING ON NFT TILE", nftToModify.metadata.attributes[0])
           }
         });
       }
@@ -52,7 +54,6 @@ const start = () => watchContractEvents({
       }
     }
 
-    await refreshNfts();
     if (message)
       // no message for some events
       listeners.forEach((callback) => callback(message));
