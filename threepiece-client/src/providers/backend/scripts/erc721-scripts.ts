@@ -100,15 +100,17 @@ export async function batchUpdateMetadata(
   contract: Readonly<ContractOptions<[]>>,
   startIndex: bigint
 ) {
-  const uri = await upload({
+  let uri: string | string[] = await upload({
     client: thirdwebClient,
     files: Object.values(metadatas),
     rewriteFileNames: {
       fileStartNumber: Number(startIndex)
     }
   });
-  const newNftsRepo = uri[0].substring(0, uri[0].lastIndexOf("/")) + "/";
-  console.log(newNftsRepo);
+
+  if (typeof uri !== 'string') // then its an array of the same base uri, we take the first 
+    uri = uri[0];
+  const newNftsRepo = uri.substring(0, uri.lastIndexOf("/")) + "/";
 
   const updateMetadataTx = updateBatchBaseURI({
     contract: contract,

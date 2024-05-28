@@ -70,9 +70,6 @@ export async function createNewPlayerNft(
   if (getCurrentPlayerInfo(playerAddress, playerInfo)) {
     throw new Error("Player already exists");
   }
-  if (adminAccount.address === playerAddress) {
-    throw new Error("Admin can't be a player NFT");
-  }
   const value = level || 1;
   const attributes: PlayerNFTAttributes = [
     {
@@ -111,9 +108,6 @@ export async function findOrCreatePlayerNft(playerAddress: string) {
   if (playerInfo) {
     return playerInfo;
   }
-  if (adminAccount.address === playerAddress) {
-    throw new Error("Admin can't be a player NFT");
-  }
   console.info("Player not found, creating new player...");
   await createNewPlayerNft(playerAddress);
   const newPlayers = store.get(allPlayersAtom);
@@ -140,12 +134,13 @@ export async function changePlayerNameNft(
   newName: string
 ) {
   const playersNft = store.get(allPlayersNftsAtom);
+  console.log(playersNft);
+  
   const nft = playersNft.find((nft) => nft.owner === playerAddress);
+  nft.metadata.name = newName;
+
   await updateMetadata(
-    {
-      ...nft.metadata,
-      name: newName,
-    },
+    nft.metadata,
     playersNft,
     Number(nft.id),
     playerContract
