@@ -15,11 +15,11 @@ export type PlayerNFT = NFT & {
 export namespace GameEvent {
   export enum Land {
     None = "none",
-    Raining = "raining",
+    Raining = "raining"
   }
 
   export enum Game {
-    Lootbox = "lootbox",
+    Lootbox = "lootbox"
   }
 }
 
@@ -82,6 +82,7 @@ export enum ResourceType {
   Wood = "wood",
   Soil = "soil",
   Ore = "ore",
+  Snow = "snow"
 }
 
 export interface MetadataAttributes {
@@ -93,7 +94,7 @@ export function isValidLand(land: Land): land is Land {
   const resources = land.resources;
   const landEvent = land.event;
   let resourceInEnum = true;
-  resources.forEach((r) => {
+  resources?.forEach((r) => {
     if (!isInEnum(r.resourceType, ResourceType)) resourceInEnum = false;
   });
   return resourceInEnum && isInEnum(landEvent, GameEvent.Land);

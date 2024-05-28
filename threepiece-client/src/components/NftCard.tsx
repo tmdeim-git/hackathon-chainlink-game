@@ -30,7 +30,7 @@ export default function NftCard({
 }) {
   const [open, setOpen] = useState(false);
 
-  const [land, setLand] = useState<Land>(lands[0]);
+  const [land, setLand] = useState<Land>(lands[2]);
 
   const handleClickOpen = () => {
     setOpen(true);

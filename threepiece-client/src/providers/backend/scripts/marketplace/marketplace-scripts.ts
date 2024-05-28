@@ -50,7 +50,7 @@ export async function createLandTrade(
 
 export async function cancelListing(account: Account, tradeId: bigint) {
   console.log(account.address, tradeId);
-  
+
   const tx = cancelTrade({
     item: tradeId,
     contract: marketplaceLandContract,

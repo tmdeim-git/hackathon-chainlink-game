@@ -5,6 +5,8 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+import "@thirdweb-dev/contracts/extension/ContractMetadata.sol";
+import "@thirdweb-dev/contracts/extension/Permissions.sol";
 
 /**
  * @title NFTMarketplace
@@ -14,8 +16,11 @@ import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
  * implemented. The item tokenization is responsibility of the ERC721 contract
  * which should encode any item details.
  */
-contract NFTMarketplace {
+contract NFTMarketplace is ContractMetadata, Permissions {
     event TradeStatusChange(uint256 ad, bytes32 status);
+    
+    // for metadata updates
+    address public deployer;
 
     IERC20 public currencyToken;
     IERC721 public itemToken;
@@ -38,6 +43,8 @@ contract NFTMarketplace {
         itemToken = IERC721(_itemTokenAddress);
         tradeCounter = 0;
         activeTradeCounter = 0;
+        deployer = msg.sender;
+        _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 
     /**
@@ -147,13 +154,17 @@ contract NFTMarketplace {
         removeTrade(trade.item);
     }
 
+    function setItemTokenAddress(address _itemTokenAddress) public onlyRole(DEFAULT_ADMIN_ROLE) {
+        itemToken = IERC721(_itemTokenAddress);
+    }
+
     /**
      * @notice Call this function to approve this contract to manage your ERC721 tokens.
      * @dev This must be called from the frontend by the token owner before a trade can be opened.
      * @param _operator The contract address to be approved.
      * @param _approved Boolean value for the approval status.
      */
-    function setApprovalForAllNFT(address _operator, bool _approved) public {
+    function setApprovalForAllNFT(address _operator, bool _approved) public onlyRole(DEFAULT_ADMIN_ROLE) {
         itemToken.setApprovalForAll(_operator, _approved);
     }
 
@@ -163,7 +174,17 @@ contract NFTMarketplace {
      * @param _spender The contract address to be approved.
      * @param _amount The amount of tokens to be approved.
      */
-    function approveCurrencyToken(address _spender, uint256 _amount) public {
+    function approveCurrencyToken(address _spender, uint256 _amount) public onlyRole(DEFAULT_ADMIN_ROLE) {
         currencyToken.approve(_spender, _amount);
+    }
+
+    function _canSetContractURI()
+        internal
+        view
+        virtual
+        override
+        returns (bool)
+    {
+        return msg.sender == deployer;
     }
 }

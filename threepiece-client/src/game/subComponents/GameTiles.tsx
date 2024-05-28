@@ -17,7 +17,7 @@ const GameTiles: React.FC<Props> = (props: Props) => {
   const spacesBetweenColumns = width / cols;
   return (
     <Group>
-      {landIds.map((id, index) => (
+      {landIds?.map((id, index) => (
         <GameTileInfo
           key={id}
           tileId={id}

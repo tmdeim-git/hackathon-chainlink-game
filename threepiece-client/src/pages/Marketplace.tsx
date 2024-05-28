@@ -29,7 +29,8 @@ export default function Marketplace() {
   console.log(status);
   const allLands: Land[] = store.get(allLandsAtom);
 
-  console.log(playerListedLands);
+
+  console.log(markedplaceListedLands);
 
   return (
     <div style={{ height: "100%" }}>

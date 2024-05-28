@@ -1,6 +1,6 @@
-import { ContractOptions } from "thirdweb";
+import { ContractOptions, NFT } from "thirdweb";
 import { Account } from "thirdweb/wallets";
-import { Land, ResourceType, MetadataAttributes } from "../thirdweb/types";
+import { Land, ResourceType, MetadataAttributes, LandNFTAttributes, LandNFT } from "../thirdweb/types";
 import { adminAddress } from "./backend/admin";
 import {
   updateMetadata,
@@ -69,6 +69,22 @@ export async function batchUpdateAttributeLand(
   if (account.address === adminAddress) {
     const nftList = store.get(landsNftsAtom);
     return await batchUpdateAttribute(newAttributes, nftList, contract);
+  }
+}
+
+export async function updateAttributeLand(
+  account: Account,
+  contract: Readonly<ContractOptions<[]>>,
+  newAttributes: LandNFTAttributes,
+  nftId: bigint
+) {
+  if (account.address === adminAddress) {
+    const nftList = store.get(landsNftsAtom) as NFT[];
+    let metadata = nftList.find(n => n.id === nftId).metadata;
+    metadata.attributes = newAttributes as unknown as Record<string, unknown>;
+    console.log(metadata);
+
+    return await updateMetadata(metadata, nftList, Number(nftId), contract);
   }
 }
 

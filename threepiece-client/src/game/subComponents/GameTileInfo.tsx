@@ -20,7 +20,7 @@ const GameTileInfo: React.FC<Props> = (props: Props) => {
   const walletAddress = wallet?.getAccount().address;
 
   const strokeColor =
-    gameTile._isUnclaimedTile || gameTile._land.ownerAddress !== walletAddress
+    gameTile?._isUnclaimedTile || gameTile?._land.ownerAddress !== walletAddress
       ? "black"
       : "green";
   return (
