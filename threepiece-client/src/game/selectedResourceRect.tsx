@@ -5,10 +5,24 @@ import { useActiveAccount } from "thirdweb/react";
 import UpdateSingleAttribute from "../components/UpdateSingleAttribute";
 import { Tabs, Tab } from "@mui/material";
 import { useState } from "react";
+import { useGetLands } from "../providers/land-provider";
+import { ResourceType } from "../thirdweb/types";
 
 
 const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
   const account = useActiveAccount();
+  const lands = useGetLands();
+  console.log("ALL LANDS", lands);
+
+  let counter: Record<ResourceType, number>
+  // counter.ore = 5;
+  for (const land of lands) {
+    console.log(land.resources);
+    //    for each resource of the land
+    //        increment the counter of each ressource (use ResourceType array for counting)
+  }
+
+
   const getTileId = (): number => {
     return selectedTile?._land.id || null;
   };
