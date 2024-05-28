@@ -32,7 +32,7 @@ export function useGetPlayers() {
 const getCurrentPlayerInfo = (playerAddress: string, player: Player[]) =>
   player.find((player) => player.ownerAddress === playerAddress);
 
-export function useGetPlayer(playerAddress: string) {
+export function useGetPlayerByAddress(playerAddress: string) {
   const playerAtom = useMemo(
     () =>
       selectAtom(allPlayersAtom, (players) =>
