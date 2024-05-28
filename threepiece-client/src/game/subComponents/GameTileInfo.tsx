@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
-import { Group, Rect, Text, Stage, Layer } from 'react-konva';
-import { GameTile } from '../GameTile';
-import { useGetGameTilesById } from '../client';
-import { useActiveWallet } from 'thirdweb/react';
+import { useState, useEffect } from "react";
+import { Group, Rect, Text, Image } from "react-konva";
+import { useActiveWallet } from "thirdweb/react";
+import rain from "../../assets/rain.gif";
+import { GameEvent } from "../../thirdweb/types";
+import { GameTile } from "../GameTile";
+import { useGetGameTilesById } from "../client";
 
 type Props = {
   width: number;
@@ -14,7 +16,7 @@ type Props = {
 };
 
 const GameTileInfo: React.FC<Props> = (props: Props) => {
-  const { width, height, tileId } = props;
+  const { width, height, x, y, tileId, setTileSelected } = props;
   const [isHovered, setIsHovered] = useState(false);
   const [isFightHovered, setIsFightHovered] = useState(false);
   const gameTile = useGetGameTilesById(tileId);
@@ -27,7 +29,7 @@ const GameTileInfo: React.FC<Props> = (props: Props) => {
     const stage = e.target.getStage();
     const pointerPosition = stage?.getPointerPosition();
     if (pointerPosition) {
-      setPopup({ x: props.x / width - 2, y: props.y / height + 10 });
+      setPopup({ x: props.x / width, y: props.y / height });
     }
   };
 
@@ -36,11 +38,26 @@ const GameTileInfo: React.FC<Props> = (props: Props) => {
     document.body.style.cursor = 'default';
   };
 
+  const [image, setImage] = useState<HTMLImageElement | null>(null);
+
+  const isRaining = gameTile._land.event === GameEvent.Land.Raining;
+
+  useEffect(() => {
+    const mapImage = new window.Image();
+    mapImage.src = rain;
+    mapImage.onload = () => {
+      setImage(mapImage);
+    };
+  }, []);
+
   const unowned =
     gameTile?._isUnclaimedTile || gameTile?._land.ownerAddress !== walletAddress;
 
   return (
-    <Group x={props.x} y={props.y}>
+    <Group x={x} y={y}>
+      {image && isRaining && (
+        <Image image={image} width={width} height={height} />
+      )}
       <Rect
         width={width}
         height={height}
@@ -49,18 +66,18 @@ const GameTileInfo: React.FC<Props> = (props: Props) => {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onClick={(e) => {
-          props.setTileSelected(gameTile);
+          setTileSelected(gameTile);
           openBattle(e);
         }}
       />
-      {popup && (
+      {popup && gameTile._selected && (
         <Group>
           <Rect
             x={popup.x}
             y={popup.y}
-            width={width}
+            width={45}
             height={30}
-            fill={isFightHovered ? 'red' : 'darkred'}
+            fill={isFightHovered ? 'darkred' : '#1a1a1a'}
             cornerRadius={15}
             shadowColor="black"
             shadowBlur={5}
@@ -74,10 +91,10 @@ const GameTileInfo: React.FC<Props> = (props: Props) => {
             y={popup.y}
             width={width}
             height={30}
-            text="FIGHT!"
+            text="🗡️"
             fontSize={14}
             fill="white"
-            align="center"
+            padding={14}
             verticalAlign="middle"
             onClick={() => {
               closeBattle();
