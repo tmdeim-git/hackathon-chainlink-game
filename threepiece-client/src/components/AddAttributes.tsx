@@ -14,8 +14,7 @@ import {
   thirdwebClient,
 } from "../providers/web3-provider";
 
-const AddAttributes = ({ setError, account }) => {
-  const [addLoading, setAddLoading] = useState(false);
+const AddAttributes = ({ setError, account, loading, setLoading }) => {
   const [addContractAddress, setAddContractAddress] = useState("");
   const [addAttributeName, setAddAttributeName] = useState("");
   const [addDefaultAttributeValue, setDefaultAttributeValue] = useState("");
@@ -30,7 +29,7 @@ const AddAttributes = ({ setError, account }) => {
       return;
     }
     setError("");
-    setAddLoading(true);
+    setLoading(true);
     const contract = addContractAddress
       ? getContract({
           client: thirdwebClient,
@@ -43,7 +42,7 @@ const AddAttributes = ({ setError, account }) => {
       value: addDefaultAttributeValue,
     };
     await batchAddAttributes(newAttributes, account, contract);
-    setAddLoading(false);
+    setLoading(false);
   };
 
   return (
@@ -126,7 +125,7 @@ const AddAttributes = ({ setError, account }) => {
           },
         }}
       />
-      {addLoading ? (
+      {loading ? (
         <CircularProgress color="primary" />
       ) : (
         <Button

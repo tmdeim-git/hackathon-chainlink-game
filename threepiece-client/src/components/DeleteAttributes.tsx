@@ -14,8 +14,7 @@ import {
   thirdwebClient,
 } from "../providers/web3-provider";
 
-const DeleteAttributes = ({ setError, account }) => {
-  const [deleteLoading, setDeleteLoading] = useState(false);
+const DeleteAttributes = ({ setError, account, loading, setLoading }) => {
   const [deleteContractAddress, setDeleteContractAddress] = useState("");
   const [deleteAttributeName, setDeleteAttributeName] = useState("");
   const [deleteInputError, setDeleteInputError] = useState(false);
@@ -29,7 +28,7 @@ const DeleteAttributes = ({ setError, account }) => {
       return;
     }
     setError("");
-    setDeleteLoading(true);
+    setLoading(true);
     const contract = deleteContractAddress
       ? getContract({
           client: thirdwebClient,
@@ -39,7 +38,7 @@ const DeleteAttributes = ({ setError, account }) => {
       : landContract;
 
     await batchDeleteAttributes(deleteAttributeName, account, contract);
-    setDeleteLoading(false);
+    setLoading(false);
   };
 
   return (
@@ -101,7 +100,7 @@ const DeleteAttributes = ({ setError, account }) => {
           },
         }}
       />
-      {deleteLoading ? (
+      {loading ? (
         <CircularProgress color="error" />
       ) : (
         <Button

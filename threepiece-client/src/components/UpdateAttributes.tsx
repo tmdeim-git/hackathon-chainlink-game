@@ -14,8 +14,7 @@ import {
   thirdwebClient,
 } from "../providers/web3-provider";
 
-const UpdateAttributes = ({ setError, account }) => {
-  const [updateLoading, setUpdateLoading] = useState(false);
+const UpdateAttributes = ({ setError, account, loading, setLoading }) => {
   const [updateContractAddress, setUpdateContractAddress] = useState("");
   const [updateAttributeName, setUpdateAttributeName] = useState("");
   const [updateNewValue, setUpdateNewValue] = useState("");
@@ -37,7 +36,7 @@ const UpdateAttributes = ({ setError, account }) => {
       return;
     }
     setError("");
-    setUpdateLoading(true);
+    setLoading(true);
     const contract = updateContractAddress
       ? getContract({
           client: thirdwebClient,
@@ -51,7 +50,7 @@ const UpdateAttributes = ({ setError, account }) => {
       value: updateNewValue,
     };
     await batchUpdateAttributeLand(account, contract, newAttributes);
-    setUpdateLoading(false);
+    setLoading(false);
   };
 
   return (
@@ -138,7 +137,7 @@ const UpdateAttributes = ({ setError, account }) => {
           },
         }}
       />
-      {updateLoading ? (
+      {loading ? (
         <CircularProgress color="primary" />
       ) : (
         <Button
