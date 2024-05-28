@@ -26,14 +26,14 @@ const GameTileInfo: React.FC<Props> = (props: Props) => {
   const walletAddress = wallet?.getAccount().address;
   const [isLoading, setIsLoading] = useState(false); // State to track loading status
 
-  const [popup, setPopup] = useState<{ x: number; y: number } | null>(null);
+  const [popup, setPopup] = useState<boolean>(false);
 
   const openBattlePrompt = (e: any) => {
     setResult(null)
     const stage = e.target.getStage();
     const pointerPosition = stage?.getPointerPosition();
     if (pointerPosition) {
-      setPopup({ x: props.x / width, y: props.y / height });
+      setPopup(true);
     }
   };
 
@@ -42,7 +42,7 @@ const GameTileInfo: React.FC<Props> = (props: Props) => {
       return
     setIsLoading(true);
     setTileSelected(null)
-    setPopup(null);
+    setPopup(false);
     document.body.style.cursor = 'default';
 
     const result = await getRandomNumbersWithVrf({
@@ -72,7 +72,7 @@ const GameTileInfo: React.FC<Props> = (props: Props) => {
 
   const unowned =
     gameTile?._isUnclaimedTile || gameTile?._land.ownerAddress !== walletAddress;
-
+  const popupLength = 35;
   return (
     <Group x={x} y={y}>
       {image && isRaining && (
@@ -92,7 +92,7 @@ const GameTileInfo: React.FC<Props> = (props: Props) => {
       />
       {result === 'lost' && !gameTile?._selected && (
         <Text
-          x={30}
+          x={10}
           y={15}
           text="❌"
           fontSize={20}
@@ -102,7 +102,7 @@ const GameTileInfo: React.FC<Props> = (props: Props) => {
 
       {result === 'won' && !gameTile?._selected && (
         <Text
-          x={30}
+          x={10}
           y={15}
           text="🏆"
           fontSize={20}
@@ -131,10 +131,10 @@ const GameTileInfo: React.FC<Props> = (props: Props) => {
       {!isLoading && popup && gameTile._selected && (
         <Group>
           <Rect
-            x={popup.x}
-            y={popup.y}
-            width={45}
-            height={30}
+            x={width - popupLength}
+            y={0}
+            width={popupLength}
+            height={popupLength}
             fill={isFightHovered ? 'darkred' : '#1a1a1a'}
             cornerRadius={15}
             shadowColor="black"
@@ -145,14 +145,15 @@ const GameTileInfo: React.FC<Props> = (props: Props) => {
             listening={false}
           />
           <Text
-            x={popup.x}
-            y={popup.y}
-            width={width}
-            height={30}
+            x={width - popupLength}
+            y={0}
+            width={popupLength}
+            height={popupLength}
             text="🗡️"
             fontSize={14}
+            padding={2}
             fill="white"
-            padding={14}
+            align="center"
             verticalAlign="middle"
             onClick={() => {
               beginBattle();

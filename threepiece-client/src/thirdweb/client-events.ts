@@ -72,10 +72,15 @@ const startMetadataUpdateEvent = () =>
   watchContractEvents({
     onEvents(events) {
       refreshNfts();
-      const event = events[0];
-      const id = event.args._fromTokenId;
-      console.log(`Token metadata updated`, event);
-      const message = `NFT ${id} has been updated.`;
+      const { args } = events[0];
+      let message: string;
+      console.log(`Token metadata updated`, events);
+      if (args._toTokenId - args._fromTokenId > 1n) {
+        message = `NFTs ${args._fromTokenId} to ${args._toTokenId} updated!`;
+      } else {
+        const id = args._fromTokenId;
+        message = `NFT ${id} has been updated.`;
+      }
       listeners.forEach((callback) => callback(message));
     },
     events: [batchMetadataUpdateEvent()],
