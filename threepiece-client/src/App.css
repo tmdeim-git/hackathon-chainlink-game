@@ -1,4 +1,3 @@
-
 html, body {
   height: 100%;
   margin: 0;
@@ -9,25 +8,13 @@ html, body {
 #root {
   text-align: center;
   width: 100%;
-  height: 100vh;
-  position: relative;
-  display: flex;
-  flex-direction: column;
+  height: 100%;
 }
 
 .app {
   display: flex;
   flex-direction: column;
-}
-
-.navbar{
-    flex: 0 1 auto;
-
-}
-
-.footer{
-  flex: 0 1 auto;
-
+  height : 100%;
 }
 
 .content {
@@ -48,7 +35,6 @@ html, body {
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
-
 
 @keyframes logo-spin {
   from {
@@ -71,9 +57,4 @@ html, body {
 
 .read-the-docs {
   color: #888;
-}
-
-.app {
-  backdrop-filter: blur(4px);
-  padding-top: 67px;
 }

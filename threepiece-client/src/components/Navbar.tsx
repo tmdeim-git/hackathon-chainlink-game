@@ -25,7 +25,7 @@ export function Navbar() {
   }
 
   return (
-    <AppBar style={{ backgroundColor: "#333" }}>
+    <AppBar style={{ position: "relative", backgroundColor: "#333" }}>
       <Toolbar
         style={{
           display: "flex",

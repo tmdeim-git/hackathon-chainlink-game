@@ -1,6 +1,5 @@
 .login-page {
-    position: relative;
-    height: 100vh;
+    height: 100%;
     background-image: url("../src/assets/app-background.png");
     background-size: cover;
     background-position: center;
