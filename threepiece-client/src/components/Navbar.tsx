@@ -92,7 +92,7 @@ export function Navbar() {
               variant="contained"
               sx={{ fontSize: "16px", marginLeft: "16px" }}
             >
-              Retourner au jeu
+              🗺️
             </Button>
           )}
         </Box>
