@@ -15,9 +15,9 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
   };
 
   const getRessources = () => {
-    return selectedTile?._land.resources.map((r) => {
+    return selectedTile?._land.resources.map((r, key) => {
       return (
-        <div className="resource-element">
+        <div className="resource-element" key={key}>
           <h3 className="resource-element-title"> {r.resourceType} </h3>
           <div> time: {r.productionTimeSeconds / 60} min</div>
           <div>amount: {r.Amount}</div>
