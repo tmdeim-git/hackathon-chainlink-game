@@ -27,7 +27,7 @@ export default function Marketplace() {
 
 
 
-  console.log(playerListedLands);
+  console.log(markedplaceListedLands);
 
 
 

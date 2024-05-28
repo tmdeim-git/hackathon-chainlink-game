@@ -82,7 +82,7 @@ function nftToLandListings(nfts: any[]): {
 }[] {
     const allLands = store.get(allLandsAtom);
 
-    console.log("TO LAND LISTINGS", nfts.map((nft) => {
+    console.log(nfts, "TO LAND LISTINGS", nfts.map((nft) => {
         return {
             land: allLands[nft[1]],
             poster: nft[0],
@@ -93,7 +93,7 @@ function nftToLandListings(nfts: any[]): {
     }));
     return nfts.map((nft) => {
         return {
-            land: allLands[nft[1]],
+            land: allLands[Number(nft[1]) % allLands.length],
             poster: nft[0],
             item: nft[1],
             price: nft[2],
