@@ -12,7 +12,7 @@ const AnimatedIconButton = styled(IconButton)({
   },
   "&:focus": {
     outline: "none",
-    boxShadow: "0 0 0 3px rgba(0, 0, 0, 0.2)", // Customize the outline
+    boxShadow: "0 0 0 3px rgba(0, 0, 0, 0.2)",
   },
   "@keyframes shake": {
     "0%": { transform: "translateX(0)" },

@@ -7,10 +7,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { getContract } from "thirdweb";
-import {
-  batchDeleteAttributes,
-  batchUpdateAttributeLand,
-} from "../providers/scripts-provider";
+import { batchDeleteAttributes } from "../providers/scripts-provider";
 import {
   landContract,
   testChain,
@@ -18,7 +15,7 @@ import {
 } from "../providers/web3-provider";
 
 const DeleteAttributes = ({ setError, account }) => {
-  const [deleteLoading, setDeleteLoading] = useState(true);
+  const [deleteLoading, setDeleteLoading] = useState(false);
   const [deleteContractAddress, setDeleteContractAddress] = useState("");
   const [deleteAttributeName, setDeleteAttributeName] = useState("");
   const [deleteInputError, setDeleteInputError] = useState(false);
