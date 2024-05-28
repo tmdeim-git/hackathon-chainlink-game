@@ -8,10 +8,10 @@ type Props = {
   height: number;
   lines: number;
   cols: number;
-  tileSelected: (tile: GameTile) => void;
+  setTileSelected: (tile: GameTile) => void;
 };
 const GameTiles: React.FC<Props> = (props: Props) => {
-  const { width, height, tileSelected, lines, cols } = props;
+  const { width, height, setTileSelected, lines, cols } = props;
   const landIds = useGetLandIds();
   const spacesBetweenLines = height / lines;
   const spacesBetweenColumns = width / cols;
@@ -25,7 +25,7 @@ const GameTiles: React.FC<Props> = (props: Props) => {
           height={spacesBetweenLines}
           x={(index % cols) * spacesBetweenColumns}
           y={Math.floor(index / cols) * spacesBetweenLines}
-          tileSelected={tileSelected}
+          setTileSelected={setTileSelected}
         />
       ))}
     </Group>

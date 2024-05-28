@@ -67,7 +67,7 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
         {tabValue === 0 && (
           <div className="tile-info">
             <div style={{ paddingTop: 10 }}>Tile ID: {getTileId()}</div>
-            <div>Owned By: {getOwner()}</div>
+            {!selectedTile?._isUnclaimedTile ? <div>Owned By: {getOwner()}</div> : <div>Available in the marketplace</div>}
             <h3 className="resources-title">Resources:</h3>
             <div className="resource-table">{getResources()}</div>
           </div>

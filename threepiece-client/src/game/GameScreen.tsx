@@ -5,7 +5,7 @@ import { getGameTiles } from "./client";
 import "../style/gameScreen.css";
 
 type props = {
-  tileSelected: (tile: GameTile) => void;
+  setTileSelected: (tile: GameTile) => void;
   ownerAddress?: string;
 };
 
@@ -28,7 +28,7 @@ class GameScreen extends Component<props> {
   animationFrameId: number | null;
   image: HTMLImageElement;
 
-  constructor(props: { tileSelected: () => void }) {
+  constructor(props: { setTileSelected: () => void }) {
     super(props);
     this.canvasRef = createRef<HTMLCanvasElement>();
     this.animationFrameId = null;
@@ -137,7 +137,7 @@ class GameScreen extends Component<props> {
   }
 
   mouseClickDown = (e) => {
-    this.props.tileSelected(this.state.selectedTile);
+    this.props.setTileSelected(this.state.selectedTile);
     this.setState({
       mouseX: e.clientX,
       mouseY: e.clientY,
