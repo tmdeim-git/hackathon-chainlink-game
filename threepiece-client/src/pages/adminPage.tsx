@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box, Typography, Alert, CircularProgress } from "@mui/material";
+import { Box, Alert, CircularProgress } from "@mui/material";
 import { useActiveAccount } from "thirdweb/react";
 import { useGetLandsNft } from "../providers/land-provider";
 import ResetLandsButton from "../components/ResetLandsButton";
@@ -10,7 +10,7 @@ import DeleteAttributes from "../components/DeleteAttributes";
 import UpdateAttributes from "../components/UpdateAttributes";
 
 export function AdminPage() {
-  const [resetLoading, setResetLoading] = useState(true);
+  const [resetLoading, setResetLoading] = useState(false);
   const account = useActiveAccount();
   const [error, setError] = useState("");
 
