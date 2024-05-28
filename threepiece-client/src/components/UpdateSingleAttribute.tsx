@@ -70,7 +70,7 @@ const UpdateSingleAttribute = ({ account, nft }: { account: Account, nft: LandNF
         {"UPDATE ATTRIBUTE (ID = " + nft.id + ")"}
       </Typography>
       <Autocomplete
-        options={nft.metadata.attributes.map(a => a.trait_type)}
+        options={nft.metadata.attributes.map(a => a.trait_type).filter(a => a !== "id")}
         onChange={(e) => handleAttributeNameChange(e)}
         renderInput={(params) => (
           <TextField
