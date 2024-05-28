@@ -18,16 +18,7 @@ export function AdminPage() {
   const account = useActiveAccount();
   const [error, setError] = useState("");
 
-  const anyLoading =
-    resetLoading || addLoading || updateLoading || deleteLoading;
-
-  // Handle reset lands
-  const handleResetLands = async () => {
-    setResetLoading(true);
-    await resetLands(account);
-    setResetLoading(false);
-  };
-
+  const anyLoading = resetLoading || addLoading || updateLoading || deleteLoading;
   const allLandNfts = useGetLandsNft();
 
   return (
@@ -49,7 +40,7 @@ export function AdminPage() {
       )}
       <LoadingWithMusic isLoading={anyLoading} />
       <ResetLandsButton
-        onReset={handleResetLands}
+        account={account}
         loading={resetLoading}
         setLoading={setResetLoading}
       />
