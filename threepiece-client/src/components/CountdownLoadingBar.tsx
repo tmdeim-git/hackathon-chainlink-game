@@ -59,7 +59,7 @@ const CountdownLoadingBar = ({ startTime, endTime }) => {
 
 const ResourceProduction = ({
   resource,
-  land
+  land,
 }: {
   resource: Resource;
   land: Land;

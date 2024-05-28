@@ -21,9 +21,11 @@ import { Provider } from "jotai";
 import AdminPage from "./pages/adminPage";
 import { findOrCreatePlayerNft } from "./providers/player-provider";
 import { store } from "./providers/store";
+import Footer from "./components/Footer";
 
 let shouldRedirect = false;
 let wasConnected = false;
+
 function App() {
   const status = useActiveWalletConnectionStatus();
   const wallet = useActiveAccount();
@@ -56,7 +58,7 @@ function App() {
       navigate(login);
     }
 
-    // Auto redirect only if an auton connection got triggered
+    // Auto redirect only if an auto connection got triggered
     let alreadyRedirected = false;
 
     if (shouldRedirect && status !== "connecting") {
@@ -80,16 +82,24 @@ function App() {
   return (
     <Provider store={store}>
       <div className="app">
-        <Navbar />
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/game" element={<GamePage />} />
-          <Route path="/admin" element={<AdminPage />} />
-          <Route path="/marketplace" element={<Marketplace />} />
-          <Route path="/" element={<Navigate to="/login" />} />
-        </Routes>
+        <div className="navbar">
+          <Navbar />
+        </div>
+        <div className="content">
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/game" element={<GamePage />} />
+            <Route path="/admin" element={<AdminPage />} />
+            <Route path="/marketplace" element={<Marketplace />} />
+            <Route path="/" element={<Navigate to="/login" />} />
+          </Routes>
+        </div>
+        <div className="footer">
+          <Footer />
+        </div>
       </div>
     </Provider>
   );
 }
+
 export default App;

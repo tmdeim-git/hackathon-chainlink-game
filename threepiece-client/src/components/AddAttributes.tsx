@@ -15,7 +15,7 @@ import {
 } from "../providers/web3-provider";
 
 const AddAttributes = ({ setError, account }) => {
-  const [addLoading, setAddLoading] = useState(false);
+  const [addLoading, setAddLoading] = useState(true);
   const [addContractAddress, setAddContractAddress] = useState("");
   const [addAttributeName, setAddAttributeName] = useState("");
   const [addDefaultAttributeValue, setDefaultAttributeValue] = useState("");

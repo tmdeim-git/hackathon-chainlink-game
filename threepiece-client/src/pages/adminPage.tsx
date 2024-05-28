@@ -10,7 +10,7 @@ import DeleteAttributes from "../components/DeleteAttributes";
 import UpdateAttributes from "../components/UpdateAttributes";
 
 export function AdminPage() {
-  const [resetLoading, setResetLoading] = useState(false);
+  const [resetLoading, setResetLoading] = useState(true);
   const account = useActiveAccount();
   const [error, setError] = useState("");
 
