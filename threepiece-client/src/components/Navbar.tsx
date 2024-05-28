@@ -77,7 +77,7 @@ export function Navbar() {
               />
             </Button>
           )}
-          {pathname !== "/marketplace" && (
+          {wallet && pathname !== "/marketplace" && (
             <CartButton style={{ marginRight: "10px" }} />
           )}
           <Connect />
