@@ -15,11 +15,17 @@ let started: boolean = false;
 const listeners: Listener[] = [];
 
 export function addBackendListener(callback?: (message: string) => void) {
+  if (!started) {
+    start();
+    console.log("started backend events")
+    started = true;
+  }
   listeners.push(callback);
 }
 
-const unwatch = watchContractEvents({
-  onEvents(events) {
+
+const start = () => watchContractEvents({
+  async onEvents(events) {
     const allLandNfts = store.get(landsNftsAtom);
     const event = events[0];
     const { eventName, results } = event.args;
@@ -46,10 +52,10 @@ const unwatch = watchContractEvents({
       }
     }
 
+    await refreshNfts();
     if (message)
       // no message for some events
       listeners.forEach((callback) => callback(message));
-    refreshNfts();
   },
   events: [vrfChanceEventResultEvent()],
   contract: vrfContract,

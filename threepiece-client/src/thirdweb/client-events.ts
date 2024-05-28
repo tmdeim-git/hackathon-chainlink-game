@@ -12,7 +12,7 @@ import {
 } from "../providers/web3-provider";
 import { vrfChanceEventRequestEvent } from "./generated-contracts/vrf";
 import { GameEvent, isInEnum } from "./types";
-import { addBackendListener as backendAddListener } from "../providers/backend/backend-events";
+import { addBackendListener } from "../providers/backend/backend-events";
 import { store, refreshNfts } from "../providers/store";
 import { landsNftsAtom } from "../providers/land-provider";
 import { allPlayersNftsAtom } from "../providers/player-provider";
@@ -33,7 +33,7 @@ export function clientAddListener(
     console.log("started events");
     started = true;
   }
-  backendAddListener(callback);
+  addBackendListener(callback);
   listeners.push(callback);
 }
 
