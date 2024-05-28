@@ -79,7 +79,7 @@ export async function createNewPlayerNft(
   ];
 
   const nft = {
-    name: "LandLoomer",
+    name: "LandExplorer",
     attributes,
   };
 
