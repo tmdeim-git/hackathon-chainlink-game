@@ -17,7 +17,6 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
   let counter: Record<ResourceType, number>
   // counter.ore = 5;
   for (const land of lands) {
-    console.log(land.resources);
     //    for each resource of the land
     //        increment the counter of each ressource (use ResourceType array for counting)
   }
