@@ -7,7 +7,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { getContract } from "thirdweb";
-import { batchUpdateAttributeLand } from "../providers/scripts-provider";
+import { batchDeleteAttributes, batchUpdateAttributeLand } from "../providers/scripts-provider";
 import {
   landContract,
   testChain,
@@ -32,17 +32,13 @@ const DeleteAttributes = ({ setError, account }) => {
     setDeleteLoading(true);
     const contract = deleteContractAddress
       ? getContract({
-          client: thirdwebClient,
-          chain: testChain,
-          address: deleteContractAddress,
-        })
+        client: thirdwebClient,
+        chain: testChain,
+        address: deleteContractAddress,
+      })
       : landContract;
 
-    const newAttributes = {
-      trait_type: deleteAttributeName,
-      value: null,
-    };
-    await batchUpdateAttributeLand(account, contract, newAttributes);
+    await batchDeleteAttributes(deleteAttributeName, account, contract);
     setDeleteLoading(false);
   };
 

@@ -84,14 +84,14 @@ export async function batchAddAttributes(
 }
 
 export async function batchDeleteAttributes(
-  newAttributes: MetadataAttributes,
+  trait_type: string,
   account: Account,
   contract: Readonly<ContractOptions<[]>>
 ) {
   const allLandNfts = store.get(landsNftsAtom);
   if (account.address === adminAddress) {
     return await batchRemoveAttribute(
-      newAttributes.trait_type,
+      trait_type,
       allLandNfts,
       contract
     );
