@@ -16,8 +16,8 @@ const Game: React.FC = () => {
   }, []);
 
   const handleSelectedTile = (tile: GameTile) => {
-    selectedTile._selected = false;
-    tile._selected = true;
+    if (selectedTile) selectedTile._selected = false;
+    if (tile) tile._selected = true;
     setSelectedTile(tile);
   };
 

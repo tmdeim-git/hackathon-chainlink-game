@@ -12,7 +12,6 @@ import { ResourceType } from "../thirdweb/types";
 const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
   const account = useActiveAccount();
   const lands = useGetLands();
-  console.log("ALL LANDS", lands);
 
   let counter: Record<ResourceType, number>
   // counter.ore = 5;
