@@ -93,7 +93,7 @@ export function isValidLand(land: Land): land is Land {
   const resources = land.resources;
   const landEvent = land.event;
   let resourceInEnum = true;
-  resources.forEach((r) => {
+  resources?.forEach((r) => {
     if (!isInEnum(r.resourceType, ResourceType)) resourceInEnum = false;
   });
   return resourceInEnum && isInEnum(landEvent, GameEvent.Land);

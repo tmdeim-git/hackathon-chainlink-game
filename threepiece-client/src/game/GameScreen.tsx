@@ -75,7 +75,7 @@ class GameScreen extends Component<props> {
       const tileDicFilter = Object.entries(tileDic);
       const unClaimedTiles = tileDicFilter.filter(
         ([, tile]) =>
-          tile._isUnclaimedTile ||
+          tile?._isUnclaimedTile ||
           tile._land.ownerAddress !== this.props.ownerAddress
       );
       const claimedTiles = tileDicFilter.filter(

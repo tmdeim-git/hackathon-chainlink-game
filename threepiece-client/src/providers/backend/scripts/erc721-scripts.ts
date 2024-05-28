@@ -86,7 +86,9 @@ export async function updateMetadata(
   contract: Readonly<ContractOptions<[]>>
 ) {
   const metadatas = nftList.map((n) => n.metadata);
-  metadatas[nftIdToChange] = newMetadata;
+  nftList.find(n => n.id === BigInt(nftIdToChange)).metadata = newMetadata;
+  console.log(nftList.find(n => n.id === BigInt(nftIdToChange)).metadata);
+
   return await batchUpdateMetadata(metadatas, contract, nftList[0].id);
 }
 
