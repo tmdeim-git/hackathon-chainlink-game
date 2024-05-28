@@ -7,9 +7,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 2500
         }
       ],
       "event": "none"
@@ -19,9 +19,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -31,9 +31,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -43,9 +43,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -55,9 +55,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -67,9 +67,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -79,9 +79,15 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "soil",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -91,9 +97,21 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "snow",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -103,9 +121,21 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "soil",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "snow",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -115,9 +145,21 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "soil",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "snow",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -127,9 +169,15 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -139,9 +187,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -151,9 +199,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -163,9 +211,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -175,9 +223,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -187,9 +235,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -199,9 +247,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -211,9 +259,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -223,9 +271,15 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "soil",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -235,9 +289,15 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "soil",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -247,9 +307,21 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "soil",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "ore",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -259,9 +331,15 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "ore",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -274,6 +352,18 @@
           "productionRate": 45,
           "maximumAmmount": 2500,
           "currentAmmount": 0
+        },
+        {
+          "resourceType": "soil",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -282,10 +372,10 @@
       "id": 23,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -294,10 +384,10 @@
       "id": 24,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -307,9 +397,21 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "ore",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -319,9 +421,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -331,9 +433,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -343,9 +445,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -355,9 +457,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -367,9 +469,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -379,9 +481,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -391,9 +493,15 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "ore",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -402,10 +510,16 @@
       "id": 33,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "soil",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -414,10 +528,10 @@
       "id": 34,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "soil",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -426,10 +540,16 @@
       "id": 35,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "soil",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "sand",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -439,9 +559,15 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "sand",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -451,9 +577,15 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "ore",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -462,10 +594,10 @@
       "id": 38,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -474,10 +606,16 @@
       "id": 39,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "sand",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -487,9 +625,15 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -499,9 +643,15 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -511,9 +661,15 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "ore",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -523,9 +679,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -535,9 +691,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -547,9 +703,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -559,9 +715,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -571,9 +727,15 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "ore",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -582,10 +744,16 @@
       "id": 48,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "ore",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "soil",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -594,10 +762,16 @@
       "id": 49,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "soil",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "sand",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -606,10 +780,22 @@
       "id": 50,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "soil",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "sand",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -619,9 +805,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -631,9 +817,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -643,9 +829,21 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "sand",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -655,9 +853,21 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "sand",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -666,10 +876,16 @@
       "id": 55,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "sand",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -678,10 +894,16 @@
       "id": 56,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "sand",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -691,9 +913,21 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "soil",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "ore",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -703,9 +937,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -715,9 +949,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -727,9 +961,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -739,9 +973,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -751,9 +985,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -763,9 +997,15 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "ore",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -774,10 +1014,10 @@
       "id": 64,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -786,10 +1026,16 @@
       "id": 65,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "sand",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -799,9 +1045,21 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "sand",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -811,9 +1069,21 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "sand",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -823,9 +1093,15 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "ore",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -835,9 +1111,15 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "sand",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -847,9 +1129,15 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "sand",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -859,9 +1147,21 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "sand",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -871,9 +1171,15 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "sand",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -883,9 +1189,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -895,9 +1201,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -907,9 +1213,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -919,9 +1225,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -931,9 +1237,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -943,9 +1249,15 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "ore",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -954,10 +1266,22 @@
       "id": 79,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "ore",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "soil",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -966,10 +1290,16 @@
       "id": 80,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "soil",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "sand",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -978,10 +1308,16 @@
       "id": 81,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "soil",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -990,10 +1326,16 @@
       "id": 82,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "ore",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1002,10 +1344,16 @@
       "id": 83,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "ore",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1015,9 +1363,15 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "ore",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1027,9 +1381,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1039,9 +1393,21 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "sand",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1051,9 +1417,15 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "ore",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1063,9 +1435,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1075,9 +1447,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1087,9 +1459,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1099,9 +1471,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1111,9 +1483,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1123,9 +1495,21 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "ore",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1134,10 +1518,10 @@
       "id": 94,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "soil",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1146,10 +1530,10 @@
       "id": 95,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1158,10 +1542,10 @@
       "id": 96,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1170,10 +1554,10 @@
       "id": 97,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1182,10 +1566,16 @@
       "id": 98,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "ore",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1195,9 +1585,15 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1207,9 +1603,21 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "sand",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "ore",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1218,10 +1626,10 @@
       "id": 101,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1230,10 +1638,16 @@
       "id": 102,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "ore",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1243,9 +1657,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1255,9 +1669,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1267,9 +1681,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1279,9 +1693,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1290,10 +1704,16 @@
       "id": 107,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "soil",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "ore",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1302,10 +1722,10 @@
       "id": 108,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1314,10 +1734,10 @@
       "id": 109,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1326,10 +1746,10 @@
       "id": 110,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1338,10 +1758,10 @@
       "id": 111,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1351,9 +1771,15 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "ore",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1363,9 +1789,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1375,9 +1801,15 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1386,10 +1818,16 @@
       "id": 115,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "sand",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1398,10 +1836,10 @@
       "id": 116,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1411,9 +1849,15 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "ore",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1423,9 +1867,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1435,9 +1879,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1447,9 +1891,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1459,9 +1903,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1471,9 +1915,15 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "ore",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1483,9 +1933,15 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "soil",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1494,10 +1950,10 @@
       "id": 124,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "soil",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1506,10 +1962,10 @@
       "id": 125,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1518,10 +1974,10 @@
       "id": 126,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1530,10 +1986,10 @@
       "id": 127,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1542,10 +1998,16 @@
       "id": 128,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "sand",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1555,9 +2017,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1566,10 +2028,10 @@
       "id": 130,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1578,10 +2040,10 @@
       "id": 131,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1591,9 +2053,15 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "ore",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1603,9 +2071,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1615,9 +2083,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1627,9 +2095,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1639,9 +2107,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1651,9 +2119,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1663,9 +2131,21 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "ore",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1674,10 +2154,16 @@
       "id": 139,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "ore",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1686,10 +2172,10 @@
       "id": 140,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1698,10 +2184,10 @@
       "id": 141,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1710,10 +2196,16 @@
       "id": 142,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "ore",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1722,10 +2214,16 @@
       "id": 143,
       "resources": [
         {
-          "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "ore",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1735,9 +2233,15 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "ore",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1747,9 +2251,21 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "ore",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1759,9 +2275,21 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "wood",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "ore",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1771,9 +2299,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1783,9 +2311,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1795,9 +2323,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1807,9 +2335,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1819,9 +2347,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1831,9 +2359,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1843,9 +2371,15 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "ore",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1855,9 +2389,15 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "ore",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1867,9 +2407,15 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "ore",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1879,9 +2425,15 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
+        },
+        {
+          "resourceType": "ore",
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1891,9 +2443,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1903,9 +2455,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1915,9 +2467,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1927,9 +2479,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1939,9 +2491,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1951,9 +2503,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1963,9 +2515,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"
@@ -1975,9 +2527,9 @@
       "resources": [
         {
           "resourceType": "water",
-          "productionRate": 45,
-          "maximumAmmount": 2500,
-          "currentAmmount": 0
+          "productionTimeSeconds": 300,
+          "productionEndDate": null,
+          "Amount": 0
         }
       ],
       "event": "none"

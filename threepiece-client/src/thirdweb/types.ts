@@ -15,11 +15,11 @@ export type PlayerNFT = NFT & {
 export namespace GameEvent {
   export enum Land {
     None = "none",
-    Raining = "raining",
+    Raining = "raining"
   }
 
   export enum Game {
-    Lootbox = "lootbox",
+    Lootbox = "lootbox"
   }
 }
 
@@ -82,6 +82,7 @@ export enum ResourceType {
   Wood = "wood",
   Soil = "soil",
   Ore = "ore",
+  Snow = "snow"
 }
 
 export interface MetadataAttributes {
