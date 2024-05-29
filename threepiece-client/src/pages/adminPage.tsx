@@ -3,7 +3,6 @@ import { Box, Alert } from "@mui/material";
 import { useActiveAccount } from "thirdweb/react";
 import { useGetLandsNft } from "../providers/land-provider";
 import ResetLandsButton from "../components/ResetLandsButton";
-import { resetLands } from "../providers/scripts-provider";
 import AddAttributes from "../components/AddAttributes";
 import AttributesTable from "../components/AttributesTable";
 import DeleteAttributes from "../components/DeleteAttributes";
@@ -18,7 +17,8 @@ export function AdminPage() {
   const account = useActiveAccount();
   const [error, setError] = useState("");
 
-  const anyLoading = resetLoading || addLoading || updateLoading || deleteLoading;
+  const anyLoading =
+    resetLoading || addLoading || updateLoading || deleteLoading;
   const allLandNfts = useGetLandsNft();
 
   return (

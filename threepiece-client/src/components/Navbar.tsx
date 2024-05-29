@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -7,11 +8,10 @@ import {
   Modal,
   TextField,
 } from "@mui/material";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Connect from "../thirdweb/auth/Connect";
 import { adminAddress } from "../providers/backend/admin";
 import { useActiveAccount, useActiveWallet } from "thirdweb/react";
-import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import CartButton from "./CartButton";
 import HomeButton from "./HomeButton";
 import BackToGameButton from "./BackToGame";
@@ -20,8 +20,8 @@ import {
   changePlayerNameNft,
   useGetPlayerByAddress,
 } from "../providers/player-provider";
-import EditIcon from "@mui/icons-material/Edit";
-import { useState } from "react";
+import GoToAdminPageButton from "./GoToAdminPage";
+import EditButton from "./EditButton";
 
 const style = {
   position: "absolute",
@@ -42,7 +42,6 @@ export function Navbar() {
   const [newName, setNewName] = useState("");
 
   const account = useActiveAccount();
-  const navigate = useNavigate();
   const wallet = useActiveWallet();
   const { pathname } = useLocation();
 
@@ -52,8 +51,8 @@ export function Navbar() {
 
   const isAdmin = account?.address === adminAddress;
 
-  const handleOpen = () => {
-    setNewName(playerName || "");
+  const handleOpen = (name: string) => {
+    setNewName(name);
     setOpen(true);
   };
 
@@ -116,26 +115,13 @@ export function Navbar() {
               }}
             >
               <p>{`Welcome ${playerName} (${playerLevel})`}</p>
-              <Button
-                onClick={handleOpen}
-                size="small"
-                sx={{ minWidth: "auto", padding: "6px" }}
-              >
-                <EditIcon style={{ fontSize: "16px" }} />
-              </Button>
+              <EditButton onOpen={handleOpen} style={{ marginLeft: "8px" }} />
             </div>
           )}
           {isAdmin && pathname !== "/admin" && (
-            <Button
-              onClick={() => navigate("/admin")}
-              color="primary"
-              variant="contained"
-              sx={{ fontSize: "16px", marginRight: "10px" }}
-            >
-              <AdminPanelSettingsIcon
-                style={{ fontSize: "24px", verticalAlign: "middle" }}
-              />
-            </Button>
+            <GoToAdminPageButton
+              style={{ fontSize: "24px", verticalAlign: "middle" }}
+            />
           )}
           {wallet && pathname !== "/marketplace" && (
             <CartButton style={{ marginRight: "10px" }} />
@@ -147,7 +133,12 @@ export function Navbar() {
             aria-describedby="modal-modal-description"
           >
             <Box sx={style}>
-              <Typography id="modal-modal-title" variant="h6" component="h2">
+              <Typography
+                id="modal-modal-title"
+                variant="h6"
+                component="h2"
+                color="black"
+              >
                 Change Name
               </Typography>
               <TextField

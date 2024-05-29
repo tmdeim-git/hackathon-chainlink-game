@@ -1,8 +1,7 @@
-import React from "react";
+import styled from "@emotion/styled";
 import { IconButton, Tooltip } from "@mui/material";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { styled } from "@mui/system";
 import { useNavigate } from "react-router-dom";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 
 const AnimatedIconButton = styled(IconButton)({
   "&:hover": {
@@ -22,24 +21,24 @@ const AnimatedIconButton = styled(IconButton)({
   },
 });
 
-interface CartButtonProps {
+interface AdminButtonProps {
   style?: React.CSSProperties;
 }
 
-const CartButton: React.FC<CartButtonProps> = ({ style }) => {
+const GoToAdminPageButton: React.FC<AdminButtonProps> = ({ style }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("/marketplace");
+    navigate("/admin");
   };
 
   return (
-    <Tooltip title="Marketplace" arrow>
+    <Tooltip title="Admin dashboard" arrow>
       <AnimatedIconButton onClick={handleClick} color="primary" style={style}>
-        <ShoppingCartIcon />
+        <AdminPanelSettingsIcon />
       </AnimatedIconButton>
     </Tooltip>
   );
 };
 
-export default CartButton;
+export default GoToAdminPageButton;

@@ -13,7 +13,7 @@ const FooterContainer = styled(Box)(({ theme }) => ({
   flexWrap: "wrap",
 }));
 
-const TeamMembers = styled(Box)(({ }) => ({
+const TeamMembers = styled(Box)(({}) => ({
   display: "flex",
   alignItems: "center",
   gap: "8px",
@@ -22,7 +22,7 @@ const TeamMembers = styled(Box)(({ }) => ({
   fontSize: "0.875em",
 }));
 
-const TeamMember = styled(Box)(({ }) => ({
+const TeamMember = styled(Box)(({}) => ({
   display: "flex",
   alignItems: "center",
   whiteSpace: "nowrap", // Prevents text from wrapping
@@ -63,13 +63,6 @@ const Footer: React.FC = () => {
             </TeamMember>
           ))}
         </TeamMembers>
-      </Box>
-      <Box flex={1}>
-        <Typography variant="body1">About the Project</Typography>
-        <Typography variant="body2">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce euismod
-          convallis velit, eu auctor lacus vehicula sit amet.
-        </Typography>
       </Box>
     </FooterContainer>
   );
