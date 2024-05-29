@@ -25,7 +25,7 @@ interface MapButtonProps {
   style?: React.CSSProperties;
 }
 
-const MapButton: React.FC<MapButtonProps> = ({ style }) => {
+const BackToGameButton: React.FC<MapButtonProps> = ({ style }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -41,4 +41,4 @@ const MapButton: React.FC<MapButtonProps> = ({ style }) => {
   );
 };
 
-export default MapButton;
+export default BackToGameButton;
