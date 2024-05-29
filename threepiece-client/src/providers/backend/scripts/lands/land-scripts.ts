@@ -78,7 +78,6 @@ export async function resetLandNfts(contract?: Readonly<ContractOptions<[]>>) {
   }
 
   const allLandNfts = store.get(landsNftsAtom);
-  console.log(allLandNfts);
 
   await burnByBatch(allLandNfts, contractToUse);
 

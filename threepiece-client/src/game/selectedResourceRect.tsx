@@ -12,12 +12,10 @@ import { ResourceType } from "../thirdweb/types";
 const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
   const account = useActiveAccount();
   const lands = useGetLands();
-  console.log("ALL LANDS", lands);
 
   let counter: Record<ResourceType, number>
   // counter.ore = 5;
   for (const land of lands) {
-    console.log(land.resources);
     //    for each resource of the land
     //        increment the counter of each ressource (use ResourceType array for counting)
   }
@@ -68,7 +66,7 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
         {tabValue === 0 && (
           <div className="tile-info">
             <div style={{ paddingTop: 10 }}>Tile ID: {getTileId()}</div>
-            <div>Owned By: {getOwner()}</div>
+            {!selectedTile?._isUnclaimedTile ? <div>Owned By: {getOwner()}</div> : <div>Available in the marketplace</div>}
             <h3 className="resources-title">Resources:</h3>
             <div className="resource-table">{getResources()}</div>
           </div>

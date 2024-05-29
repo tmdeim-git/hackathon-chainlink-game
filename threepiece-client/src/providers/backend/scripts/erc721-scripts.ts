@@ -61,7 +61,6 @@ export async function batchUpdateAttribute(
   contract: Readonly<ContractOptions<[]>>
 ) {
   const metadatas = nftList.map((n) => n.metadata);
-  console.log("Before...", metadatas);
 
   for (const { attributes } of metadatas) {
     const attributesArr = attributes as unknown as Array<MetadataAttributes>;
@@ -86,8 +85,6 @@ export async function updateMetadata(
   contract: Readonly<ContractOptions<[]>>
 ) {
   nftList.find(n => n.id === BigInt(nftIdToChange)).metadata = newMetadata;
-  console.log(nftList.find(n => n.id === BigInt(nftIdToChange)).metadata);
-  console.log(nftList, contract, nftList[0].id);
 
   return await batchUpdateMetadata(nftList.map((n) => n.metadata), contract, nftList[0].id);
 }
@@ -100,15 +97,17 @@ export async function batchUpdateMetadata(
   contract: Readonly<ContractOptions<[]>>,
   startIndex: bigint
 ) {
-  const uri = await upload({
+  let uri: string | string[] = await upload({
     client: thirdwebClient,
     files: Object.values(metadatas),
     rewriteFileNames: {
       fileStartNumber: Number(startIndex)
     }
   });
-  const newNftsRepo = uri[0].substring(0, uri[0].lastIndexOf("/")) + "/";
-  console.log(newNftsRepo);
+
+  if (typeof uri !== 'string') // then its an array of the same base uri, we take the first 
+    uri = uri[0];
+  const newNftsRepo = uri.substring(0, uri.lastIndexOf("/")) + "/";
 
   const updateMetadataTx = updateBatchBaseURI({
     contract: contract,
@@ -153,7 +152,6 @@ export async function sendAndConfirmMulticall(
       dataList,
     ],
   });
-  console.log(batchTx);
 
   const batchResult = await sendAndConfirmTransaction({
     account: adminAccount,

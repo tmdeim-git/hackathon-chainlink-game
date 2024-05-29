@@ -16,9 +16,11 @@ const Game: React.FC = () => {
   }, []);
 
   const handleSelectedTile = (tile: GameTile) => {
-    console.log("selected");
+    if (selectedTile) selectedTile._selected = false;
+    if (tile) tile._selected = true;
     setSelectedTile(tile);
   };
+
   return (
     <div className="game-page">
       <div>
@@ -39,7 +41,7 @@ const Game: React.FC = () => {
           </div>
         </div>
       </div>
-      <GameScreenBoycottage tileSelected={handleSelectedTile} />
+      <GameScreenBoycottage setTileSelected={handleSelectedTile} />
     </div>
   );
 };

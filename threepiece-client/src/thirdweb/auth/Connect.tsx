@@ -23,7 +23,6 @@ function Connect() {
       wallets={wallets}
       connectButton={{ label: "Play" }}
       onConnect={async (wallet) => {
-        wallet.switchChain(testChain);
         setWallet(wallet);
         refreshNfts();
         if (pathname === "/login") navigate("/game");
