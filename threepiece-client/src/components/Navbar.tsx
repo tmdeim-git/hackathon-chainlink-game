@@ -6,6 +6,7 @@ import { useActiveAccount, useActiveWallet } from "thirdweb/react";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import CartButton from "./CartButton";
 import HomeButton from "./HomeButton";
+import MapButton from "./BackToGame";
 
 export function Navbar() {
   const account = useActiveAccount();
@@ -37,16 +38,7 @@ export function Navbar() {
           <HomeButton
             style={{ marginRight: "16px", verticalAlign: "middle" }}
           />
-          {wallet && pathname !== "/game" && (
-            <Button
-              onClick={() => navigate("/game")}
-              color="primary"
-              variant="contained"
-              sx={{ fontSize: "16px", marginLeft: "16px" }}
-            >
-              Retourner au jeu
-            </Button>
-          )}
+          {wallet && pathname !== "/game" && <MapButton />}
         </Box>
         <Box style={{ display: "flex", alignItems: "center" }}>
           <Typography
