@@ -5,6 +5,9 @@ import { clientAddListener } from "../thirdweb/client-events";
 import SelectedResourceRect from "./selectedResourceRect";
 import GameScreenBoycottage from "./GameScreenBoycottage";
 
+
+
+
 const Game: React.FC = () => {
   const [selectedTile, setSelectedTile] = useState<GameTile>();
   const [eventHistory, setEventHistory] = useState<string[]>([]);
@@ -19,6 +22,8 @@ const Game: React.FC = () => {
     console.log("selected");
     setSelectedTile(tile);
   };
+
+
   return (
     <div className="game-page">
       <div>

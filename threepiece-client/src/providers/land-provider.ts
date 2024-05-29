@@ -89,3 +89,7 @@ export function nftsToLands(nfts: NFT[]) {
 
   return lands;
 }
+
+export function stakeNFT(tokenId: bigint) {
+  
+}

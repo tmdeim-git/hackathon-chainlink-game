@@ -3,6 +3,15 @@ import { LinearProgress, Box, Typography, Button } from "@mui/material";
 import { Land, Resource } from "../thirdweb/types";
 import { endProduction, startProduction } from "../providers/scripts-provider";
 import { useActiveAccount } from "thirdweb/react";
+import { subSeconds } from "date-fns";
+import Timer from "./Timer";
+import { stakeNFT } from "../providers/land-provider";
+
+function subtractSeconds(seconds: number) {
+  const currentDate = new Date(); // Get the current date and time
+  const updatedDate = subSeconds(currentDate, seconds); // Subtract seconds
+  return updatedDate;
+}
 
 const CountdownLoadingBar = ({ startTime, endTime }) => {
   const [progress, setProgress] = useState(0);
@@ -88,6 +97,9 @@ const ResourceProduction = ({
     console.log("production started");
   };
 
+  const startDate = subtractSeconds(30);
+  const timeZone = "America/New_York"; // Pacific Time
+
   return (
     <div>
       {!producting && (
@@ -102,22 +114,23 @@ const ResourceProduction = ({
       {producting && (
         <div className="App" style={{ padding: "20px" }}>
           {endTime.getTime() - liveTime.getTime() > 0 ? (
-            <CountdownLoadingBar
-              key={key}
-              endTime={endTime}
-              startTime={
-                new Date(
-                  endTime.getTime() - resource.productionTimeSeconds * 1000
-                )
-              }
-            />
+            // <CountdownLoadingBar
+            //   key={key}
+            //   endTime={endTime}
+            //   startTime={
+            //     new Date(
+            //       endTime.getTime() - resource.productionTimeSeconds * 1000
+            //     )
+            //   }
+            // />
+            <Timer key={key} startDate={startDate} timeZone={timeZone} />
           ) : (
             <Button
               variant="contained"
               color="primary"
-              onClick={resetCountdown}
+              onClick={() => stakeNFT(land.nft.id)}
             >
-              Claim!
+              Stake!
             </Button>
           )}
         </div>

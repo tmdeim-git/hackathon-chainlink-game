@@ -45,7 +45,7 @@ export function approvalEvent(filters: ApprovalEventFilters = {}) {
     signature: "event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId)",
     filters,
   });
-}
+};
   
 
 /**
@@ -81,7 +81,7 @@ export function approvalForAllEvent(filters: ApprovalForAllEventFilters = {}) {
     signature: "event ApprovalForAll(address indexed owner, address indexed operator, bool approved)",
     filters,
   });
-}
+};
   
 
 
@@ -106,7 +106,7 @@ export function batchMetadataUpdateEvent() {
   return prepareEvent({
     signature: "event BatchMetadataUpdate(uint256 _fromTokenId, uint256 _toTokenId)",
   });
-}
+};
   
 
 
@@ -131,7 +131,7 @@ export function claimConditionsUpdatedEvent() {
   return prepareEvent({
     signature: "event ClaimConditionsUpdated((uint256 startTimestamp, uint256 maxClaimableSupply, uint256 supplyClaimed, uint256 quantityLimitPerWallet, bytes32 merkleRoot, uint256 pricePerToken, address currency, string metadata)[] claimConditions, bool resetEligibility)",
   });
-}
+};
   
 
 
@@ -156,7 +156,7 @@ export function contractURIUpdatedEvent() {
   return prepareEvent({
     signature: "event ContractURIUpdated(string prevURI, string newURI)",
   });
-}
+};
   
 
 /**
@@ -190,7 +190,7 @@ export function defaultRoyaltyEvent(filters: DefaultRoyaltyEventFilters = {}) {
     signature: "event DefaultRoyalty(address indexed newRoyaltyRecipient, uint256 newRoyaltyBps)",
     filters,
   });
-}
+};
   
 
 
@@ -215,7 +215,7 @@ export function flatPlatformFeeUpdatedEvent() {
   return prepareEvent({
     signature: "event FlatPlatformFeeUpdated(address platformFeeRecipient, uint256 flatFee)",
   });
-}
+};
   
 
 
@@ -240,7 +240,7 @@ export function initializedEvent() {
   return prepareEvent({
     signature: "event Initialized(uint8 version)",
   });
-}
+};
   
 
 
@@ -265,7 +265,7 @@ export function maxTotalSupplyUpdatedEvent() {
   return prepareEvent({
     signature: "event MaxTotalSupplyUpdated(uint256 maxTotalSupply)",
   });
-}
+};
   
 
 
@@ -290,7 +290,7 @@ export function metadataFrozenEvent() {
   return prepareEvent({
     signature: "event MetadataFrozen()",
   });
-}
+};
   
 
 /**
@@ -326,7 +326,7 @@ export function ownerUpdatedEvent(filters: OwnerUpdatedEventFilters = {}) {
     signature: "event OwnerUpdated(address indexed prevOwner, address indexed newOwner)",
     filters,
   });
-}
+};
   
 
 /**
@@ -360,7 +360,7 @@ export function platformFeeInfoUpdatedEvent(filters: PlatformFeeInfoUpdatedEvent
     signature: "event PlatformFeeInfoUpdated(address indexed platformFeeRecipient, uint256 platformFeeBps)",
     filters,
   });
-}
+};
   
 
 
@@ -385,7 +385,7 @@ export function platformFeeTypeUpdatedEvent() {
   return prepareEvent({
     signature: "event PlatformFeeTypeUpdated(uint8 feeType)",
   });
-}
+};
   
 
 /**
@@ -419,7 +419,7 @@ export function primarySaleRecipientUpdatedEvent(filters: PrimarySaleRecipientUp
     signature: "event PrimarySaleRecipientUpdated(address indexed recipient)",
     filters,
   });
-}
+};
   
 
 /**
@@ -457,7 +457,7 @@ export function roleAdminChangedEvent(filters: RoleAdminChangedEventFilters = {}
     signature: "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
     filters,
   });
-}
+};
   
 
 /**
@@ -495,7 +495,7 @@ export function roleGrantedEvent(filters: RoleGrantedEventFilters = {}) {
     signature: "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
     filters,
   });
-}
+};
   
 
 /**
@@ -533,7 +533,7 @@ export function roleRevokedEvent(filters: RoleRevokedEventFilters = {}) {
     signature: "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
     filters,
   });
-}
+};
   
 
 /**
@@ -569,7 +569,32 @@ export function royaltyForTokenEvent(filters: RoyaltyForTokenEventFilters = {}) 
     signature: "event RoyaltyForToken(uint256 indexed tokenId, address indexed royaltyRecipient, uint256 royaltyBps)",
     filters,
   });
-}
+};
+  
+
+
+
+/**
+ * Creates an event object for the Staked event.
+ * @returns The prepared event object.
+ * @example
+ * ```
+ * import { getContractEvents } from "thirdweb";
+ * import { stakedEvent } from "TODO";
+ * 
+ * const events = await getContractEvents({
+ * contract,
+ * events: [
+ *  stakedEvent()
+ * ],
+ * });
+ * ```
+ */ 
+export function stakedEvent() {
+  return prepareEvent({
+    signature: "event Staked(uint256 tokenId)",
+  });
+};
   
 
 /**
@@ -603,7 +628,7 @@ export function tokenURIRevealedEvent(filters: TokenURIRevealedEventFilters = {}
     signature: "event TokenURIRevealed(uint256 indexed index, string revealedURI)",
     filters,
   });
-}
+};
   
 
 /**
@@ -641,7 +666,7 @@ export function tokensClaimedEvent(filters: TokensClaimedEventFilters = {}) {
     signature: "event TokensClaimed(uint256 indexed claimConditionIndex, address indexed claimer, address indexed receiver, uint256 startTokenId, uint256 quantityClaimed)",
     filters,
   });
-}
+};
   
 
 /**
@@ -675,7 +700,7 @@ export function tokensLazyMintedEvent(filters: TokensLazyMintedEventFilters = {}
     signature: "event TokensLazyMinted(uint256 indexed startTokenId, uint256 endTokenId, string baseURI, bytes encryptedBaseURI)",
     filters,
   });
-}
+};
   
 
 /**
@@ -713,7 +738,32 @@ export function transferEvent(filters: TransferEventFilters = {}) {
     signature: "event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)",
     filters,
   });
-}
+};
+  
+
+
+
+/**
+ * Creates an event object for the Unstaked event.
+ * @returns The prepared event object.
+ * @example
+ * ```
+ * import { getContractEvents } from "thirdweb";
+ * import { unstakedEvent } from "TODO";
+ * 
+ * const events = await getContractEvents({
+ * contract,
+ * events: [
+ *  unstakedEvent()
+ * ],
+ * });
+ * ```
+ */ 
+export function unstakedEvent() {
+  return prepareEvent({
+    signature: "event Unstaked(uint256 tokenId)",
+  });
+};
   
 
 /**
@@ -752,7 +802,7 @@ export async function DEFAULT_ADMIN_ROLE(
 ],
     params: []
   });
-}
+};
 
 
 /**
@@ -800,7 +850,7 @@ export async function balanceOf(
 ],
     params: [options.owner]
   });
-}
+};
 
 
 /**
@@ -848,7 +898,7 @@ export async function batchFrozen(
 ],
     params: [options.arg_0]
   });
-}
+};
 
 
 
@@ -888,7 +938,7 @@ export async function claimCondition(
 ],
     params: []
   });
-}
+};
 
 
 
@@ -923,7 +973,7 @@ export async function contractType(
 ],
     params: []
   });
-}
+};
 
 
 
@@ -958,7 +1008,7 @@ export async function contractURI(
 ],
     params: []
   });
-}
+};
 
 
 
@@ -993,7 +1043,7 @@ export async function contractVersion(
 ],
     params: []
   });
-}
+};
 
 
 /**
@@ -1048,7 +1098,7 @@ export async function encryptDecrypt(
 ],
     params: [options.data, options.key]
   });
-}
+};
 
 
 /**
@@ -1096,7 +1146,7 @@ export async function encryptedData(
 ],
     params: [options.arg_0]
   });
-}
+};
 
 
 
@@ -1131,7 +1181,7 @@ export async function getActiveClaimConditionId(
 ],
     params: []
   });
-}
+};
 
 
 /**
@@ -1179,7 +1229,7 @@ export async function getApproved(
 ],
     params: [options.tokenId]
   });
-}
+};
 
 
 
@@ -1214,7 +1264,7 @@ export async function getBaseURICount(
 ],
     params: []
   });
-}
+};
 
 
 /**
@@ -1262,7 +1312,7 @@ export async function getBatchIdAtIndex(
 ],
     params: [options.index]
   });
-}
+};
 
 
 /**
@@ -1352,7 +1402,103 @@ export async function getClaimConditionById(
 ],
     params: [options.conditionId]
   });
-}
+};
+
+
+/**
+ * Represents the parameters for the "getCumulativeDurationStaked" function.
+ */
+export type GetCumulativeDurationStakedParams = {
+  tokenId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"tokenId","type":"uint256"}>
+};
+
+/**
+ * Calls the "getCumulativeDurationStaked" function on the contract.
+ * @param options - The options for the getCumulativeDurationStaked function.
+ * @returns The parsed result of the function call.
+ * @example
+ * ```
+ * import { getCumulativeDurationStaked } from "TODO";
+ * 
+ * const result = await getCumulativeDurationStaked({
+ *  tokenId: ...,
+ * });
+ * 
+ * ```
+ */
+export async function getCumulativeDurationStaked(
+  options: BaseTransactionOptions<GetCumulativeDurationStakedParams>
+) {
+  return readContract({
+    contract: options.contract,
+    method: [
+  "0x23e9afb0",
+  [
+    {
+      "internalType": "uint256",
+      "name": "tokenId",
+      "type": "uint256"
+    }
+  ],
+  [
+    {
+      "internalType": "uint256",
+      "name": "",
+      "type": "uint256"
+    }
+  ]
+],
+    params: [options.tokenId]
+  });
+};
+
+
+/**
+ * Represents the parameters for the "getCurrentAdditionalBalance" function.
+ */
+export type GetCurrentAdditionalBalanceParams = {
+  tokenId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"tokenId","type":"uint256"}>
+};
+
+/**
+ * Calls the "getCurrentAdditionalBalance" function on the contract.
+ * @param options - The options for the getCurrentAdditionalBalance function.
+ * @returns The parsed result of the function call.
+ * @example
+ * ```
+ * import { getCurrentAdditionalBalance } from "TODO";
+ * 
+ * const result = await getCurrentAdditionalBalance({
+ *  tokenId: ...,
+ * });
+ * 
+ * ```
+ */
+export async function getCurrentAdditionalBalance(
+  options: BaseTransactionOptions<GetCurrentAdditionalBalanceParams>
+) {
+  return readContract({
+    contract: options.contract,
+    method: [
+  "0xad0614f9",
+  [
+    {
+      "internalType": "uint256",
+      "name": "tokenId",
+      "type": "uint256"
+    }
+  ],
+  [
+    {
+      "internalType": "uint256",
+      "name": "",
+      "type": "uint256"
+    }
+  ]
+],
+    params: [options.tokenId]
+  });
+};
 
 
 
@@ -1392,7 +1538,7 @@ export async function getDefaultRoyaltyInfo(
 ],
     params: []
   });
-}
+};
 
 
 
@@ -1432,7 +1578,7 @@ export async function getFlatPlatformFeeInfo(
 ],
     params: []
   });
-}
+};
 
 
 
@@ -1472,7 +1618,7 @@ export async function getPlatformFeeInfo(
 ],
     params: []
   });
-}
+};
 
 
 
@@ -1507,7 +1653,7 @@ export async function getPlatformFeeType(
 ],
     params: []
   });
-}
+};
 
 
 /**
@@ -1562,7 +1708,7 @@ export async function getRevealURI(
 ],
     params: [options.batchId, options.key]
   });
-}
+};
 
 
 /**
@@ -1610,7 +1756,7 @@ export async function getRoleAdmin(
 ],
     params: [options.role]
   });
-}
+};
 
 
 /**
@@ -1665,7 +1811,7 @@ export async function getRoleMember(
 ],
     params: [options.role, options.index]
   });
-}
+};
 
 
 /**
@@ -1713,7 +1859,7 @@ export async function getRoleMemberCount(
 ],
     params: [options.role]
   });
-}
+};
 
 
 /**
@@ -1766,7 +1912,55 @@ export async function getRoyaltyInfoForToken(
 ],
     params: [options.tokenId]
   });
-}
+};
+
+
+/**
+ * Represents the parameters for the "getStakingRewards" function.
+ */
+export type GetStakingRewardsParams = {
+  tokenId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"tokenId","type":"uint256"}>
+};
+
+/**
+ * Calls the "getStakingRewards" function on the contract.
+ * @param options - The options for the getStakingRewards function.
+ * @returns The parsed result of the function call.
+ * @example
+ * ```
+ * import { getStakingRewards } from "TODO";
+ * 
+ * const result = await getStakingRewards({
+ *  tokenId: ...,
+ * });
+ * 
+ * ```
+ */
+export async function getStakingRewards(
+  options: BaseTransactionOptions<GetStakingRewardsParams>
+) {
+  return readContract({
+    contract: options.contract,
+    method: [
+  "0x067f9c10",
+  [
+    {
+      "internalType": "uint256",
+      "name": "tokenId",
+      "type": "uint256"
+    }
+  ],
+  [
+    {
+      "internalType": "uint256",
+      "name": "",
+      "type": "uint256"
+    }
+  ]
+],
+    params: [options.tokenId]
+  });
+};
 
 
 /**
@@ -1821,7 +2015,7 @@ export async function getSupplyClaimedByWallet(
 ],
     params: [options.conditionId, options.claimer]
   });
-}
+};
 
 
 /**
@@ -1876,7 +2070,7 @@ export async function hasRole(
 ],
     params: [options.role, options.account]
   });
-}
+};
 
 
 /**
@@ -1931,7 +2125,7 @@ export async function hasRoleWithSwitch(
 ],
     params: [options.role, options.account]
   });
-}
+};
 
 
 /**
@@ -1986,7 +2180,7 @@ export async function isApprovedForAll(
 ],
     params: [options.owner, options.operator]
   });
-}
+};
 
 
 /**
@@ -2034,7 +2228,55 @@ export async function isEncryptedBatch(
 ],
     params: [options.batchId]
   });
-}
+};
+
+
+/**
+ * Represents the parameters for the "isStaked" function.
+ */
+export type IsStakedParams = {
+  tokenId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"tokenId","type":"uint256"}>
+};
+
+/**
+ * Calls the "isStaked" function on the contract.
+ * @param options - The options for the isStaked function.
+ * @returns The parsed result of the function call.
+ * @example
+ * ```
+ * import { isStaked } from "TODO";
+ * 
+ * const result = await isStaked({
+ *  tokenId: ...,
+ * });
+ * 
+ * ```
+ */
+export async function isStaked(
+  options: BaseTransactionOptions<IsStakedParams>
+) {
+  return readContract({
+    contract: options.contract,
+    method: [
+  "0xbaa51f86",
+  [
+    {
+      "internalType": "uint256",
+      "name": "tokenId",
+      "type": "uint256"
+    }
+  ],
+  [
+    {
+      "internalType": "bool",
+      "name": "",
+      "type": "bool"
+    }
+  ]
+],
+    params: [options.tokenId]
+  });
+};
 
 
 /**
@@ -2082,7 +2324,7 @@ export async function isTrustedForwarder(
 ],
     params: [options.forwarder]
   });
-}
+};
 
 
 
@@ -2117,7 +2359,7 @@ export async function maxTotalSupply(
 ],
     params: []
   });
-}
+};
 
 
 
@@ -2152,7 +2394,7 @@ export async function name(
 ],
     params: []
   });
-}
+};
 
 
 
@@ -2187,7 +2429,7 @@ export async function nextTokenIdToClaim(
 ],
     params: []
   });
-}
+};
 
 
 
@@ -2222,7 +2464,7 @@ export async function nextTokenIdToMint(
 ],
     params: []
   });
-}
+};
 
 
 
@@ -2257,7 +2499,7 @@ export async function owner(
 ],
     params: []
   });
-}
+};
 
 
 /**
@@ -2305,7 +2547,7 @@ export async function ownerOf(
 ],
     params: [options.tokenId]
   });
-}
+};
 
 
 
@@ -2340,7 +2582,7 @@ export async function primarySaleRecipient(
 ],
     params: []
   });
-}
+};
 
 
 /**
@@ -2400,7 +2642,7 @@ export async function royaltyInfo(
 ],
     params: [options.tokenId, options.salePrice]
   });
-}
+};
 
 
 /**
@@ -2448,7 +2690,7 @@ export async function supportsInterface(
 ],
     params: [options.interfaceId]
   });
-}
+};
 
 
 
@@ -2483,7 +2725,151 @@ export async function symbol(
 ],
     params: []
   });
-}
+};
+
+
+/**
+ * Represents the parameters for the "tokenToIsStaked" function.
+ */
+export type TokenToIsStakedParams = {
+  arg_0: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"","type":"uint256"}>
+};
+
+/**
+ * Calls the "tokenToIsStaked" function on the contract.
+ * @param options - The options for the tokenToIsStaked function.
+ * @returns The parsed result of the function call.
+ * @example
+ * ```
+ * import { tokenToIsStaked } from "TODO";
+ * 
+ * const result = await tokenToIsStaked({
+ *  arg_0: ...,
+ * });
+ * 
+ * ```
+ */
+export async function tokenToIsStaked(
+  options: BaseTransactionOptions<TokenToIsStakedParams>
+) {
+  return readContract({
+    contract: options.contract,
+    method: [
+  "0xa96533e9",
+  [
+    {
+      "internalType": "uint256",
+      "name": "",
+      "type": "uint256"
+    }
+  ],
+  [
+    {
+      "internalType": "bool",
+      "name": "",
+      "type": "bool"
+    }
+  ]
+],
+    params: [options.arg_0]
+  });
+};
+
+
+/**
+ * Represents the parameters for the "tokenToTotalDurationStaked" function.
+ */
+export type TokenToTotalDurationStakedParams = {
+  arg_0: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"","type":"uint256"}>
+};
+
+/**
+ * Calls the "tokenToTotalDurationStaked" function on the contract.
+ * @param options - The options for the tokenToTotalDurationStaked function.
+ * @returns The parsed result of the function call.
+ * @example
+ * ```
+ * import { tokenToTotalDurationStaked } from "TODO";
+ * 
+ * const result = await tokenToTotalDurationStaked({
+ *  arg_0: ...,
+ * });
+ * 
+ * ```
+ */
+export async function tokenToTotalDurationStaked(
+  options: BaseTransactionOptions<TokenToTotalDurationStakedParams>
+) {
+  return readContract({
+    contract: options.contract,
+    method: [
+  "0x37057779",
+  [
+    {
+      "internalType": "uint256",
+      "name": "",
+      "type": "uint256"
+    }
+  ],
+  [
+    {
+      "internalType": "uint256",
+      "name": "",
+      "type": "uint256"
+    }
+  ]
+],
+    params: [options.arg_0]
+  });
+};
+
+
+/**
+ * Represents the parameters for the "tokenToWhenStaked" function.
+ */
+export type TokenToWhenStakedParams = {
+  arg_0: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"","type":"uint256"}>
+};
+
+/**
+ * Calls the "tokenToWhenStaked" function on the contract.
+ * @param options - The options for the tokenToWhenStaked function.
+ * @returns The parsed result of the function call.
+ * @example
+ * ```
+ * import { tokenToWhenStaked } from "TODO";
+ * 
+ * const result = await tokenToWhenStaked({
+ *  arg_0: ...,
+ * });
+ * 
+ * ```
+ */
+export async function tokenToWhenStaked(
+  options: BaseTransactionOptions<TokenToWhenStakedParams>
+) {
+  return readContract({
+    contract: options.contract,
+    method: [
+  "0xf1da6b97",
+  [
+    {
+      "internalType": "uint256",
+      "name": "",
+      "type": "uint256"
+    }
+  ],
+  [
+    {
+      "internalType": "uint256",
+      "name": "",
+      "type": "uint256"
+    }
+  ]
+],
+    params: [options.arg_0]
+  });
+};
 
 
 /**
@@ -2531,7 +2917,7 @@ export async function tokenURI(
 ],
     params: [options.tokenId]
   });
-}
+};
 
 
 
@@ -2566,7 +2952,7 @@ export async function totalMinted(
 ],
     params: []
   });
-}
+};
 
 
 
@@ -2601,7 +2987,7 @@ export async function totalSupply(
 ],
     params: []
   });
-}
+};
 
 
 /**
@@ -2706,7 +3092,7 @@ export async function verifyClaim(
 ],
     params: [options.conditionId, options.claimer, options.quantity, options.currency, options.pricePerToken, options.allowlistProof]
   });
-}
+};
 
 
 /**
@@ -2762,7 +3148,7 @@ export function approve(
 ],
     params: [options.to, options.tokenId]
   });
-}
+};
 
 
 /**
@@ -2807,7 +3193,7 @@ export function burn(
 ],
     params: [options.tokenId]
   });
-}
+};
 
 
 /**
@@ -2909,7 +3295,7 @@ export function claim(
 ],
     params: [options.receiver, options.quantity, options.currency, options.pricePerToken, options.allowlistProof, options.data]
   });
-}
+};
 
 
 /**
@@ -2954,7 +3340,7 @@ export function freezeBatchBaseURI(
 ],
     params: [options.index]
   });
-}
+};
 
 
 /**
@@ -3006,115 +3392,7 @@ export function grantRole(
 ],
     params: [options.role, options.account]
   });
-}
-
-
-/**
- * Represents the parameters for the "initialize" function.
- */
-export type InitializeParams = {
-  defaultAdmin: AbiParameterToPrimitiveType<{"internalType":"address","name":"_defaultAdmin","type":"address"}>
-name: AbiParameterToPrimitiveType<{"internalType":"string","name":"_name","type":"string"}>
-symbol: AbiParameterToPrimitiveType<{"internalType":"string","name":"_symbol","type":"string"}>
-contractURI: AbiParameterToPrimitiveType<{"internalType":"string","name":"_contractURI","type":"string"}>
-trustedForwarders: AbiParameterToPrimitiveType<{"internalType":"address[]","name":"_trustedForwarders","type":"address[]"}>
-saleRecipient: AbiParameterToPrimitiveType<{"internalType":"address","name":"_saleRecipient","type":"address"}>
-royaltyRecipient: AbiParameterToPrimitiveType<{"internalType":"address","name":"_royaltyRecipient","type":"address"}>
-royaltyBps: AbiParameterToPrimitiveType<{"internalType":"uint128","name":"_royaltyBps","type":"uint128"}>
-platformFeeBps: AbiParameterToPrimitiveType<{"internalType":"uint128","name":"_platformFeeBps","type":"uint128"}>
-platformFeeRecipient: AbiParameterToPrimitiveType<{"internalType":"address","name":"_platformFeeRecipient","type":"address"}>
 };
-
-/**
- * Calls the "initialize" function on the contract.
- * @param options - The options for the "initialize" function.
- * @returns A prepared transaction object.
- * @example
- * ```
- * import { initialize } from "TODO";
- * 
- * const transaction = initialize({
- *  defaultAdmin: ...,
- *  name: ...,
- *  symbol: ...,
- *  contractURI: ...,
- *  trustedForwarders: ...,
- *  saleRecipient: ...,
- *  royaltyRecipient: ...,
- *  royaltyBps: ...,
- *  platformFeeBps: ...,
- *  platformFeeRecipient: ...,
- * });
- * 
- * // Send the transaction
- * ...
- * 
- * ```
- */
-export function initialize(
-  options: BaseTransactionOptions<InitializeParams>
-) {
-  return prepareContractCall({
-    contract: options.contract,
-    method: [
-  "0xe1591634",
-  [
-    {
-      "internalType": "address",
-      "name": "_defaultAdmin",
-      "type": "address"
-    },
-    {
-      "internalType": "string",
-      "name": "_name",
-      "type": "string"
-    },
-    {
-      "internalType": "string",
-      "name": "_symbol",
-      "type": "string"
-    },
-    {
-      "internalType": "string",
-      "name": "_contractURI",
-      "type": "string"
-    },
-    {
-      "internalType": "address[]",
-      "name": "_trustedForwarders",
-      "type": "address[]"
-    },
-    {
-      "internalType": "address",
-      "name": "_saleRecipient",
-      "type": "address"
-    },
-    {
-      "internalType": "address",
-      "name": "_royaltyRecipient",
-      "type": "address"
-    },
-    {
-      "internalType": "uint128",
-      "name": "_royaltyBps",
-      "type": "uint128"
-    },
-    {
-      "internalType": "uint128",
-      "name": "_platformFeeBps",
-      "type": "uint128"
-    },
-    {
-      "internalType": "address",
-      "name": "_platformFeeRecipient",
-      "type": "address"
-    }
-  ],
-  []
-],
-    params: [options.defaultAdmin, options.name, options.symbol, options.contractURI, options.trustedForwarders, options.saleRecipient, options.royaltyRecipient, options.royaltyBps, options.platformFeeBps, options.platformFeeRecipient]
-  });
-}
 
 
 /**
@@ -3179,7 +3457,52 @@ export function lazyMint(
 ],
     params: [options.amount, options.baseURIForTokens, options.data]
   });
-}
+};
+
+
+/**
+ * Represents the parameters for the "mint" function.
+ */
+export type MintParams = {
+  quanity: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"_quanity","type":"uint256"}>
+};
+
+/**
+ * Calls the "mint" function on the contract.
+ * @param options - The options for the "mint" function.
+ * @returns A prepared transaction object.
+ * @example
+ * ```
+ * import { mint } from "TODO";
+ * 
+ * const transaction = mint({
+ *  quanity: ...,
+ * });
+ * 
+ * // Send the transaction
+ * ...
+ * 
+ * ```
+ */
+export function mint(
+  options: BaseTransactionOptions<MintParams>
+) {
+  return prepareContractCall({
+    contract: options.contract,
+    method: [
+  "0xa0712d68",
+  [
+    {
+      "internalType": "uint256",
+      "name": "_quanity",
+      "type": "uint256"
+    }
+  ],
+  []
+],
+    params: [options.quanity]
+  });
+};
 
 
 /**
@@ -3230,7 +3553,7 @@ export function multicall(
 ],
     params: [options.data]
   });
-}
+};
 
 
 /**
@@ -3282,7 +3605,7 @@ export function renounceRole(
 ],
     params: [options.role, options.account]
   });
-}
+};
 
 
 /**
@@ -3340,7 +3663,7 @@ export function reveal(
 ],
     params: [options.index, options.key]
   });
-}
+};
 
 
 /**
@@ -3392,7 +3715,7 @@ export function revokeRole(
 ],
     params: [options.role, options.account]
   });
-}
+};
 
 
 /**
@@ -3451,7 +3774,7 @@ export function safeTransferFrom(
 ],
     params: [options.from, options.to, options.tokenId]
   });
-}
+};
 
 
 /**
@@ -3503,7 +3826,7 @@ export function setApprovalForAll(
 ],
     params: [options.operator, options.approved]
   });
-}
+};
 
 
 /**
@@ -3597,7 +3920,7 @@ export function setClaimConditions(
 ],
     params: [options.conditions, options.resetClaimEligibility]
   });
-}
+};
 
 
 /**
@@ -3642,7 +3965,7 @@ export function setContractURI(
 ],
     params: [options.uri]
   });
-}
+};
 
 
 /**
@@ -3694,7 +4017,7 @@ export function setDefaultRoyaltyInfo(
 ],
     params: [options.royaltyRecipient, options.royaltyBps]
   });
-}
+};
 
 
 /**
@@ -3746,7 +4069,7 @@ export function setFlatPlatformFeeInfo(
 ],
     params: [options.platformFeeRecipient, options.flatFee]
   });
-}
+};
 
 
 /**
@@ -3791,7 +4114,7 @@ export function setMaxTotalSupply(
 ],
     params: [options.maxTotalSupply]
   });
-}
+};
 
 
 /**
@@ -3836,7 +4159,7 @@ export function setOwner(
 ],
     params: [options.newOwner]
   });
-}
+};
 
 
 /**
@@ -3888,7 +4211,7 @@ export function setPlatformFeeInfo(
 ],
     params: [options.platformFeeRecipient, options.platformFeeBps]
   });
-}
+};
 
 
 /**
@@ -3933,7 +4256,7 @@ export function setPlatformFeeType(
 ],
     params: [options.feeType]
   });
-}
+};
 
 
 /**
@@ -3978,7 +4301,7 @@ export function setPrimarySaleRecipient(
 ],
     params: [options.saleRecipient]
   });
-}
+};
 
 
 /**
@@ -4037,7 +4360,52 @@ export function setRoyaltyInfoForToken(
 ],
     params: [options.tokenId, options.recipient, options.bps]
   });
-}
+};
+
+
+/**
+ * Represents the parameters for the "stake" function.
+ */
+export type StakeParams = {
+  tokenId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"tokenId","type":"uint256"}>
+};
+
+/**
+ * Calls the "stake" function on the contract.
+ * @param options - The options for the "stake" function.
+ * @returns A prepared transaction object.
+ * @example
+ * ```
+ * import { stake } from "TODO";
+ * 
+ * const transaction = stake({
+ *  tokenId: ...,
+ * });
+ * 
+ * // Send the transaction
+ * ...
+ * 
+ * ```
+ */
+export function stake(
+  options: BaseTransactionOptions<StakeParams>
+) {
+  return prepareContractCall({
+    contract: options.contract,
+    method: [
+  "0xa694fc3a",
+  [
+    {
+      "internalType": "uint256",
+      "name": "tokenId",
+      "type": "uint256"
+    }
+  ],
+  []
+],
+    params: [options.tokenId]
+  });
+};
 
 
 /**
@@ -4096,7 +4464,52 @@ export function transferFrom(
 ],
     params: [options.from, options.to, options.tokenId]
   });
-}
+};
+
+
+/**
+ * Represents the parameters for the "unstake" function.
+ */
+export type UnstakeParams = {
+  tokenId: AbiParameterToPrimitiveType<{"internalType":"uint256","name":"tokenId","type":"uint256"}>
+};
+
+/**
+ * Calls the "unstake" function on the contract.
+ * @param options - The options for the "unstake" function.
+ * @returns A prepared transaction object.
+ * @example
+ * ```
+ * import { unstake } from "TODO";
+ * 
+ * const transaction = unstake({
+ *  tokenId: ...,
+ * });
+ * 
+ * // Send the transaction
+ * ...
+ * 
+ * ```
+ */
+export function unstake(
+  options: BaseTransactionOptions<UnstakeParams>
+) {
+  return prepareContractCall({
+    contract: options.contract,
+    method: [
+  "0x2e17de78",
+  [
+    {
+      "internalType": "uint256",
+      "name": "tokenId",
+      "type": "uint256"
+    }
+  ],
+  []
+],
+    params: [options.tokenId]
+  });
+};
 
 
 /**
@@ -4148,6 +4561,6 @@ export function updateBatchBaseURI(
 ],
     params: [options.index, options.uri]
   });
-}
+};
 
 
