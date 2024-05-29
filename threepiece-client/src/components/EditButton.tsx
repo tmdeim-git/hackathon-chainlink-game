@@ -1,7 +1,7 @@
 import React from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import styled from "@emotion/styled";
-import { Button, IconButton, Tooltip } from "@mui/material";
+import { IconButton, Tooltip } from "@mui/material";
 import { useGetPlayerByAddress } from "../providers/player-provider";
 import { useActiveAccount } from "thirdweb/react";
 
