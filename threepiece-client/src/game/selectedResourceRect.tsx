@@ -32,8 +32,7 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
       console.log(land.resources);
     }
   }
-  // const percentage = (counter[resource.resourceType] / totalResources) * 100;
-  //console.log(percentage);
+
   console.log(counter);
   console.log(totalResources);
 
@@ -49,9 +48,16 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
 
   const getResources = () => {
     return selectedTile?._land.resources.map((r, key) => {
+      const percentage = (
+        (counter[r.resourceType] / totalResources) *
+        100
+      ).toFixed(2);
+      console.log(percentage);
       return (
         <div className="resource-element" key={key}>
-          <h3 className="resource-element-title"> {r.resourceType} </h3>
+          <h3 className="resource-element-title">
+            {percentage}% {r.resourceType}{" "}
+          </h3>
           <div> time: {r.productionTimeSeconds / 60} min</div>
           <div>amount: {r.Amount}</div>
           <ResourceProduction resource={r} land={selectedTile?._land} />
