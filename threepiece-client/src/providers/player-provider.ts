@@ -134,7 +134,6 @@ export async function changePlayerNameNft(
   newName: string
 ) {
   const playersNft = store.get(allPlayersNftsAtom);
-  console.log(playersNft);
   
   const nft = playersNft.find((nft) => nft.owner === playerAddress);
   nft.metadata.name = newName;

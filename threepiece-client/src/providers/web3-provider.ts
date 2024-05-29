@@ -58,14 +58,12 @@ export const marketplaceLandContract = getContract({
 
 export async function getAllLandNFTs(): Promise<LandNFT[]> {
   const landNfts = await getTheNFTs(landContract);
-  console.log("landNfts", landNfts);
 
   return landNfts as LandNFT[];
 }
 
 export async function getAllPlayerNFTs(): Promise<PlayerNFT[]> {
   const playerNfts = await getTheNFTs(playerContract);
-  console.log("playerNfts", playerNfts);
 
   return playerNfts as PlayerNFT[];
 }

@@ -1,36 +1,19 @@
-import { useEffect, useState } from "react";
-import {
-  useActiveAccount,
-  useActiveWalletConnectionStatus,
-} from "thirdweb/react";
+import { useActiveAccount } from "thirdweb/react";
 import NftCard from "../components/NftCard";
-import { Land } from "../thirdweb/types";
-import { Account } from "thirdweb/wallets";
-import { store } from "../providers/store";
-import { allLandsAtom, useGetPlayerLands } from "../providers/land-provider";
-import { useAtomValue } from "jotai";
+import { useGetPlayerLands } from "../providers/land-provider";
 import {
-  allListedLandNftsAtom,
-  getUserListedLandsNfts,
   useGetMarketplaceLandsNfts,
   useGetUserListedLandsNfts,
 } from "../providers/marketplace-provider";
 
 export default function Marketplace() {
   const account = useActiveAccount();
-  const status = useActiveWalletConnectionStatus();
 
   const markedplaceListedLands = useGetMarketplaceLandsNfts(account?.address); // listed
   const playerListedLands = useGetUserListedLandsNfts(account?.address); // owned listed
   const playerLands = useGetPlayerLands(account?.address); // owned
 
   if (!account) return <div>Loading...</div>;
-
-  console.log(status);
-  const allLands: Land[] = store.get(allLandsAtom);
-
-
-  console.log(markedplaceListedLands);
 
   return (
     <div style={{ height: "100%" }}>

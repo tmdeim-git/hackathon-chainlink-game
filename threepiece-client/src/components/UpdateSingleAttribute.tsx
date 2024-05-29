@@ -7,14 +7,18 @@ import {
   CircularProgress,
   Autocomplete,
 } from "@mui/material";
-import {
-  landContract,
-} from "../providers/web3-provider";
+import { landContract } from "../providers/web3-provider";
 import { LandNFT } from "../thirdweb/types";
 import { Account } from "thirdweb/wallets";
 import { updateAttributeLand } from "../providers/scripts-provider";
 
-const UpdateSingleAttribute = ({ account, nft }: { account: Account, nft: LandNFT }) => {
+const UpdateSingleAttribute = ({
+  account,
+  nft,
+}: {
+  account: Account;
+  nft: LandNFT;
+}) => {
   const [updateLoading, setUpdateLoading] = useState(false);
   const [updateAttributeName, setUpdateAttributeName] = useState("");
   const [updateNewValue, setUpdateNewValue] = useState<any>();
@@ -25,8 +29,6 @@ const UpdateSingleAttribute = ({ account, nft }: { account: Account, nft: LandNF
 
   const handleUpdate = async () => {
     const isValid = updateAttributeName && updateNewValue;
-    console.log("TEST", nft.metadata.attributes.find((a) => a.trait_type === updateAttributeName).value);
-
 
     if (!isValid) {
       setUpdateInputErrors({
@@ -37,22 +39,29 @@ const UpdateSingleAttribute = ({ account, nft }: { account: Account, nft: LandNF
     }
     setUpdateLoading(true);
 
-    nft.metadata.attributes.find((a) => a.trait_type === updateAttributeName).value = JSON.parse(updateNewValue);
-    await updateAttributeLand(account, landContract, nft.metadata.attributes, nft.id);
+    nft.metadata.attributes.find(
+      (a) => a.trait_type === updateAttributeName
+    ).value = JSON.parse(updateNewValue);
+    await updateAttributeLand(
+      account,
+      landContract,
+      nft.metadata.attributes,
+      nft.id
+    );
     setUpdateLoading(false);
   };
 
   const handleAttributeNameChange = (e) => {
     setUpdateAttributeName(e.target.textContent);
     // Find the attribute value based on the selected attribute name
-    const selectedAttribute = nft.metadata.attributes.find((a) => a.trait_type === e.target.textContent);
-    console.log(selectedAttribute);
-
+    const selectedAttribute = nft.metadata.attributes.find(
+      (a) => a.trait_type === e.target.textContent
+    );
 
     if (selectedAttribute) {
       setUpdateNewValue(JSON.stringify(selectedAttribute.value));
     } else {
-      setUpdateNewValue(''); // Clear the new value if no attribute is selected
+      setUpdateNewValue(""); // Clear the new value if no attribute is selected
     }
   };
 
@@ -70,7 +79,9 @@ const UpdateSingleAttribute = ({ account, nft }: { account: Account, nft: LandNF
         {"UPDATE ATTRIBUTE (ID = " + nft.id + ")"}
       </Typography>
       <Autocomplete
-        options={nft.metadata.attributes.map(a => a.trait_type).filter(a => a !== "id")}
+        options={nft.metadata.attributes
+          .map((a) => a.trait_type)
+          .filter((a) => a !== "id")}
         onChange={(e) => handleAttributeNameChange(e)}
         renderInput={(params) => (
           <TextField
@@ -83,7 +94,9 @@ const UpdateSingleAttribute = ({ account, nft }: { account: Account, nft: LandNF
             value={updateAttributeName}
             error={updateInputErrors.attributeName}
             helperText={
-              updateInputErrors.attributeName ? "Attribute name is required" : ""
+              updateInputErrors.attributeName
+                ? "Attribute name is required"
+                : ""
             }
             sx={{
               marginBottom: "10px",

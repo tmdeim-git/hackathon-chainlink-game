@@ -22,7 +22,6 @@ export async function createLandTrade(
   nft: LandNFT,
   price: bigint
 ) {
-  console.log(account, nft, price);
   const approved = approveNFT({
     to: marketplaceLandContract.address,
     tokenId: nft.id,
@@ -49,7 +48,6 @@ export async function createLandTrade(
 }
 
 export async function cancelListing(account: Account, tradeId: bigint) {
-  console.log(account.address, tradeId);
 
   const tx = cancelTrade({
     item: tradeId,
@@ -80,28 +78,24 @@ export async function executeLandTrade(account: Account, nft: LandNFT) {
     }),
   });
 
-  console.log(approved);
 
   const approvedResult = await sendAndConfirmTransaction({
     transaction: approved,
     account: account,
   });
 
-  console.log(approvedResult);
 
   const tx = executeTrade({
     item: nft.id,
     contract: marketplaceLandContract,
   });
 
-  console.log(tx);
 
   const result = await sendAndConfirmTransaction({
     transaction: tx,
     account: account,
   });
 
-  console.log(result);
 
   return result;
 }

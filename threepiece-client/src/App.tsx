@@ -38,12 +38,6 @@ function App() {
   clientAddListener();
 
   useEffect(() => {
-    console.log({
-      status,
-      autoConnecting,
-      pathname,
-    });
-
     const setPlayerInfo = async () => {
       const playerInfo = await findOrCreatePlayerNft(wallet?.address);
       console.log("Player info", playerInfo);
