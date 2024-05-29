@@ -8,18 +8,34 @@ import { useState } from "react";
 import { useGetLands } from "../providers/land-provider";
 import { ResourceType } from "../thirdweb/types";
 
-
 const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
   const account = useActiveAccount();
   const lands = useGetLands();
 
-  let counter: Record<ResourceType, number>
-  // counter.ore = 5;
+  let counter: Record<ResourceType, number>;
+  counter = {
+    sand: 0,
+    seawater: 0,
+    water: 0,
+    wood: 0,
+    soil: 0,
+    ore: 0,
+    snow: 0,
+  };
+  let totalResources = 0;
   for (const land of lands) {
-    //    for each resource of the land
-    //        increment the counter of each ressource (use ResourceType array for counting)
-  }
+    totalResources += land.resources.length;
 
+    {
+      for (const resource of land.resources)
+        counter[resource.resourceType] += 1;
+      console.log(land.resources);
+    }
+  }
+  // const percentage = (counter[resource.resourceType] / totalResources) * 100;
+  //console.log(percentage);
+  console.log(counter);
+  console.log(totalResources);
 
   const getTileId = (): number => {
     return selectedTile?._land.id || null;
@@ -58,7 +74,13 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
   };
   return (
     <div className="tile-info-rect">
-      <Tabs className="tile-info-title" value={tabValue} onChange={handleChange} aria-label="tile-info-tabs" variant="fullWidth">
+      <Tabs
+        className="tile-info-title"
+        value={tabValue}
+        onChange={handleChange}
+        aria-label="tile-info-tabs"
+        variant="fullWidth"
+      >
         <Tab label="Tile Info" />
         {account && <Tab label="Admin" />}
       </Tabs>
@@ -66,7 +88,11 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
         {tabValue === 0 && (
           <div className="tile-info">
             <div style={{ paddingTop: 10 }}>Tile ID: {getTileId()}</div>
-            {!selectedTile?._isUnclaimedTile ? <div>Owned By: {getOwner()}</div> : <div>Available in the marketplace</div>}
+            {!selectedTile?._isUnclaimedTile ? (
+              <div>Owned By: {getOwner()}</div>
+            ) : (
+              <div>Available in the marketplace</div>
+            )}
             <h3 className="resources-title">Resources:</h3>
             <div className="resource-table">{getResources()}</div>
           </div>
