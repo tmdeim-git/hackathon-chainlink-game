@@ -47,6 +47,7 @@ export function Navbar() {
 
   const player = useGetPlayerByAddress(account?.address || "");
   const playerName = player?.nft.metadata.name;
+  const playerLevel = player?.nft.metadata.attributes[0].value;
 
   const isAdmin = account?.address === adminAddress;
 
@@ -58,7 +59,7 @@ export function Navbar() {
   const handleClose = () => setOpen(false);
 
   const handleAccept = async () => {
-    await changePlayerNameNft(account.address, newName)
+    await changePlayerNameNft(account.address, newName);
     console.log("New name accepted:", newName);
     handleClose();
   };
@@ -122,7 +123,7 @@ export function Navbar() {
                 marginRight: "10px",
               }}
             >
-              <p>{`Welcome ${playerName}`}</p>
+              <p>{`Welcome ${playerName} (${playerLevel})`}</p>
               <Button
                 onClick={handleOpen}
                 size="small"
