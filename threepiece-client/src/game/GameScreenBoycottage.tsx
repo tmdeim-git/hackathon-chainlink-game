@@ -6,11 +6,11 @@ import ImageGame from "./subComponents/ImageGame";
 import GameTiles from "./subComponents/GameTiles";
 
 type Props = {
-  tileSelected: (tile: GameTile) => void;
+  setTileSelected: (tile: GameTile) => void;
 };
 
 const GameScreenBoycottage: React.FC<Props> = (props: Props) => {
-  const { tileSelected } = props;
+  const { setTileSelected } = props;
   const canvasSize: number = 0.55;
   const canvasAspectRation = 11 / 15.0;
   const width = window.innerWidth * canvasSize;
@@ -33,7 +33,7 @@ const GameScreenBoycottage: React.FC<Props> = (props: Props) => {
           height={height}
           lines={lines}
           cols={cols}
-          tileSelected={tileSelected}
+          setTileSelected={setTileSelected}
         />
       </Layer>
     </Stage>

@@ -33,9 +33,10 @@ export async function getRandomNumbersWithVrf(params: VrfRngParams) {
                 const event = events[0];
                 const { requestId, numbersGenerated } = event.args;
                 console.log(`RNG result`, event);
-                unwatch();
-                if (requestId === currentRequestId)
+                if (requestId === currentRequestId) {
                     resolve(numbersGenerated);
+                    unwatch();
+                }
             },
             events: [(vrfRngResultEvent())],
             contract: vrfContract,

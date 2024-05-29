@@ -13,7 +13,7 @@ const FooterContainer = styled(Box)(({ theme }) => ({
   flexWrap: "wrap",
 }));
 
-const TeamMembers = styled(Box)(({}) => ({
+const TeamMembers = styled(Box)(({ }) => ({
   display: "flex",
   alignItems: "center",
   gap: "8px",
@@ -22,13 +22,13 @@ const TeamMembers = styled(Box)(({}) => ({
   fontSize: "0.875em",
 }));
 
-const TeamMember = styled(Box)(({}) => ({
+const TeamMember = styled(Box)(({ }) => ({
   display: "flex",
   alignItems: "center",
   whiteSpace: "nowrap", // Prevents text from wrapping
   "&:not(:last-child)::after": {
-    content: '"•"',
-    margin: "0 8px",
+    content: '""',
+    margin: "0 5px",
   },
 }));
 

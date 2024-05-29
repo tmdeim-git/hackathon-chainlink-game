@@ -1,9 +1,10 @@
 import { Button, CircularProgress } from "@mui/material";
+import { resetLands } from "../providers/scripts-provider";
 
-const ResetLandsButton = ({ onReset, loading, setLoading }) => {
+const ResetLandsButton = ({ account, loading, setLoading }) => {
   const handleClick = async () => {
     setLoading(true);
-    await onReset();
+    await resetLands(account);
     setLoading(false);
   };
 

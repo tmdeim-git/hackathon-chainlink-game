@@ -10,7 +10,7 @@ import {
   getAllPlayerNFTs,
   vrfContract,
 } from "../providers/web3-provider";
-import { vrfChanceEventRequestEvent } from "./generated-contracts/vrf";
+import { vrfChanceEventRequestEvent, vrfRngRequestEvent } from "./generated-contracts/vrf";
 import { GameEvent, isInEnum } from "./types";
 import { addBackendListener } from "../providers/backend/backend-events";
 import { store, refreshNfts } from "../providers/store";
@@ -29,7 +29,8 @@ export function clientAddListener(
     startTokenCreatedEvent();
     startMetadataUpdateEvent();
     startTransferEvent();
-    startVrfRequestEvent();
+    startVrfChanceRequestEvent();
+    startVrfRequestEvent(); // TODO: we shouldnt show the vrf requests usually
     console.log("started events");
     started = true;
   }
@@ -38,6 +39,17 @@ export function clientAddListener(
 }
 
 const startVrfRequestEvent = () =>
+  watchContractEvents({
+    onEvents(events) {
+      const { args } = events[0];
+      // callback && callback(`VRF Request sent`);
+      listeners.forEach((callback) => callback(`[DEBUG] VRF Request: ${args.numberOfResultsWanted} results from ${args.startRange} to ${args.endRange}!`));
+    },
+    events: [vrfRngRequestEvent()],
+    contract: vrfContract,
+  });
+
+const startVrfChanceRequestEvent = () =>
   watchContractEvents({
     onEvents(events) {
       refreshNfts();
@@ -72,10 +84,15 @@ const startMetadataUpdateEvent = () =>
   watchContractEvents({
     onEvents(events) {
       refreshNfts();
-      const event = events[0];
-      const id = event.args._fromTokenId;
-      console.log(`Token metadata updated`, event);
-      const message = `NFT ${id} has been updated.`;
+      const { args } = events[0];
+      let message: string;
+      console.log(`Token metadata updated`, events);
+      if (args._toTokenId - args._fromTokenId > 1n) {
+        message = `NFTs ${args._fromTokenId} to ${args._toTokenId} updated!`;
+      } else {
+        const id = args._fromTokenId;
+        message = `NFT ${id} has been updated.`;
+      }
       listeners.forEach((callback) => callback(message));
     },
     events: [batchMetadataUpdateEvent()],
