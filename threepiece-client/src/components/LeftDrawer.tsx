@@ -5,12 +5,14 @@ import Button from "@mui/material/Button";
 import { GameTile } from "../game/GameTile";
 import MetadataCard from "./MetadataCard";
 import Skeleton from "@mui/material/Skeleton";
+import { useGetActiveListings } from "../providers/marketplace-provider";
 
 export default function LeftDrawer({
   selectedTile,
 }: {
   selectedTile: GameTile;
 }) {
+  const allListings = useGetActiveListings();
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
 
@@ -19,6 +21,12 @@ export default function LeftDrawer({
     if (newOpen) {
       setLoading(true);
     }
+  };
+
+  const listingId = () => {
+    return allListings.find(
+      (listing) => listing.tokenId === selectedTile._land.nft.id
+    )?.id;
   };
 
   const DrawerList = (
@@ -50,9 +58,7 @@ export default function LeftDrawer({
           import.meta.env.VITE_THIRDWEB_CLIENT_ID
         }%22%5D%2C%22nativeCurrency%22%3A%7B%22name%22%3A%22Ether%22%2C%22symbol%22%3A%22ETH%22%2C%22decimals%22%3A18%7D%2C%22shortName%22%3A%22zkevm-testnet-cardona%22%2C%22chainId%22%3A2442%2C%22testnet%22%3Atrue%2C%22slug%22%3A%22polygon-zkevm-cardona-testnet%22%2C%22icon%22%3A%7B%22url%22%3A%22ipfs%3A%2F%2FQmNmJZkQgx9RcFLS3rvxQTVYcPfyAFPr667keHTUxB9PDv%22%2C%22width%22%3A122%2C%22height%22%3A135%2C%22format%22%3A%22png%22%7D%7D&clientId=${
           import.meta.env.VITE_THIRDWEB_CLIENT_ID
-        }&directListingId=${
-          selectedTile?._land?.nft?.id
-        }&theme=dark&primaryColor=purple`}
+        }&directListingId=${listingId()}&theme=dark&primaryColor=purple`}
         width="600px"
         height="600px"
         style={{
@@ -87,12 +93,16 @@ export default function LeftDrawer({
 
   return (
     <div>
-      <Button variant="contained" onClick={toggleDrawer(true)}>
-        Buy This Land
-      </Button>
-      <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
-        {DrawerList}
-      </Drawer>
+      {listingId() != null && (
+        <>
+          <Button variant="contained" onClick={toggleDrawer(true)}>
+            Buy This Land
+          </Button>
+          <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
+            {DrawerList}
+          </Drawer>
+        </>
+      )}
     </div>
   );
 }

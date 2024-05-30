@@ -16,7 +16,7 @@ import { addBackendListener } from "../providers/backend/backend-events";
 import { store, refreshNfts } from "../providers/store";
 import { landsNftsAtom } from "../providers/land-provider";
 import { allPlayersNftsAtom } from "../providers/player-provider";
-//import { tradeStatusChangeEvent } from "./generated-contracts/marketplace";
+import { newListingEvent, newSaleEvent, cancelledListingEvent, updatedListingEvent } from "./generated-contracts/marketplace";
 
 type Listener = (message: string) => void;
 let started: boolean = false;
@@ -121,15 +121,15 @@ const startTransferEvent = () =>
     contract: landContract,
   });
 
-// const startMarketplaceEvents = () =>
-//   watchContractEvents({
-//     onEvents(events) {
-//       refreshNfts();
-//       const event = events[0];
-//       let message: string = `Marketplace trade event!`;
-//       refreshNfts();
-//       listeners.forEach((callback) => callback(message));
-//     },
-//     events: [tradeStatusChangeEvent()],
-//     contract: landContract,
-//   });
+const startMarketplaceEvents = () =>
+  watchContractEvents({
+    onEvents(events) {
+      refreshNfts();
+      const event = events[0];
+      let message: string = `Marketplace trade event!`;
+      refreshNfts();
+      listeners.forEach((callback) => callback(message));
+    },
+    events: [newListingEvent(), newSaleEvent(), cancelledListingEvent(), updatedListingEvent()],
+    contract: landContract,
+  });

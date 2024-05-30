@@ -14,10 +14,23 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
   const lands = useGetLands();
 
   let counter: Record<ResourceType, number>;
-  // counter.ore = 5;
+  counter = {
+    sand: 0,
+    seawater: 0,
+    water: 0,
+    wood: 0,
+    soil: 0,
+    ore: 0,
+    snow: 0,
+  };
+  let totalResources = 0;
   for (const land of lands) {
-    //    for each resource of the land
-    //        increment the counter of each ressource (use ResourceType array for counting)
+    totalResources += land.resources.length;
+
+    {
+      for (const resource of land.resources)
+        counter[resource.resourceType] += 1;
+    }
   }
 
   const getTileId = (): number => {
@@ -32,9 +45,15 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
 
   const getResources = () => {
     return selectedTile?._land.resources.map((r, key) => {
+      const percentage = (
+        (counter[r.resourceType] / totalResources) *
+        100
+      ).toFixed(2);
       return (
         <div className="resource-element" key={key}>
-          <h3 className="resource-element-title"> {r.resourceType} </h3>
+          <h3 className="resource-element-title">
+            {r.resourceType} ({percentage}%)
+          </h3>
           <div> time: {r.productionTimeSeconds / 60} min</div>
           <div>amount: {r.Amount}</div>
           <ResourceProduction resource={r} land={selectedTile?._land} />
