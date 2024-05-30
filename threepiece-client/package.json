@@ -16,7 +16,7 @@
     "@iconify-icons/simple-icons": "^1.2.74",
     "@iconify/react": "^4.1.1",
     "@mui/icons-material": "^5.15.18",
-    "@mui/material": "^5.15.18",
+    "@mui/material": "^5.15.19",
     "@thirdweb-dev/chain-icons": "^1.0.5",
     "@thirdweb-dev/sdk": "^4.0.85",
     "date-fns": "^3.6.0",

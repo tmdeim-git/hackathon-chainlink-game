@@ -10,10 +10,9 @@
     justify-content: center;
     padding: 2rem;
     box-sizing: border-box;
-}
-
-
-.connect-button {
+  }
+  
+  .connect-button {
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
@@ -22,4 +21,26 @@
     border: none;
     border-radius: 5px;
     margin-bottom: 20px;
-}
+  }
+   
+  .footer-section {
+    background-color: #333;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .footer-text {
+    color: #bbb;
+    font-size: 14px;
+    margin: 5px 0;
+    text-align: center;
+  }
+  
+  body {
+    background-color: #1e1e1e;
+    color: #fff;
+    font-family: 'Roboto', sans-serif;
+  }
+  
