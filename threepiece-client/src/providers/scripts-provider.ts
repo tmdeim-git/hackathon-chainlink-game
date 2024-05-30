@@ -82,7 +82,6 @@ export async function updateAttributeLand(
     const nftList = store.get(landsNftsAtom) as NFT[];
     let metadata = nftList.find(n => n.id === nftId).metadata;
     metadata.attributes = newAttributes as unknown as Record<string, unknown>;
-    console.log(metadata);
 
     return await updateMetadata(metadata, nftList, Number(nftId), contract);
   }

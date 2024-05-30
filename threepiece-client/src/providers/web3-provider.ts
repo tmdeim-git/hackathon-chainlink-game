@@ -55,22 +55,23 @@ export const marketplaceLandContract = getContract({
   client: thirdwebClient,
 });
 
+export const linkContract = getContract({
+  address: import.meta.env.VITE_LINK_CONTRACT,
+  chain: testChain,
+  client: thirdwebClient,
+});
 
 export async function getAllLandNFTs(): Promise<LandNFT[]> {
   const landNfts = await getTheNFTs(landContract);
-  console.log("landNfts", landNfts);
 
   return landNfts as LandNFT[];
 }
 
 export async function getAllPlayerNFTs(): Promise<PlayerNFT[]> {
   const playerNfts = await getTheNFTs(playerContract);
-  console.log("playerNfts", playerNfts);
 
   return playerNfts as PlayerNFT[];
 }
-
-
 
 async function getTheNFTs(contract: Readonly<ContractOptions<[]>>) {
   return (

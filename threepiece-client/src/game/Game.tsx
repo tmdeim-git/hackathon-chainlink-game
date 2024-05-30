@@ -5,9 +5,6 @@ import { clientAddListener } from "../thirdweb/client-events";
 import SelectedResourceRect from "./selectedResourceRect";
 import GameScreenBoycottage from "./GameScreenBoycottage";
 
-
-
-
 const Game: React.FC = () => {
   const [selectedTile, setSelectedTile] = useState<GameTile>();
   const [eventHistory, setEventHistory] = useState<string[]>([]);
@@ -26,7 +23,18 @@ const Game: React.FC = () => {
 
   return (
     <div className="game-page">
-      <div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          width: "20%",
+          height: "100%",
+          color: "white",
+          padding: "20px",
+        }}
+      >
         <SelectedResourceRect selectedTile={selectedTile} />
         <div className="event-history">
           <p className="event-name">Event history:</p>

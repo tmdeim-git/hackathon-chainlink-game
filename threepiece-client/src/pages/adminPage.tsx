@@ -9,6 +9,7 @@ import AttributesTable from "../components/AttributesTable";
 import DeleteAttributes from "../components/DeleteAttributes";
 import UpdateAttributes from "../components/UpdateAttributes";
 import LoadingWithMusic from "../components/LoadingWithMusic";
+import ListAllNftsButton from "../components/ListAllNftsButton";
 
 export function AdminPage() {
   const [resetLoading, setResetLoading] = useState(false);
@@ -18,7 +19,8 @@ export function AdminPage() {
   const account = useActiveAccount();
   const [error, setError] = useState("");
 
-  const anyLoading = resetLoading || addLoading || updateLoading || deleteLoading;
+  const anyLoading =
+    resetLoading || addLoading || updateLoading || deleteLoading;
   const allLandNfts = useGetLandsNft();
 
   return (
@@ -44,6 +46,8 @@ export function AdminPage() {
         loading={resetLoading}
         setLoading={setResetLoading}
       />
+      <ListAllNftsButton loading={resetLoading} setLoading={setResetLoading} />
+
       <Box
         sx={{ display: "flex", justifyContent: "space-between", width: "80%" }}
       >

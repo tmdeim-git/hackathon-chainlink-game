@@ -68,8 +68,8 @@ export default function NftCard({
                         type === "owned"
                           ? await createLandTrade(account, land.nft, 1000n)
                           : type === "listed"
-                            ? await cancelListing(account, land.nft.id)
-                            : await executeLandTrade(account, land.nft)
+                          ? await cancelListing(account, land.nft.id)
+                          : await executeLandTrade(account, land.nft)
                       }
                       // onClick={
                       //   type === "owned"
@@ -84,18 +84,18 @@ export default function NftCard({
                       {type === "owned"
                         ? "List"
                         : type === "listed"
-                          ? "Cancel Listing"
-                          : "Buy NFT"}
+                        ? "Cancel Listing"
+                        : "Buy NFT"}
                     </Button>
                   </>
                 }
               />
             </ImageListItem>
           ))) || (
-            <div style={{ height: "300px", width: "100vw", textAlign: "center" }}>
-              You don't have any NFTs.
-            </div>
-          )}
+          <div style={{ height: "300px", width: "100vw", textAlign: "center" }}>
+            You don't have any NFTs.
+          </div>
+        )}
         <Dialog
           open={open}
           onClose={handleClose}
@@ -106,7 +106,6 @@ export default function NftCard({
               const formData = new FormData(event.currentTarget);
               const formJson = Object.fromEntries((formData as any).entries());
               const price = formJson.price;
-              console.log(price);
               handleClose();
             },
           }}
@@ -131,7 +130,14 @@ export default function NftCard({
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose}>Cancel</Button>
-            <Button type="submit" onClick={async () => { await createLandTrade(account, land.nft, 1000n) }}>Confirm</Button>
+            <Button
+              type="submit"
+              onClick={async () => {
+                await createLandTrade(account, land.nft, 1000n);
+              }}
+            >
+              Confirm
+            </Button>
           </DialogActions>
         </Dialog>
       </ImageList>

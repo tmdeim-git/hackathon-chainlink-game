@@ -1,107 +1,55 @@
-// import { getContract, sendAndConfirmTransaction } from "thirdweb";
-// import {
-//   activeTrades,
-//   approveCurrencyToken,
-//   cancelTrade,
-//   executeTrade,
-//   getTradesByOwner,
-//   openTrade,
-// } from "../../../../thirdweb/generated-contracts/marketplace";
-// import { Account } from "thirdweb/wallets";
-// import { LandNFT } from "../../../../thirdweb/types";
-// import {
-//   landContract,
-//   marketplaceLandContract,
-//   testChain,
-// } from "../../../web3-provider";
-// import { approve as approveNFT } from "../../../../thirdweb/generated-contracts/nft-drop";
-// import { approve as approveCurrency } from "thirdweb/extensions/erc20";
+import { PreparedTransaction, sendAndConfirmTransaction } from "thirdweb";
+import {
+  createListing,
+  multicall,
+} from "../../../../thirdweb/generated-contracts/marketplace";
+import { allLandsAtom } from "../../../land-provider";
+import { marketplaceContract } from "../../../marketplace-provider";
+import { store } from "../../../store";
+import { landContract, linkContract } from "../../../web3-provider";
+import { adminAccount } from "../../admin";
+import { sendAndConfirmMulticall } from "../erc721-scripts";
 
-// export async function createLandTrade(
-//   account: Account,
-//   nft: LandNFT,
-//   price: bigint
-// ) {
-//   console.log(account, nft, price);
-//   const approved = approveNFT({
-//     to: marketplaceLandContract.address,
-//     tokenId: nft.id,
-//     contract: landContract,
-//   });
+export async function initialListAllLands() {
+  const lands = store.get(allLandsAtom);
+  console.log(lands);
 
-//   const approvedResult = await sendAndConfirmTransaction({
-//     transaction: approved,
-//     account: account,
-//   });
+  let listTx = [];
+  for (const land of lands) {
+    const listing = createListing({
+      contract: marketplaceContract,
+      params: {
+        assetContract: landContract.address,
+        tokenId: land.nft.id,
+        currency: linkContract.address,
+        endTimestamp: 1719699072n,
+        pricePerToken: 1000000n,
+        quantity: 1n,
+        reserved: false,
+        startTimestamp: BigInt(Math.floor(new Date().getTime() / 1000)),
+      },
+    });
+    listTx.push(listing);
+    if (listTx.length === 10 || land === lands[lands.length - 1]) {
+      console.log("List Tx: ", listTx);
+      const batchTxResult = await sendAndConfirmMulticall(
+        listTx,
+        marketplaceContract
+      );
+      console.log("Batch Tx Result: ", batchTxResult);
+      listTx = [];
+    }
+  }
+}
 
-//   const tx = openTrade({
-//     item: nft.id,
-//     price: price,
-//     contract: marketplaceLandContract,
-//   });
-
-//   const result = await sendAndConfirmTransaction({
-//     transaction: tx,
-//     account: account,
-//   });
-
-//   return result;
-// }
-
-// export async function cancelListing(account: Account, tradeId: bigint) {
-//   console.log(account.address, tradeId);
-  
-//   const tx = cancelTrade({
-//     item: tradeId,
-//     contract: marketplaceLandContract,
-//   });
-
-//   const result = await sendAndConfirmTransaction({
-//     transaction: tx,
-//     account: account,
-//   });
-
-//   return result;
-// }
-
-// export async function executeLandTrade(account: Account, nft: LandNFT) {
-//   const trade = await activeTrades({
-//     arg_0: BigInt(nft.id),
-//     contract: marketplaceLandContract,
-//   });
-
-//   const approved = approveCurrency({
-//     spender: marketplaceLandContract.address,
-//     amount: Number(trade[2]),
-//     contract: getContract({
-//       address: "0x5576815a38A3706f37bf815b261cCc7cCA77e975",
-//       chain: testChain,
-//       client: marketplaceLandContract.client,
-//     }),
-//   });
-
-//   console.log(approved);
-
-//   const approvedResult = await sendAndConfirmTransaction({
-//     transaction: approved,
-//     account: account,
-//   });
-
-//   console.log(approvedResult);
-
-//   const tx = executeTrade({
-//     item: nft.id,
-//     contract: marketplaceLandContract,
-//   });
-
-//   console.log(tx);
-
-//   const result = await sendAndConfirmTransaction({
-//     transaction: tx,
-//     account: account,
-//   });
-
-//   console.log(result);
-
-//   return result;
+// EXAMPLE OF INPUT PARAMS FOR LISTING LANDS
+//   {
+//     "assetContract": "0x0eC91918B843C99daE10b20873c0311eD048d7e3",
+//     "tokenId": 165,
+//     "quantity": 1,
+//     "currency": "0x5576815a38A3706f37bf815b261cCc7cCA77e975",
+//     "pricePerToken": 1000,
+//     "startTimestamp": 1717032871,
+//     "endTimestamp": 1717106541,
+//     "reserved": false
 // }

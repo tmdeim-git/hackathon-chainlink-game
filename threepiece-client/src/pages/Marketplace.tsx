@@ -33,22 +33,6 @@ export default function Marketplace() {
       height="600px"
       style={{ maxWidth: "100%" }}
       id="marketplace-iframe"
-      onLoad={() => {
-        const iframe = document.getElementById(
-          "marketplace-iframe"
-        ) as HTMLIFrameElement;
-        iframe.contentWindow?.postMessage(
-          {
-            type: "modify-css",
-            className: "css-1ae1s9m",
-            style: {
-              property: "display",
-              value: "none",
-            },
-          },
-          "*"
-        );
-      }}
     ></iframe>
   );
 }

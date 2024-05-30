@@ -13,6 +13,7 @@ interface ImportMetaEnv {
   readonly VITE_PLAYER_CONTRACT: string;
   readonly VITE_WOOD_CONTRACT: string;
   readonly VITE_WOOD_SWORD_CONTRACT: string;
+  readonly VITE_LINK_CONTRACT: string;
   // Add more variables here as needed
 }
 

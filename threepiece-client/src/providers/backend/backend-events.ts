@@ -1,12 +1,7 @@
-import { resolve } from "dns";
 import { watchContractEvents } from "thirdweb";
-import {
-  vrfChanceEventRequestEvent,
-  vrfChanceEventResultEvent,
-  vrfRngResultEvent,
-} from "../../thirdweb/generated-contracts/vrf";
+import { vrfChanceEventResultEvent } from "../../thirdweb/generated-contracts/vrf";
 import { landContract, vrfContract } from "../web3-provider";
-import { GameEvent, Land, LandNFT, isInEnum } from "../../thirdweb/types";
+import { GameEvent, LandNFT, isInEnum } from "../../thirdweb/types";
 import { store } from "../store";
 import { landsNftsAtom } from "../land-provider";
 import { batchUpdateMetadata } from "./scripts/erc721-scripts";
@@ -56,6 +51,24 @@ const start = () =>
                 {
                   trait_type: "event",
                   value: GameEvent.Land.Raining,
+                },
+              ],
+            } as LandNFT["metadata"];
+          });
+        } else if (eventName === GameEvent.Land.None) {
+          finalNft = allLandNfts.map((nftToModify, index) => {
+            const result = results[index];
+            // TODO: process raining
+            if (!result) return nftToModify.metadata;
+            console.log("SUN ON NFT TILE", nftToModify.metadata.attributes[0]);
+            return {
+              ...nftToModify.metadata,
+              attributes: [
+                nftToModify.metadata.attributes[0],
+                nftToModify.metadata.attributes[1],
+                {
+                  trait_type: "event",
+                  value: GameEvent.Land.None,
                 },
               ],
             } as LandNFT["metadata"];

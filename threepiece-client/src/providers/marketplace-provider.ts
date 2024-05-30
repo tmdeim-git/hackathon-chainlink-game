@@ -8,6 +8,9 @@
 // import { useMemo } from "react";
 // import { store } from "./store";
 
+import { getContract } from "thirdweb";
+import { testChain, thirdwebClient } from "./web3-provider";
+
 // const allListedLandsNfts = await getAllListedLandsNfts(await activeTradeCounter({
 //     contract: marketplaceLandContract
 // }));
@@ -43,11 +46,11 @@
 //     return useAtomValue(playerLandListingsAtom);
 // }
 
-// export const marketplaceContract = getContract({
-//     address: import.meta.env.VITE_MARKETPLACE_CONTRACT,
-//     chain: testChain,
-//     client: thirdwebClient,
-// });
+export const marketplaceContract = getContract({
+  address: import.meta.env.VITE_MARKETPLACE_CONTRACT,
+  chain: testChain,
+  client: thirdwebClient,
+});
 
 // export async function getUserListedLandsNfts(owner: string) {
 //     const trades = await getTradesByOwner({

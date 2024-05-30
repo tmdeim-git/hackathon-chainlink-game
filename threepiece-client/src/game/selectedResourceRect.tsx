@@ -3,23 +3,22 @@ import "../style/selectedResourceRect.css";
 import ResourceProduction from "../components/CountdownLoadingBar";
 import { useActiveAccount } from "thirdweb/react";
 import UpdateSingleAttribute from "../components/UpdateSingleAttribute";
-import { Tabs, Tab } from "@mui/material";
+import { Tabs, Tab, Button } from "@mui/material";
 import { useState } from "react";
 import { useGetLands } from "../providers/land-provider";
 import { ResourceType } from "../thirdweb/types";
-
+import LeftDrawer from "../components/LeftDrawer";
 
 const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
   const account = useActiveAccount();
   const lands = useGetLands();
 
-  let counter: Record<ResourceType, number>
+  let counter: Record<ResourceType, number>;
   // counter.ore = 5;
   for (const land of lands) {
     //    for each resource of the land
     //        increment the counter of each ressource (use ResourceType array for counting)
   }
-
 
   const getTileId = (): number => {
     return selectedTile?._land.id || null;
@@ -58,7 +57,13 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
   };
   return (
     <div className="tile-info-rect">
-      <Tabs className="tile-info-title" value={tabValue} onChange={handleChange} aria-label="tile-info-tabs" variant="fullWidth">
+      <Tabs
+        className="tile-info-title"
+        value={tabValue}
+        onChange={handleChange}
+        aria-label="tile-info-tabs"
+        variant="fullWidth"
+      >
         <Tab label="Tile Info" />
         {account && <Tab label="Admin" />}
       </Tabs>
@@ -66,7 +71,11 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
         {tabValue === 0 && (
           <div className="tile-info">
             <div style={{ paddingTop: 10 }}>Tile ID: {getTileId()}</div>
-            {!selectedTile?._isUnclaimedTile ? <div>Owned By: {getOwner()}</div> : <div>Available in the marketplace</div>}
+            {!selectedTile?._isUnclaimedTile ? (
+              <div>Owned By: {getOwner()}</div>
+            ) : (
+              <LeftDrawer selectedTile={selectedTile} />
+            )}
             <h3 className="resources-title">Resources:</h3>
             <div className="resource-table">{getResources()}</div>
           </div>

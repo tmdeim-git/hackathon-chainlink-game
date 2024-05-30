@@ -3,12 +3,10 @@ import { Player, PlayerNFT, PlayerNFTAttributes } from "../thirdweb/types";
 import { getAllPlayerNFTs, playerContract } from "./web3-provider";
 import { claimTo, lazyMint } from "thirdweb/extensions/erc721";
 import {
-  batchUpdateAttribute,
   sendAndConfirmMulticall,
   updateMetadata,
 } from "./backend/scripts/erc721-scripts";
 import { atom, useAtomValue } from "jotai";
-import { adminAccount } from "./backend/admin";
 import { selectAtom } from "jotai/utils";
 import { store } from "./store";
 import { useMemo } from "react";
@@ -115,15 +113,15 @@ export async function findOrCreatePlayerNft(playerAddress: string) {
 }
 
 export async function incrementePlayerLevelNft(playerAddress: string) {
-  const players = store.get(allPlayersAtom);
-  const playerInfo = getCurrentPlayerInfo(playerAddress, players);
+  const playersNft = store.get(allPlayersNftsAtom);
 
-  await batchUpdateAttribute(
-    {
-      trait_type: "level",
-      value: playerInfo.level + 1,
-    },
-    [playerInfo.nft],
+  const nft = playersNft.find((nft) => nft.owner === playerAddress);
+  nft.metadata.attributes[0].value++;
+
+  await updateMetadata(
+    nft.metadata,
+    playersNft,
+    Number(nft.id),
     playerContract
   );
   store.set(allPlayersNftsAtom, await getAllPlayerNFTs());
@@ -134,8 +132,7 @@ export async function changePlayerNameNft(
   newName: string
 ) {
   const playersNft = store.get(allPlayersNftsAtom);
-  console.log(playersNft);
-  
+
   const nft = playersNft.find((nft) => nft.owner === playerAddress);
   nft.metadata.name = newName;
 
