@@ -13,7 +13,7 @@ const FooterContainer = styled(Box)(({ theme }) => ({
   flexWrap: "wrap",
 }));
 
-const TeamMembers = styled(Box)(({}) => ({
+const TeamMembers = styled(Box)(({ }) => ({
   display: "flex",
   alignItems: "center",
   gap: "8px",
@@ -22,7 +22,7 @@ const TeamMembers = styled(Box)(({}) => ({
   fontSize: "0.875em",
 }));
 
-const TeamMember = styled(Box)(({}) => ({
+const TeamMember = styled(Box)(({ }) => ({
   display: "flex",
   alignItems: "center",
   whiteSpace: "nowrap", // Prevents text from wrapping
@@ -54,10 +54,10 @@ const Footer: React.FC = () => {
         <TeamMembers>
           {teamMembers.map((member) => (
             <TeamMember key={member.name}>
-              <Typography variant="body1">{member.name}</Typography>
               <GitHubLink href={member.github} target="_blank" rel="noopener">
+                <GitHub />
+                <Typography variant="body1" marginLeft={1}>{member.name}</Typography>
                 <IconButton aria-label={`${member.name}'s GitHub`} size="small">
-                  <GitHub />
                 </IconButton>
               </GitHubLink>
             </TeamMember>
