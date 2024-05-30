@@ -1,9 +1,8 @@
 import React from "react";
 import { IconButton, Tooltip } from "@mui/material";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { styled } from "@mui/system";
 import { useNavigate } from "react-router-dom";
-
+import MapIcon from "@mui/icons-material/Map";
 const AnimatedIconButton = styled(IconButton)({
   "&:hover": {
     animation: "shake 0.5s",
@@ -22,24 +21,24 @@ const AnimatedIconButton = styled(IconButton)({
   },
 });
 
-interface CartButtonProps {
+interface MapButtonProps {
   style?: React.CSSProperties;
 }
 
-const CartButton: React.FC<CartButtonProps> = ({ style }) => {
+const BackToGameButton: React.FC<MapButtonProps> = ({ style }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("/marketplace");
+    navigate("/game");
   };
 
   return (
-    <Tooltip title="Marketplace" arrow>
+    <Tooltip title="Return to game" arrow>
       <AnimatedIconButton onClick={handleClick} color="primary" style={style}>
-        <ShoppingCartIcon />
+        <MapIcon />
       </AnimatedIconButton>
     </Tooltip>
   );
 };
 
-export default CartButton;
+export default BackToGameButton;
