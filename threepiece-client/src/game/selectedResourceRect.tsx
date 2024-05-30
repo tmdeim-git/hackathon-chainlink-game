@@ -19,6 +19,7 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
   const account = useActiveAccount();
   const lands = useGetLands();
   const [time, setTime] = useState(0);
+  const [prodStart, setProdStarted] = useState(false);
   useEffect(() => {
     let ignore = false;
     const getTime = async () => {
@@ -38,7 +39,7 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
       ignore = true;
       clearInterval(interval);
     };
-  }, [selectedTile]);
+  }, [selectedTile, prodStart]);
   let counter: Record<ResourceType, number>;
   counter = {
     sand: 0,
@@ -101,12 +102,14 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
     setTabValue(newValue);
   };
 
-  const handleButtonProdPress = () => {
-    stakeLand(selectedTile._land.nft.id);
+  const handleButtonProdPress = async () => {
+    await stakeLand(selectedTile._land.nft.id);
+    setProdStarted(true)
   };
 
-  const handleButtonStopProdPress = () => {
-    unStakeLand(selectedTile._land.nft.id, time);
+  const handleButtonStopProdPress = async () => {
+    await unStakeLand(selectedTile._land.nft.id, time);
+    setProdStarted(false)
   };
 
   return (
@@ -139,7 +142,7 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
                 paddingTop: "20px",
               }}
             >
-              {selectedTile && time === 0 && (
+              {selectedTile && time === 0 && !prodStart && (
                 <button onClick={handleButtonProdPress}>
                   Start production for all resources
                 </button>
