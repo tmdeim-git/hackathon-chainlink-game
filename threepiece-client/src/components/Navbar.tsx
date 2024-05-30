@@ -114,7 +114,7 @@ export function Navbar() {
                 marginRight: "10px",
               }}
             >
-              <p>{`Welcome ${playerName} (${playerLevel})`}</p>
+              <p>{`Welcome ${playerName} [Level ${playerLevel}]`}</p>
               <EditButton onOpen={handleOpen} style={{ marginLeft: "8px" }} />
             </div>
           )}
