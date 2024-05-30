@@ -154,7 +154,7 @@ const unstakeLandEvent = () =>
 
       console.log("Stake result for land", test);
 
-      const message = "A land just stop ped producing resources!";
+      const message = "A land just stop producing resources!";
 
       listeners.forEach((callback) => callback(message));
     },

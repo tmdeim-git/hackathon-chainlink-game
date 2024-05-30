@@ -106,7 +106,7 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
   };
 
   const handleButtonStopProdPress = () => {
-    unStakeLand(selectedTile._land.nft.id);
+    unStakeLand(selectedTile._land.nft.id, time);
   };
 
   return (
@@ -148,7 +148,7 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
                 <>
                   <span>{`Time since production: ${time} sec`}</span>
                   <button onClick={handleButtonStopProdPress}>
-                    Stop all resources from reproducing
+                    Stop all resources from producing
                   </button>
                 </>
               )}

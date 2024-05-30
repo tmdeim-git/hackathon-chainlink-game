@@ -16,7 +16,10 @@ import {
   stake,
   unstake,
 } from "../thirdweb/generated-contracts/nft-drop";
-import { sendAndConfirmMulticall } from "./backend/scripts/erc721-scripts";
+import {
+  sendAndConfirmMulticall,
+  updateMetadata,
+} from "./backend/scripts/erc721-scripts";
 
 // NOTE: This part should usually be protected in an API
 const allLandNfts = await getAllLandNFTs();
@@ -75,11 +78,22 @@ export async function stakeLand(tokenId: bigint) {
   store.set(landsNftsAtom, await getAllLandNFTs());
 }
 
-export async function unStakeLand(tokenId: bigint) {
+export async function unStakeLand(tokenId: bigint, time: number) {
   const unStakeTx = unstake({
     tokenId,
     contract: landContract,
   });
+
+  const nftLands = store.get(landsNftsAtom);
+  const land = nftLands.find((land) => land.id === tokenId);
+
+  for (const resource of land.metadata.attributes[1].value) {
+    const productionTime = resource.productionTimeSeconds;
+    const amountProduce = Math.floor(Number(time) / productionTime);
+    resource.Amount += amountProduce;
+  }
+
+  await updateMetadata(land.metadata, nftLands, Number(tokenId), landContract);
 
   const batchResult = await sendAndConfirmMulticall([unStakeTx], landContract);
   console.log("unStake result for land", tokenId, batchResult);
