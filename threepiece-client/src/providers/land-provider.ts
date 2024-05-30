@@ -5,10 +5,18 @@ import {
   LandNFTAttributes,
   isValidLand,
 } from "../thirdweb/types";
-import { getAllLandNFTs } from "./web3-provider";
+import { getAllLandNFTs, landContract } from "./web3-provider";
 import { atom, useAtomValue } from "jotai";
 import { selectAtom } from "jotai/utils";
 import { useMemo } from "react";
+import { store } from "./store";
+import {
+  getCumulativeDurationStaked,
+  isStaked,
+  stake,
+  unstake,
+} from "../thirdweb/generated-contracts/nft-drop";
+import { sendAndConfirmMulticall } from "./backend/scripts/erc721-scripts";
 
 // NOTE: This part should usually be protected in an API
 const allLandNfts = await getAllLandNFTs();
@@ -52,7 +60,38 @@ export function useGetLandIds(): number[] {
     () => selectAtom(allLandsAtom, (lands) => lands.map((land) => land.id)),
     []
   );
+
   return useAtomValue(gameTilesAtom);
+}
+
+export async function stakeLand(tokenId: bigint) {
+  const stakeTx = stake({
+    tokenId,
+    contract: landContract,
+  });
+
+  const batchResult = await sendAndConfirmMulticall([stakeTx], landContract);
+  console.log(batchResult);
+  store.set(landsNftsAtom, await getAllLandNFTs());
+}
+
+export async function unStakeLand(tokenId: bigint) {
+  const unStakeTx = unstake({
+    tokenId,
+    contract: landContract,
+  });
+
+  const batchResult = await sendAndConfirmMulticall([unStakeTx], landContract);
+  console.log("unStake result for land", tokenId, batchResult);
+  store.set(landsNftsAtom, await getAllLandNFTs());
+}
+
+export async function getLandCurrentStake(tokenId: bigint) {
+  const result = await getCumulativeDurationStaked({
+    tokenId,
+    contract: landContract,
+  });
+  return result;
 }
 
 export function nftsToLands(nfts: NFT[]) {
@@ -90,6 +129,16 @@ export function nftsToLands(nfts: NFT[]) {
   return lands;
 }
 
-export function stakeNFT(tokenId: bigint) {
-  
+export async function getCumulativeDurationByLand(tokenId: bigint) {
+  return await getCumulativeDurationStaked({
+    contract: landContract,
+    tokenId,
+  });
+}
+
+export async function getIsLandStaked(tokenId: bigint) {
+  return await isStaked({
+    contract: landContract,
+    tokenId,
+  });
 }

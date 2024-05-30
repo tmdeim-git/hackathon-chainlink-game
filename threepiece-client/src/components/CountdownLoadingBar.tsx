@@ -5,7 +5,7 @@ import { endProduction, startProduction } from "../providers/scripts-provider";
 import { useActiveAccount } from "thirdweb/react";
 import { subSeconds } from "date-fns";
 import Timer from "./Timer";
-import { stakeNFT } from "../providers/land-provider";
+// import { stakeNFT } from "../providers/land-provider";
 
 function subtractSeconds(seconds: number) {
   const currentDate = new Date(); // Get the current date and time
@@ -102,7 +102,7 @@ const ResourceProduction = ({
 
   return (
     <div>
-      {!producting && (
+      {/* {!producting && (
         <button
           onClick={() => startCountdown()}
           className="resource-element-button"
@@ -110,7 +110,7 @@ const ResourceProduction = ({
           <div>start</div>
           <div>production</div>
         </button>
-      )}
+      )} */}
       {producting && (
         <div className="App" style={{ padding: "20px" }}>
           {endTime.getTime() - liveTime.getTime() > 0 ? (
@@ -128,7 +128,7 @@ const ResourceProduction = ({
             <Button
               variant="contained"
               color="primary"
-              onClick={() => stakeNFT(land.nft.id)}
+              // onClick={() => stakeNFT(land.nft.id)}
             >
               Stake!
             </Button>

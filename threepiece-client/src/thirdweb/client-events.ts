@@ -3,33 +3,38 @@ import {
   tokensLazyMintedEvent,
   batchMetadataUpdateEvent,
   transferEvent,
+  stakedEvent,
+  unstakedEvent,
 } from "./generated-contracts/nft-drop";
+import { landContract, vrfContract } from "../providers/web3-provider";
 import {
-  getAllLandNFTs,
-  landContract,
-  getAllPlayerNFTs,
-  vrfContract,
-} from "../providers/web3-provider";
-import { vrfChanceEventRequestEvent, vrfRngRequestEvent } from "./generated-contracts/vrf";
+  vrfChanceEventRequestEvent,
+  vrfRngRequestEvent,
+} from "./generated-contracts/vrf";
 import { GameEvent, isInEnum } from "./types";
 import { addBackendListener } from "../providers/backend/backend-events";
-import { store, refreshNfts } from "../providers/store";
-import { landsNftsAtom } from "../providers/land-provider";
-import { allPlayersNftsAtom } from "../providers/player-provider";
-import { newListingEvent, newSaleEvent, cancelledListingEvent, updatedListingEvent } from "./generated-contracts/marketplace";
+import { refreshNfts } from "../providers/store";
+import {
+  newListingEvent,
+  newSaleEvent,
+  cancelledListingEvent,
+  updatedListingEvent,
+} from "./generated-contracts/marketplace";
 
 type Listener = (message: string) => void;
 let started: boolean = false;
 const listeners: Listener[] = [];
 
 export function clientAddListener(
-  callback: (message: string) => void = () => { }
+  callback: (message: string) => void = () => {}
 ) {
   if (!started) {
     startTokenCreatedEvent();
     startMetadataUpdateEvent();
     startTransferEvent();
     startVrfChanceRequestEvent();
+    stakeLandEvent();
+    unstakeLandEvent();
     startVrfRequestEvent(); // TODO: we shouldnt show the vrf requests usually
     console.log("started events");
     started = true;
@@ -43,7 +48,11 @@ const startVrfRequestEvent = () =>
     onEvents(events) {
       const { args } = events[0];
       // callback && callback(`VRF Request sent`);
-      listeners.forEach((callback) => callback(`[DEBUG] VRF Request: ${args.numberOfResultsWanted} results from ${args.startRange} to ${args.endRange}!`));
+      listeners.forEach((callback) =>
+        callback(
+          `[DEBUG] VRF Request: ${args.numberOfResultsWanted} results from ${args.startRange} to ${args.endRange}!`
+        )
+      );
     },
     events: [vrfRngRequestEvent()],
     contract: vrfContract,
@@ -121,15 +130,53 @@ const startTransferEvent = () =>
     contract: landContract,
   });
 
-const startMarketplaceEvents = () =>
+const stakeLandEvent = () =>
   watchContractEvents({
     onEvents(events) {
       refreshNfts();
-      const event = events[0];
-      let message: string = `Marketplace trade event!`;
-      refreshNfts();
+      const test = events[0].args;
+
+      console.log("Stake result for land", test);
+
+      const message = "A tile has begin to produce resources!";
+
       listeners.forEach((callback) => callback(message));
     },
-    events: [newListingEvent(), newSaleEvent(), cancelledListingEvent(), updatedListingEvent()],
+    events: [stakedEvent()],
     contract: landContract,
   });
+
+const unstakeLandEvent = () =>
+  watchContractEvents({
+    onEvents(events) {
+      refreshNfts();
+      const test = events[0].args;
+
+      console.log("Stake result for land", test);
+
+      const message = "A land just stop ped producing resources!";
+
+      listeners.forEach((callback) => callback(message));
+    },
+    events: [
+      newListingEvent(),
+      newSaleEvent(),
+      cancelledListingEvent(),
+      unstakedEvent(),
+      updatedListingEvent(),
+    ],
+    contract: landContract,
+  });
+
+// const startMarketplaceEvents = () =>
+//   watchContractEvents({
+//     onEvents(events) {
+//       refreshNfts();
+//       const event = events[0];
+//       let message: string = `Marketplace trade event!`;
+//       refreshNfts();
+//       listeners.forEach((callback) => callback(message));
+//     },
+//     events: [tradeStatusChangeEvent()],
+//     contract: landContract,
+//   });

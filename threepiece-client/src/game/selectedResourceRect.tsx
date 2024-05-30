@@ -3,16 +3,42 @@ import "../style/selectedResourceRect.css";
 import ResourceProduction from "../components/CountdownLoadingBar";
 import { useActiveAccount } from "thirdweb/react";
 import UpdateSingleAttribute from "../components/UpdateSingleAttribute";
-import { Tabs, Tab, Button } from "@mui/material";
-import { useState } from "react";
-import { useGetLands } from "../providers/land-provider";
+import { Tabs, Tab } from "@mui/material";
+import { useEffect, useState } from "react";
+import {
+  getCumulativeDurationByLand,
+  getIsLandStaked,
+  stakeLand,
+  unStakeLand,
+  useGetLands,
+} from "../providers/land-provider";
 import { ResourceType } from "../thirdweb/types";
 import LeftDrawer from "../components/LeftDrawer";
 
 const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
   const account = useActiveAccount();
   const lands = useGetLands();
+  const [time, setTime] = useState(0);
+  useEffect(() => {
+    let ignore = false;
+    const getTime = async () => {
+      if (ignore) return;
+      const isLandStaked = await getIsLandStaked(selectedTile._land.nft.id);
+      if (!isLandStaked) return setTime(0);
+      const time = await getCumulativeDurationByLand(selectedTile._land.nft.id);
+      console.log(time);
+      setTime(Number(time));
+    };
+    getTime();
+    const interval = setInterval(() => {
+      setTime((prevTime) => (prevTime === 0 ? prevTime : prevTime + 1));
+    }, 1000);
 
+    return () => {
+      ignore = true;
+      clearInterval(interval);
+    };
+  }, [selectedTile]);
   let counter: Record<ResourceType, number>;
   counter = {
     sand: 0,
@@ -74,6 +100,15 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
+
+  const handleButtonProdPress = () => {
+    stakeLand(selectedTile._land.nft.id);
+  };
+
+  const handleButtonStopProdPress = () => {
+    unStakeLand(selectedTile._land.nft.id);
+  };
+
   return (
     <div className="tile-info-rect">
       <Tabs
@@ -97,6 +132,27 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
             )}
             <h3 className="resources-title">Resources:</h3>
             <div className="resource-table">{getResources()}</div>
+            <div
+              style={{
+                justifyContent: "center",
+                display: "flex",
+                paddingTop: "20px",
+              }}
+            >
+              {selectedTile && time === 0 && (
+                <button onClick={handleButtonProdPress}>
+                  Start production for all resources
+                </button>
+              )}
+              {time > 0 && (
+                <>
+                  <span>{`Time since production: ${time} sec`}</span>
+                  <button onClick={handleButtonStopProdPress}>
+                    Stop all resources from reproducing
+                  </button>
+                </>
+              )}
+            </div>
           </div>
         )}
         {tabValue === 1 && (
