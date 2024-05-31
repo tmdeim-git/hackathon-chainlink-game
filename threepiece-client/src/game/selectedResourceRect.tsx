@@ -66,6 +66,8 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
   };
 
   let totalResources = 0;
+  let percentage: string;
+
   for (const land of lands) {
     totalResources += land.resources.length;
     for (const resource of land.resources) {
@@ -82,12 +84,12 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
       </option>
     ));
 
-  const getResources = () =>
-    selectedTile?._land.resources.map((r, key) => {
-      const percentage = (
-        (counter[r.resourceType] / totalResources) *
-        100
-      ).toFixed(2);
+  const getResources = () => {
+    return selectedTile?._land.resources.map((r, key) => {
+      percentage = ((counter[r.resourceType] / totalResources) * 100).toFixed(
+        2
+      );
+      selectedTile._percentage.push(Number(percentage));
       return (
         <div className="resource-element" key={key}>
           <h3 className="resource-element-title">
@@ -99,13 +101,7 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
         </div>
       );
     });
-
-  const getOwner = (): string =>
-    selectedTile
-      ? selectedTile?._isUnclaimedTile
-        ? "Nobody"
-        : selectedTile._land.ownerAddress
-      : "";
+  }
 
   const [tabValue, setTabValue] = useState(0);
 
@@ -143,11 +139,7 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
         {tabValue === 0 && (
           <div className="tile-info">
             <div style={{ paddingTop: 10 }}>Tile ID: {getTileId()}</div>
-            {!selectedTile?._isUnclaimedTile ? (
-              <div>Owned By: {getOwner()}</div>
-            ) : (
-              <LeftDrawer selectedTile={selectedTile} />
-            )}
+            <LeftDrawer selectedTile={selectedTile} />
             <h3 className="resources-title">Resources:</h3>
             <div className="resource-table">{getResources()}</div>
             <div

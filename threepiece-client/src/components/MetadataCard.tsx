@@ -12,6 +12,8 @@ import {
   useGetPlayerByAddress,
 } from "../providers/player-provider";
 import { store } from "../providers/store";
+import { ResourceType } from "../thirdweb/types";
+import { Tooltip } from "@mui/material";
 
 const bull = (
   <Box
@@ -56,9 +58,20 @@ export default function MetadataCard({
         <Typography sx={{ fontSize: 20, color: "white" }} gutterBottom>
           Available ressources
         </Typography>
-        <Stack direction="row" spacing={2}>
+        <Stack direction="column" spacing={2} flexWrap={"wrap"}>
           {selectedTile._land.resources.map((r, key) => {
-            return <MetadataChip key={key} text={`${r.resourceType}`} />;
+            return (
+              <MetadataChip
+                key={key}
+                label={
+                  r.resourceType +
+                  " (" +
+                  selectedTile._percentage[key].toFixed(2) +
+                  "%)"
+                }
+                percentage={selectedTile._percentage[key]}
+              />
+            );
           })}
         </Stack>
       </CardContent>

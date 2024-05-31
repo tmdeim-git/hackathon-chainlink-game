@@ -6,6 +6,9 @@ import { GameTile } from "../game/GameTile";
 import MetadataCard from "./MetadataCard";
 import Skeleton from "@mui/material/Skeleton";
 import { useGetActiveListings } from "../providers/marketplace-provider";
+import NftCard from "./NftCard";
+import { useActiveAccount } from "thirdweb/react";
+import { ResourceType } from "../thirdweb/types";
 
 export default function LeftDrawer({
   selectedTile,
@@ -15,7 +18,9 @@ export default function LeftDrawer({
   const allListings = useGetActiveListings();
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
+  const account = useActiveAccount();
 
+  if (!selectedTile) return null;
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
     if (newOpen) {
@@ -29,7 +34,11 @@ export default function LeftDrawer({
     )?.id;
   };
 
-  const DrawerList = (
+  const selectedListing = allListings.find(
+    (listing) => listing.tokenId === selectedTile._land.nft.id
+  );
+
+  const buyListing = (
     <Box
       sx={{
         width: 450,
@@ -91,18 +100,47 @@ export default function LeftDrawer({
     </Box>
   );
 
+  const newListing = (
+    <Box
+      sx={{
+        width: 450,
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-evenly",
+        alignItems: "center",
+      }}
+      role="presentation"
+    >
+      <NftCard selectedTile={selectedTile} selectedListing={selectedListing} />
+      <MetadataCard selectedTile={selectedTile} />
+    </Box>
+  );
+
   return (
     <div>
-      {listingId() != null && (
+      {
         <>
-          <Button variant="contained" onClick={toggleDrawer(true)}>
-            Buy This Land
-          </Button>
+          {account.address === selectedTile._land.ownerAddress &&
+          listingId() == null ? (
+            <Button variant="contained" onClick={toggleDrawer(true)}>
+              List on Marketplace
+            </Button>
+          ) : (
+            listingId() != null &&
+            account.address !== selectedTile._land.ownerAddress && (
+              <Button variant="contained" onClick={toggleDrawer(true)}>
+                Buy This Land
+              </Button>
+            )
+          )}
           <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
-            {DrawerList}
+            {account.address === selectedTile._land.ownerAddress
+              ? newListing
+              : buyListing}
           </Drawer>
         </>
-      )}
+      }
     </div>
   );
 }

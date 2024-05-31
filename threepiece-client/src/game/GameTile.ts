@@ -9,6 +9,7 @@ export class GameTile {
   _land: Land;
   _selected: boolean = false;
   _isUnclaimedTile: boolean = false;
+  _percentage: number[];
 
   constructor(i: number, j: number, land: Land, isUnclaimedTile: boolean) {
     this._x = j * this._size;
@@ -17,6 +18,7 @@ export class GameTile {
     this._j = j;
     this._land = land;
     this._isUnclaimedTile = isUnclaimedTile;
+    this._percentage = [];
   }
   draw(ctx: CanvasRenderingContext2D): void {
     //if (this._selected) ctx.lineWidth = 3;

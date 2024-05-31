@@ -20,6 +20,7 @@ import {
   cancelledListingEvent,
   updatedListingEvent,
 } from "./generated-contracts/marketplace";
+import { marketplaceContract } from "../providers/marketplace-provider";
 
 type Listener = (message: string) => void;
 let started: boolean = false;
@@ -36,6 +37,7 @@ export function clientAddListener(
     stakeLandEvent();
     unstakeLandEvent();
     startVrfRequestEvent(); // TODO: we shouldnt show the vrf requests usually
+    startMarketplaceEvents();
     console.log("started events");
     started = true;
   }
@@ -158,25 +160,24 @@ const unstakeLandEvent = () =>
 
       listeners.forEach((callback) => callback(message));
     },
+    events: [unstakedEvent()],
+    contract: landContract,
+  });
+
+const startMarketplaceEvents = () =>
+  watchContractEvents({
+    onEvents(events) {
+      refreshNfts();
+      const event = events[0];
+      let message: string = `Marketplace trade event!`;
+      refreshNfts();
+      listeners.forEach((callback) => callback(message));
+    },
     events: [
       newListingEvent(),
       newSaleEvent(),
       cancelledListingEvent(),
-      unstakedEvent(),
       updatedListingEvent(),
     ],
-    contract: landContract,
+    contract: marketplaceContract,
   });
-
-// const startMarketplaceEvents = () =>
-//   watchContractEvents({
-//     onEvents(events) {
-//       refreshNfts();
-//       const event = events[0];
-//       let message: string = `Marketplace trade event!`;
-//       refreshNfts();
-//       listeners.forEach((callback) => callback(message));
-//     },
-//     events: [tradeStatusChangeEvent()],
-//     contract: landContract,
-//   });

@@ -1,14 +1,12 @@
-import { PreparedTransaction, sendAndConfirmTransaction } from "thirdweb";
-import {
-  createListing,
-  multicall,
-} from "../../../../thirdweb/generated-contracts/marketplace";
+import { sendAndConfirmTransaction } from "thirdweb";
+import { createListing } from "../../../../thirdweb/generated-contracts/marketplace";
 import { allLandsAtom } from "../../../land-provider";
 import { marketplaceContract } from "../../../marketplace-provider";
 import { store } from "../../../store";
 import { landContract, linkContract } from "../../../web3-provider";
-import { adminAccount } from "../../admin";
 import { sendAndConfirmMulticall } from "../erc721-scripts";
+import { Account } from "thirdweb/wallets";
+import { approve } from "../../../../thirdweb/generated-contracts/nft-drop";
 
 export async function initialListAllLands() {
   const lands = store.get(allLandsAtom);
@@ -40,6 +38,59 @@ export async function initialListAllLands() {
       listTx = [];
     }
   }
+}
+
+export async function listNftById({
+  id,
+  account,
+  price,
+}: {
+  id: bigint;
+  account: Account;
+  price: number;
+}) {
+  const approveNFT = approve({
+    contract: landContract,
+    to: marketplaceContract.address,
+    tokenId: id,
+  });
+
+  console.log("Approve NFT: ", approveNFT);
+
+  const approveTxResult = await sendAndConfirmTransaction({
+    transaction: approveNFT,
+    account: account,
+  });
+
+  console.log("Approve Tx Result: ", approveTxResult);
+
+  const listing = createListing({
+    contract: marketplaceContract,
+    params: {
+      assetContract: landContract.address,
+      tokenId: id,
+      currency: linkContract.address,
+      endTimestamp: BigInt(
+        Math.floor(
+          new Date(new Date().setDate(new Date().getDate() + 30)).getTime() /
+            1000
+        )
+      ),
+      pricePerToken: BigInt(price * 1e18),
+      quantity: 1n,
+      reserved: false,
+      startTimestamp: BigInt(Math.floor(new Date().getTime() / 1000)),
+    },
+  });
+
+  console.log("Listing: ", listing);
+
+  const txResult = await sendAndConfirmTransaction({
+    transaction: listing,
+    account: account,
+  });
+
+  console.log("Tx Result: ", txResult);
 }
 
 // EXAMPLE OF INPUT PARAMS FOR LISTING LANDS
