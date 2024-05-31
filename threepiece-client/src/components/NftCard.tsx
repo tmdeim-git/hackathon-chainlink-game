@@ -207,6 +207,7 @@ export default function NftCard({
                 id: selectedTile._land.nft.id,
                 account: account,
                 price: Number(value),
+                startTimestamp: BigInt(Math.floor(new Date().getTime() / 1000)),
               });
             }}
           >

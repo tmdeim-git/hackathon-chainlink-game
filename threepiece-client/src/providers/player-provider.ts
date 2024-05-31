@@ -72,7 +72,7 @@ export async function createNewPlayerNft(
   const attributes: PlayerNFTAttributes = [
     {
       trait_type: "level",
-      value,
+      value: value,
     },
   ];
 
@@ -90,7 +90,7 @@ export async function createNewPlayerNft(
     quantity: BigInt(1),
     to: playerAddress,
   });
-
+  debugger
   const batchResult = await sendAndConfirmMulticall(
     [mintTx, claimTx],
     playerContract

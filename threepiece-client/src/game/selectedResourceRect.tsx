@@ -15,7 +15,7 @@ import {
 import { ResourceType } from "../thirdweb/types";
 import LeftDrawer from "../components/LeftDrawer";
 
-const CustomButton = styled(Button)(({ }) => ({
+const CustomButton = styled(Button)(({}) => ({
   backgroundColor: "#222222",
   color: "white",
   borderRadius: "20px",
@@ -34,11 +34,10 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
   const [loadingStart, setLoadingStart] = useState(false);
   const [loadingStop, setLoadingStop] = useState(false);
   const [prodStart, setProdStarted] = useState(false);
-
   useEffect(() => {
     let ignore = false;
     const getTime = async () => {
-      if (ignore) return;
+      if (ignore || !selectedTile) return;
       const isLandStaked = await getIsLandStaked(selectedTile._land.nft.id);
       if (!isLandStaked) return setTime(0);
       const time = await getCumulativeDurationByLand(selectedTile._land.nft.id);
@@ -85,11 +84,12 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
     ));
 
   const getResources = () => {
+    if (!selectedTile) return null;
     return selectedTile?._land.resources.map((r, key) => {
       percentage = ((counter[r.resourceType] / totalResources) * 100).toFixed(
         2
       );
-      selectedTile._percentage.push(Number(percentage));
+      selectedTile?._percentage.push(Number(percentage));
       return (
         <div className="resource-element" key={key}>
           <h3 className="resource-element-title">
@@ -101,7 +101,7 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
         </div>
       );
     });
-  }
+  };
 
   const [tabValue, setTabValue] = useState(0);
 
@@ -111,15 +111,15 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
 
   const handleButtonProdPress = async () => {
     setLoadingStop(true);
-    await stakeLand(selectedTile._land.nft.id);
-    setProdStarted(true)
+    await stakeLand(selectedTile?._land.nft.id);
+    setProdStarted(true);
     setLoadingStop(false);
   };
 
   const handleButtonStopProdPress = async () => {
     setLoadingStop(true);
-    await unStakeLand(selectedTile._land.nft.id, time);
-    setProdStarted(false)
+    await unStakeLand(selectedTile?._land.nft.id, time);
+    setProdStarted(false);
     setLoadingStop(false);
   };
 
@@ -151,62 +151,56 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
                 alignItems: "center",
               }}
             >
-              {
-                selectedTile && time === 0 && !prodStart && (
+              {selectedTile && time === 0 && !prodStart && (
+                <CustomButton
+                  onClick={handleButtonProdPress}
+                  variant="contained"
+                  disabled={loadingStart}
+                >
+                  {loadingStart ? (
+                    <CircularProgress size={24} color="inherit" />
+                  ) : (
+                    "Start production for all resources"
+                  )}
+                </CustomButton>
+              )}
+              {time > 0 && (
+                <>
+                  <span
+                    style={{ marginBottom: "10px" }}
+                  >{`Time since production: ${time} sec`}</span>
                   <CustomButton
-                    onClick={handleButtonProdPress}
+                    onClick={handleButtonStopProdPress}
                     variant="contained"
-                    disabled={loadingStart}
+                    disabled={loadingStop}
                   >
-                    {loadingStart ? (
+                    {loadingStop ? (
                       <CircularProgress size={24} color="inherit" />
                     ) : (
-                      "Start production for all resources"
+                      "Stop all resources from producing"
                     )}
                   </CustomButton>
-                )
-              }
-              {
-                time > 0 && (
-                  <>
-                    <span
-                      style={{ marginBottom: "10px" }}
-                    >{`Time since production: ${time} sec`}</span>
-                    <CustomButton
-                      onClick={handleButtonStopProdPress}
-                      variant="contained"
-                      disabled={loadingStop}
-                    >
-                      {loadingStop ? (
-                        <CircularProgress size={24} color="inherit" />
-                      ) : (
-                        "Stop all resources from producing"
-                      )}
-                    </CustomButton>
-                  </>
-                )
-              }
-            </div >
-          </div >
-        )}
-        {
-          tabValue === 1 && (
-            <div>
-              {!selectedTile && <div>You must select a tile first</div>}
-              {selectedTile && (
-                <div>
-                  <UpdateSingleAttribute
-                    account={account}
-                    nft={selectedTile._land.nft}
-                    key={selectedTile._land.nft.id}
-                  />
-                </div>
+                </>
               )}
             </div>
-          )
-        }
-      </div >
-    </div >
+          </div>
+        )}
+        {tabValue === 1 && (
+          <div>
+            {!selectedTile && <div>You must select a tile first</div>}
+            {selectedTile && (
+              <div>
+                <UpdateSingleAttribute
+                  account={account}
+                  nft={selectedTile?._land.nft}
+                  key={selectedTile?._land.nft.id}
+                />
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
   );
 };
 

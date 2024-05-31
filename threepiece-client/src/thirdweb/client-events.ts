@@ -170,7 +170,6 @@ const startMarketplaceEvents = () =>
       refreshNfts();
       const event = events[0];
       let message: string = `Marketplace trade event!`;
-      refreshNfts();
       listeners.forEach((callback) => callback(message));
     },
     events: [

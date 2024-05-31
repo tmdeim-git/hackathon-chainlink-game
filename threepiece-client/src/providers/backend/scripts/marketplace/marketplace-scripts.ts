@@ -44,10 +44,12 @@ export async function listNftById({
   id,
   account,
   price,
+  startTimestamp
 }: {
   id: bigint;
   account: Account;
   price: number;
+  startTimestamp: bigint;
 }) {
   const approveNFT = approve({
     contract: landContract,
@@ -79,7 +81,7 @@ export async function listNftById({
       pricePerToken: BigInt(price * 1e18),
       quantity: 1n,
       reserved: false,
-      startTimestamp: BigInt(Math.floor(new Date().getTime() / 1000)),
+      startTimestamp: startTimestamp,
     },
   });
 
