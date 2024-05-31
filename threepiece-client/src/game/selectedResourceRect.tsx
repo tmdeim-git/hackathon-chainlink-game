@@ -3,7 +3,7 @@ import "../style/selectedResourceRect.css";
 import ResourceProduction from "../components/CountdownLoadingBar";
 import { useActiveAccount } from "thirdweb/react";
 import UpdateSingleAttribute from "../components/UpdateSingleAttribute";
-import { Tabs, Tab } from "@mui/material";
+import { Tabs, Tab, CircularProgress, Button, styled } from "@mui/material";
 import { useEffect, useState } from "react";
 import {
   getCumulativeDurationByLand,
@@ -15,10 +15,25 @@ import {
 import { ResourceType } from "../thirdweb/types";
 import LeftDrawer from "../components/LeftDrawer";
 
+const CustomButton = styled(Button)(({}) => ({
+  backgroundColor: "#222222",
+  color: "white",
+  borderRadius: "20px",
+  fontSize: "16px",
+  padding: "10px 20px",
+  marginBottom: "20px",
+  "&:hover": {
+    backgroundColor: "#444444",
+  },
+}));
+
 const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
   const account = useActiveAccount();
   const lands = useGetLands();
   const [time, setTime] = useState(0);
+  const [loadingStart, setLoadingStart] = useState(false);
+  const [loadingStop, setLoadingStop] = useState(false);
+
   useEffect(() => {
     let ignore = false;
     const getTime = async () => {
@@ -26,7 +41,6 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
       const isLandStaked = await getIsLandStaked(selectedTile._land.nft.id);
       if (!isLandStaked) return setTime(0);
       const time = await getCumulativeDurationByLand(selectedTile._land.nft.id);
-      console.log(time);
       setTime(Number(time));
     };
     getTime();
@@ -39,8 +53,8 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
       clearInterval(interval);
     };
   }, [selectedTile]);
-  let counter: Record<ResourceType, number>;
-  counter = {
+
+  let counter: Record<ResourceType, number> = {
     sand: 0,
     seawater: 0,
     water: 0,
@@ -49,28 +63,26 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
     ore: 0,
     snow: 0,
   };
+
   let totalResources = 0;
   for (const land of lands) {
     totalResources += land.resources.length;
-
-    {
-      for (const resource of land.resources)
-        counter[resource.resourceType] += 1;
+    for (const resource of land.resources) {
+      counter[resource.resourceType] += 1;
     }
   }
 
-  const getTileId = (): number => {
-    return selectedTile?._land.id || null;
-  };
+  const getTileId = (): number => selectedTile?._land.id || null;
 
-  const getResourceType = (): any => {
-    return selectedTile?._land.resources.map((r) => {
-      return <option value={r.resourceType}>{r.resourceType}</option>;
-    });
-  };
+  const getResourceType = (): any =>
+    selectedTile?._land.resources.map((r) => (
+      <option value={r.resourceType} key={r.resourceType}>
+        {r.resourceType}
+      </option>
+    ));
 
-  const getResources = () => {
-    return selectedTile?._land.resources.map((r, key) => {
+  const getResources = () =>
+    selectedTile?._land.resources.map((r, key) => {
       const percentage = (
         (counter[r.resourceType] / totalResources) *
         100
@@ -86,27 +98,30 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
         </div>
       );
     });
-  };
 
-  const getOwner = (): string => {
-    if (selectedTile) {
-      return selectedTile?._isUnclaimedTile
+  const getOwner = (): string =>
+    selectedTile
+      ? selectedTile?._isUnclaimedTile
         ? "Nobody"
-        : selectedTile._land.ownerAddress;
-    }
-  };
+        : selectedTile._land.ownerAddress
+      : "";
+
   const [tabValue, setTabValue] = useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
 
-  const handleButtonProdPress = () => {
-    stakeLand(selectedTile._land.nft.id);
+  const handleButtonProdPress = async () => {
+    setLoadingStart(true);
+    await stakeLand(selectedTile._land.nft.id);
+    setLoadingStart(false);
   };
 
-  const handleButtonStopProdPress = () => {
-    unStakeLand(selectedTile._land.nft.id, time);
+  const handleButtonStopProdPress = async () => {
+    setLoadingStop(true);
+    await unStakeLand(selectedTile._land.nft.id, time);
+    setLoadingStop(false);
   };
 
   return (
@@ -137,19 +152,39 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
                 justifyContent: "center",
                 display: "flex",
                 paddingTop: "20px",
+                flexDirection: "column",
+                alignItems: "center",
               }}
             >
               {selectedTile && time === 0 && (
-                <button onClick={handleButtonProdPress}>
-                  Start production for all resources
-                </button>
+                <CustomButton
+                  onClick={handleButtonProdPress}
+                  variant="contained"
+                  disabled={loadingStart}
+                >
+                  {loadingStart ? (
+                    <CircularProgress size={24} color="inherit" />
+                  ) : (
+                    "Start production for all resources"
+                  )}
+                </CustomButton>
               )}
               {time > 0 && (
                 <>
-                  <span>{`Time since production: ${time} sec`}</span>
-                  <button onClick={handleButtonStopProdPress}>
-                    Stop all resources from producing
-                  </button>
+                  <span
+                    style={{ marginBottom: "10px" }}
+                  >{`Time since production: ${time} sec`}</span>
+                  <CustomButton
+                    onClick={handleButtonStopProdPress}
+                    variant="contained"
+                    disabled={loadingStop}
+                  >
+                    {loadingStop ? (
+                      <CircularProgress size={24} color="inherit" />
+                    ) : (
+                      "Stop all resources from producing"
+                    )}
+                  </CustomButton>
                 </>
               )}
             </div>
