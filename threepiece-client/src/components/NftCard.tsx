@@ -18,7 +18,10 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import InputAdornment from "@mui/material/InputAdornment";
 import { useState } from "react";
 import { useActiveAccount } from "thirdweb/react";
-import { listNftById } from "../providers/backend/scripts/marketplace/marketplace-scripts";
+import {
+  cancelNft,
+  listNftById,
+} from "../providers/backend/scripts/marketplace/marketplace-scripts";
 
 const theme = createTheme({
   components: {
@@ -72,9 +75,11 @@ const bull = (
 export default function NftCard({
   selectedTile,
   selectedListing,
+  state,
 }: {
   selectedTile: GameTile;
   selectedListing: DirectListing;
+  state: string;
 }) {
   const player = useGetPlayerByAddress(selectedTile._land.ownerAddress);
   const account = useActiveAccount();
@@ -161,58 +166,71 @@ export default function NftCard({
           }}
         >
           <ThemeProvider theme={theme}>
-            <TextField
-              id="outlined-basic"
-              label="Price"
-              variant="outlined"
-              onChange={handleChange}
-              error={!!error}
-              value={value}
-              helperText={error || "Only numeric values are allowed"}
-              FormHelperTextProps={{
-                style: error
-                  ? { color: "red", fontSize: "14px", margin: "3px 0" }
-                  : { color: "white", fontSize: "14px", margin: "3px 0" }, // Custom style for the helper text
-              }}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment
-                    sx={{
-                      "& .MuiSvgIcon-root": {
-                        color: "white",
-                      },
-                    }}
-                    position="end"
-                  >
-                    LINK
-                  </InputAdornment>
-                ),
-              }}
-            />
+            {state === "list" && (
+              <TextField
+                id="outlined-basic"
+                label="Price"
+                variant="outlined"
+                onChange={handleChange}
+                error={!!error}
+                value={value}
+                helperText={error || "Only numeric values are allowed"}
+                FormHelperTextProps={{
+                  style: error
+                    ? { color: "red", fontSize: "14px", margin: "3px 0" }
+                    : { color: "white", fontSize: "14px", margin: "3px 0" }, // Custom style for the helper text
+                }}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment
+                      sx={{
+                        "& .MuiSvgIcon-root": {
+                          color: "white",
+                        },
+                      }}
+                      position="end"
+                    >
+                      LINK
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            )}
           </ThemeProvider>
-          <Button
-            size="large"
-            variant="contained"
-            sx={{
-              backgroundColor: "rgba(168, 85, 247, 1)",
-              color: "white",
-              padding: "15px 20px",
-              "&:hover": {
-                backgroundColor: "rgba(168, 85, 247, 0.3)",
+          {state != "view" ? (
+            <Button
+              size="large"
+              variant="contained"
+              sx={{
+                backgroundColor: "rgba(168, 85, 247, 1)",
                 color: "white",
-              },
-            }}
-            onClick={async () => {
-              await listNftById({
-                id: selectedTile._land.nft.id,
-                account: account,
-                price: Number(value),
-                startTimestamp: BigInt(Math.floor(new Date().getTime() / 1000)),
-              });
-            }}
-          >
-            List
-          </Button>
+                padding: "15px 20px",
+                "&:hover": {
+                  backgroundColor: "rgba(168, 85, 247, 0.3)",
+                  color: "white",
+                },
+              }}
+              onClick={async () => {
+                if (state !== "cancel") {
+                  await listNftById({
+                    id: selectedTile._land.nft.id,
+                    account: account,
+                    price: Number(value),
+                    startTimestamp: BigInt(
+                      Math.floor(new Date().getTime() / 1000)
+                    ),
+                  });
+                } else {
+                  await cancelNft({
+                    id: selectedTile._land.nft.id,
+                    account: account,
+                  });
+                }
+              }}
+            >
+              {state === "cancel" ? "Cancel" : "List"}
+            </Button>
+          ) : null}
         </CardActions>
       </div>
     </Card>

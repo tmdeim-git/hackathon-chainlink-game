@@ -61,6 +61,12 @@ export const linkContract = getContract({
   client: thirdwebClient,
 });
 
+export const woodContract = getContract({
+  address: import.meta.env.VITE_WOOD_CONTRACT,
+  chain: testChain,
+  client: thirdwebClient,
+});
+
 export async function getAllLandNFTs(): Promise<LandNFT[]> {
   const landNfts = await getTheNFTs(landContract);
 

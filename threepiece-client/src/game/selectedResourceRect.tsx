@@ -118,7 +118,7 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
 
   const handleButtonStopProdPress = async () => {
     setLoadingStop(true);
-    await unStakeLand(selectedTile?._land.nft.id, time);
+    await unStakeLand(selectedTile?._land.nft.id, time, account.address as `0x${string}`);
     setProdStarted(false);
     setLoadingStop(false);
   };

@@ -1,15 +1,19 @@
 import { sendAndConfirmTransaction } from "thirdweb";
 import { createListing } from "../../../../thirdweb/generated-contracts/marketplace";
 import { allLandsAtom } from "../../../land-provider";
-import { marketplaceContract } from "../../../marketplace-provider";
+import {
+  allActiveListedLandNftsAtom,
+  marketplaceContract,
+} from "../../../marketplace-provider";
 import { store } from "../../../store";
 import { landContract, linkContract } from "../../../web3-provider";
 import { sendAndConfirmMulticall } from "../erc721-scripts";
 import { Account } from "thirdweb/wallets";
 import { approve } from "../../../../thirdweb/generated-contracts/nft-drop";
-
+import { DirectListing, cancelListing } from "thirdweb/extensions/marketplace";
+const lands = store.get(allLandsAtom);
+const listings: DirectListing[] = store.get(allActiveListedLandNftsAtom);
 export async function initialListAllLands() {
-  const lands = store.get(allLandsAtom);
   console.log(lands);
 
   let listTx = [];
@@ -44,7 +48,7 @@ export async function listNftById({
   id,
   account,
   price,
-  startTimestamp
+  startTimestamp,
 }: {
   id: bigint;
   account: Account;
@@ -95,6 +99,27 @@ export async function listNftById({
   console.log("Tx Result: ", txResult);
 }
 
+export async function cancelNft({
+  id,
+  account,
+}: {
+  id: bigint;
+  account: Account;
+}) {
+  listings.map(async (listing) => {
+    if (listing.tokenId === id) {
+      const tx = cancelListing({
+        contract: marketplaceContract,
+        listingId: listing.id,
+      });
+      const txResult = await sendAndConfirmTransaction({
+        transaction: tx,
+        account: account,
+      });
+      console.log("Tx Result: ", txResult);
+    }
+  });
+}
 // EXAMPLE OF INPUT PARAMS FOR LISTING LANDS
 //   {
 //     "assetContract": "0x0eC91918B843C99daE10b20873c0311eD048d7e3",

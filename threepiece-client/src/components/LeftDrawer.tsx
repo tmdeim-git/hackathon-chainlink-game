@@ -9,6 +9,7 @@ import { useGetActiveListings } from "../providers/marketplace-provider";
 import NftCard from "./NftCard";
 import { useActiveAccount } from "thirdweb/react";
 import { ResourceType } from "../thirdweb/types";
+import { refreshNfts } from "../providers/store";
 
 export default function LeftDrawer({
   selectedTile,
@@ -25,6 +26,9 @@ export default function LeftDrawer({
     setOpen(newOpen);
     if (newOpen) {
       setLoading(true);
+    }
+    if (!newOpen) {
+      refreshNfts();
     }
   };
 
@@ -112,7 +116,53 @@ export default function LeftDrawer({
       }}
       role="presentation"
     >
-      <NftCard selectedTile={selectedTile} selectedListing={selectedListing} />
+      <NftCard
+        selectedTile={selectedTile}
+        selectedListing={selectedListing}
+        state="list"
+      />
+      <MetadataCard selectedTile={selectedTile} />
+    </Box>
+  );
+
+  const cancelListing = (
+    <Box
+      sx={{
+        width: 450,
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-evenly",
+        alignItems: "center",
+      }}
+      role="presentation"
+    >
+      <NftCard
+        selectedTile={selectedTile}
+        selectedListing={selectedListing}
+        state={"cancel"}
+      />
+      <MetadataCard selectedTile={selectedTile} />
+    </Box>
+  );
+
+  const viewListing = (
+    <Box
+      sx={{
+        width: 450,
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-evenly",
+        alignItems: "center",
+      }}
+      role="presentation"
+    >
+      <NftCard
+        selectedTile={selectedTile}
+        selectedListing={selectedListing}
+        state={"view"}
+      />
       <MetadataCard selectedTile={selectedTile} />
     </Box>
   );
@@ -126,18 +176,34 @@ export default function LeftDrawer({
             <Button variant="contained" onClick={toggleDrawer(true)}>
               List on Marketplace
             </Button>
+          ) : listingId() != null &&
+            account.address !== selectedTile._land.ownerAddress ? (
+            <Button variant="contained" onClick={toggleDrawer(true)}>
+              Buy This Land
+            </Button>
+          ) : account.address === selectedTile._land.ownerAddress &&
+            listingId() != null ? (
+            <Button variant="contained" onClick={toggleDrawer(true)}>
+              Cancel Listing
+            </Button>
           ) : (
-            listingId() != null &&
-            account.address !== selectedTile._land.ownerAddress && (
-              <Button variant="contained" onClick={toggleDrawer(true)}>
-                Buy This Land
-              </Button>
-            )
+            <Button variant="contained" onClick={toggleDrawer(true)}>
+              View NFT
+            </Button>
           )}
           <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
-            {account.address === selectedTile._land.ownerAddress
-              ? newListing
-              : buyListing}
+            {account.address === selectedTile._land.ownerAddress &&
+            listingId() == null ? (
+              newListing
+            ) : listingId() != null &&
+              account.address !== selectedTile._land.ownerAddress ? (
+              buyListing
+            ) : account.address === selectedTile._land.ownerAddress &&
+              listingId() != null ? (
+              cancelListing
+            ) : (
+              viewListing
+            )}
           </Drawer>
         </>
       }

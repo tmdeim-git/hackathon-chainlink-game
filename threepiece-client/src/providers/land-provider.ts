@@ -1,11 +1,11 @@
-import { NFT } from "thirdweb";
+import { Address, NFT, sendAndConfirmTransaction } from "thirdweb";
 import {
   Land,
   LandNFT,
   LandNFTAttributes,
   isValidLand,
 } from "../thirdweb/types";
-import { getAllLandNFTs, landContract } from "./web3-provider";
+import { getAllLandNFTs, landContract, woodContract } from "./web3-provider";
 import { atom, useAtomValue } from "jotai";
 import { selectAtom } from "jotai/utils";
 import { useMemo } from "react";
@@ -20,6 +20,9 @@ import {
   sendAndConfirmMulticall,
   updateMetadata,
 } from "./backend/scripts/erc721-scripts";
+import { mintTo } from "thirdweb/extensions/erc20";
+import { useActiveAccount } from "thirdweb/react";
+import { adminAccount } from "./backend/admin";
 
 // NOTE: This part should usually be protected in an API
 const allLandNfts = await getAllLandNFTs();
@@ -78,7 +81,11 @@ export async function stakeLand(tokenId: bigint) {
   store.set(landsNftsAtom, await getAllLandNFTs());
 }
 
-export async function unStakeLand(tokenId: bigint, time: number) {
+export async function unStakeLand(
+  tokenId: bigint,
+  time: number,
+  account: Address
+) {
   const unStakeTx = unstake({
     tokenId,
     contract: landContract,
@@ -91,6 +98,8 @@ export async function unStakeLand(tokenId: bigint, time: number) {
     const productionTime = resource.productionTimeSeconds;
     const amountProduce = Math.floor(Number(time) / productionTime);
     resource.Amount += amountProduce;
+    await mintWood(resource.Amount, account);
+    console.log("minted", resource.Amount, "wood");
   }
 
   await updateMetadata(land.metadata, nftLands, Number(tokenId), landContract);
@@ -98,6 +107,21 @@ export async function unStakeLand(tokenId: bigint, time: number) {
   const batchResult = await sendAndConfirmMulticall([unStakeTx], landContract);
   console.log("unStake result for land", tokenId, batchResult);
   store.set(landsNftsAtom, await getAllLandNFTs());
+}
+
+export async function mintWood(amount: number, account: Address) {
+  const tx = mintTo({
+    amount,
+    to: account,
+    contract: woodContract,
+  });
+
+  const result = await sendAndConfirmTransaction({
+    transaction: tx,
+    account: adminAccount,
+  });
+
+  console.log(result);
 }
 
 export async function getLandCurrentStake(tokenId: bigint) {
