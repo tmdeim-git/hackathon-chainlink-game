@@ -15,7 +15,7 @@ import {
 import { ResourceType } from "../thirdweb/types";
 import LeftDrawer from "../components/LeftDrawer";
 
-const CustomButton = styled(Button)(({}) => ({
+const CustomButton = styled(Button)(({ }) => ({
   backgroundColor: "#222222",
   color: "white",
   borderRadius: "20px",
@@ -33,6 +33,7 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
   const [time, setTime] = useState(0);
   const [loadingStart, setLoadingStart] = useState(false);
   const [loadingStop, setLoadingStop] = useState(false);
+  const [prodStart, setProdStarted] = useState(false);
 
   useEffect(() => {
     let ignore = false;
@@ -52,9 +53,9 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
       ignore = true;
       clearInterval(interval);
     };
-  }, [selectedTile]);
-
-  let counter: Record<ResourceType, number> = {
+  }, [selectedTile, prodStart]);
+  let counter: Record<ResourceType, number>;
+  counter = {
     sand: 0,
     seawater: 0,
     water: 0,
@@ -113,14 +114,16 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
   };
 
   const handleButtonProdPress = async () => {
-    setLoadingStart(true);
+    setLoadingStop(true);
     await stakeLand(selectedTile._land.nft.id);
-    setLoadingStart(false);
+    setProdStarted(true)
+    setLoadingStop(false);
   };
 
   const handleButtonStopProdPress = async () => {
     setLoadingStop(true);
     await unStakeLand(selectedTile._land.nft.id, time);
+    setProdStarted(false)
     setLoadingStop(false);
   };
 
@@ -156,56 +159,62 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
                 alignItems: "center",
               }}
             >
-              {selectedTile && time === 0 && (
-                <CustomButton
-                  onClick={handleButtonProdPress}
-                  variant="contained"
-                  disabled={loadingStart}
-                >
-                  {loadingStart ? (
-                    <CircularProgress size={24} color="inherit" />
-                  ) : (
-                    "Start production for all resources"
-                  )}
-                </CustomButton>
-              )}
-              {time > 0 && (
-                <>
-                  <span
-                    style={{ marginBottom: "10px" }}
-                  >{`Time since production: ${time} sec`}</span>
+              {
+                selectedTile && time === 0 && !prodStart && (
                   <CustomButton
-                    onClick={handleButtonStopProdPress}
+                    onClick={handleButtonProdPress}
                     variant="contained"
-                    disabled={loadingStop}
+                    disabled={loadingStart}
                   >
-                    {loadingStop ? (
+                    {loadingStart ? (
                       <CircularProgress size={24} color="inherit" />
                     ) : (
-                      "Stop all resources from producing"
+                      "Start production for all resources"
                     )}
                   </CustomButton>
-                </>
+                )
+              }
+              {
+                time > 0 && (
+                  <>
+                    <span
+                      style={{ marginBottom: "10px" }}
+                    >{`Time since production: ${time} sec`}</span>
+                    <CustomButton
+                      onClick={handleButtonStopProdPress}
+                      variant="contained"
+                      disabled={loadingStop}
+                    >
+                      {loadingStop ? (
+                        <CircularProgress size={24} color="inherit" />
+                      ) : (
+                        "Stop all resources from producing"
+                      )}
+                    </CustomButton>
+                  </>
+                )
+              }
+            </div >
+          </div >
+        )}
+        {
+          tabValue === 1 && (
+            <div>
+              {!selectedTile && <div>You must select a tile first</div>}
+              {selectedTile && (
+                <div>
+                  <UpdateSingleAttribute
+                    account={account}
+                    nft={selectedTile._land.nft}
+                    key={selectedTile._land.nft.id}
+                  />
+                </div>
               )}
             </div>
-          </div>
-        )}
-        {tabValue === 1 && (
-          <div>
-            {!selectedTile && <div>You must select a tile first</div>}
-            {selectedTile && (
-              <div>
-                <UpdateSingleAttribute
-                  account={account}
-                  nft={selectedTile._land.nft}
-                  key={selectedTile._land.nft.id}
-                />
-              </div>
-            )}
-          </div>
-        )}
-      </div>
-    </div>
+          )
+        }
+      </div >
+    </div >
   );
 };
 
