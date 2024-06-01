@@ -34,7 +34,7 @@ const CartButton: React.FC<CartButtonProps> = ({ style }) => {
   };
 
   return (
-    <Tooltip title="Marketplace" arrow>
+    <Tooltip title="Item Store" arrow>
       <AnimatedIconButton onClick={handleClick} color="primary" style={style}>
         <ShoppingCartIcon />
       </AnimatedIconButton>

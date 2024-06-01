@@ -12,6 +12,7 @@ import { resetLandNfts } from "./backend/scripts/lands/land-scripts";
 import { landsNftsAtom } from "./land-provider";
 import { landContract } from "./web3-provider";
 import { store } from "./store";
+import { NFTMetadata } from "@thirdweb-dev/sdk";
 
 export async function startProduction(land: Land, resource: ResourceType) {
   const metadata = land.nft.metadata;
@@ -62,48 +63,46 @@ export async function resetLands(account: Account) {
 }
 
 export async function batchUpdateAttributeLand(
+  nftList: LandNFT[],
   account: Account,
   contract: Readonly<ContractOptions<[]>>,
   newAttributes: MetadataAttributes
 ) {
   if (account.address === adminAddress) {
-    const nftList = store.get(landsNftsAtom);
-    return await batchUpdateAttribute(newAttributes, nftList, contract);
+    return await batchUpdateAttribute(newAttributes, structuredClone(nftList), contract);
   }
 }
 
 export async function updateAttributeLand(
   account: Account,
   contract: Readonly<ContractOptions<[]>>,
-  newAttributes: LandNFTAttributes,
+  metadata: NFT["metadata"],
+  nftList: LandNFT[],
   nftId: bigint
 ) {
   if (account.address === adminAddress) {
-    const nftList = store.get(landsNftsAtom) as NFT[];
-    let metadata = nftList.find(n => n.id === nftId).metadata;
-    metadata.attributes = newAttributes as unknown as Record<string, unknown>;
-
+    if (nftList.length != 165) throw new Error(nftList.length + "") // DEBUG 
     return await updateMetadata(metadata, nftList, Number(nftId), contract);
   }
 }
 
 export async function batchAddAttributes(
+  nftList: LandNFT[],
   newAttributes: MetadataAttributes,
   account: Account,
   contract: Readonly<ContractOptions<[]>>
 ) {
   if (account.address === adminAddress) {
-    const nftList = store.get(landsNftsAtom);
     return await batchAddAttribute(newAttributes, nftList, contract);
   }
 }
 
 export async function batchDeleteAttributes(
+  allLandNfts: LandNFT[],
   trait_type: string,
   account: Account,
   contract: Readonly<ContractOptions<[]>>
 ) {
-  const allLandNfts = store.get(landsNftsAtom);
   if (account.address === adminAddress) {
     return await batchRemoveAttribute(
       trait_type,

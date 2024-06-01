@@ -90,13 +90,12 @@ export async function createNewPlayerNft(
     quantity: BigInt(1),
     to: playerAddress,
   });
-  debugger
+
   const batchResult = await sendAndConfirmMulticall(
     [mintTx, claimTx],
     playerContract
   );
   console.log(batchResult);
-  store.set(allPlayersNftsAtom, await getAllPlayerNFTs());
 }
 
 export async function findOrCreatePlayerNft(playerAddress: string) {
@@ -124,7 +123,6 @@ export async function incrementePlayerLevelNft(playerAddress: string) {
     Number(nft.id),
     playerContract
   );
-  store.set(allPlayersNftsAtom, await getAllPlayerNFTs());
 }
 
 export async function changePlayerNameNft(
@@ -142,5 +140,4 @@ export async function changePlayerNameNft(
     Number(nft.id),
     playerContract
   );
-  store.set(allPlayersNftsAtom, await getAllPlayerNFTs());
 }

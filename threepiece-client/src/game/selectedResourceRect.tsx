@@ -14,8 +14,9 @@ import {
 } from "../providers/land-provider";
 import { ResourceType } from "../thirdweb/types";
 import LeftDrawer from "../components/LeftDrawer";
+import { adminAddress } from "../providers/backend/admin";
 
-const CustomButton = styled(Button)(({}) => ({
+const CustomButton = styled(Button)(({ }) => ({
   backgroundColor: "#222222",
   color: "white",
   borderRadius: "20px",
@@ -34,6 +35,8 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
   const [loadingStart, setLoadingStart] = useState(false);
   const [loadingStop, setLoadingStop] = useState(false);
   const [prodStart, setProdStarted] = useState(false);
+  const [tabValue, setTabValue] = useState(0);
+
   useEffect(() => {
     let ignore = false;
     const getTime = async () => {
@@ -53,6 +56,8 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
       clearInterval(interval);
     };
   }, [selectedTile, prodStart]);
+  if (!account)
+    return
   let counter: Record<ResourceType, number>;
   counter = {
     sand: 0,
@@ -68,6 +73,8 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
   let percentage: string;
 
   for (const land of lands) {
+    if (!land.resources)
+      continue
     totalResources += land.resources.length;
     for (const resource of land.resources) {
       counter[resource.resourceType] += 1;
@@ -95,7 +102,7 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
           <h3 className="resource-element-title">
             {r.resourceType} ({percentage}%)
           </h3>
-          <div> time: {r.productionTimeSeconds / 60} min</div>
+          <div>time: {r.productionTimeSeconds / 60} min</div>
           <div>amount: {r.Amount}</div>
           <ResourceProduction resource={r} land={selectedTile?._land} />
         </div>
@@ -103,7 +110,6 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
     });
   };
 
-  const [tabValue, setTabValue] = useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
@@ -111,14 +117,14 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
 
   const handleButtonProdPress = async () => {
     setLoadingStop(true);
-    await stakeLand(selectedTile?._land.nft.id);
+    await stakeLand(selectedTile?._land.nft.id, account);
     setProdStarted(true);
     setLoadingStop(false);
   };
 
   const handleButtonStopProdPress = async () => {
     setLoadingStop(true);
-    await unStakeLand(selectedTile?._land.nft.id, time, account.address as `0x${string}`);
+    await unStakeLand(selectedTile?._land.nft.id, time, account);
     setProdStarted(false);
     setLoadingStop(false);
   };
@@ -133,7 +139,7 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
         variant="fullWidth"
       >
         <Tab label="Tile Info" />
-        {account && <Tab label="Admin" />}
+        {account && adminAddress === account.address && <Tab label="Admin" />}
       </Tabs>
       <div>
         {tabValue === 0 && (
@@ -151,7 +157,7 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
                 alignItems: "center",
               }}
             >
-              {selectedTile && time === 0 && !prodStart && (
+              {selectedTile && time === 0 && !prodStart && selectedTile._land.ownerAddress === account.address && (
                 <CustomButton
                   onClick={handleButtonProdPress}
                   variant="contained"
@@ -164,7 +170,7 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
                   )}
                 </CustomButton>
               )}
-              {time > 0 && (
+              {time > 0 && selectedTile._land.ownerAddress === account.address && (
                 <>
                   <span
                     style={{ marginBottom: "10px" }}
@@ -185,7 +191,7 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
             </div>
           </div>
         )}
-        {tabValue === 1 && (
+        {adminAddress === account?.address && tabValue === 1 && (
           <div>
             {!selectedTile && <div>You must select a tile first</div>}
             {selectedTile && (
@@ -193,6 +199,7 @@ const SelectedResourceRect = ({ selectedTile }: { selectedTile: GameTile }) => {
                 <UpdateSingleAttribute
                   account={account}
                   nft={selectedTile?._land.nft}
+                  nftList={lands.map(l => l.nft)}
                   key={selectedTile?._land.nft.id}
                 />
               </div>

@@ -23,7 +23,7 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
   margin: "20px auto",
 }));
 
-const GitHubLink = styled(Link)(({}) => ({
+const GitHubLink = styled(Link)(({ }) => ({
   color: "white",
   display: "flex",
   alignItems: "center",
@@ -182,14 +182,14 @@ export function LoginPage() {
           <AccordionDetails>
             <Typography component="ul" align="left" fontSize={16}>
               <li>
+                🎩 Admin: Special view for administrator to reset NFTs and
+                update metadata (single or in batch).{" "}
+              </li>
+              <li>
                 📔 Base contracts modified: "NFT Drops" for Land, Player, Wood,
                 Wood Sword and "MarketplaceV3" (all by Thirdweb).{" "}
               </li>
               <li>📝 New contracts: RNG with VRF. </li>
-              <li>
-                🎩 Admin: Special view for administrator to reset NFTs and
-                update metadata (single or in batch).{" "}
-              </li>
             </Typography>
           </AccordionDetails>
         </Accordion>
@@ -201,7 +201,7 @@ export function LoginPage() {
             fontSize={14}
             className="footer-text"
           >
-            SPECIAL THANKS 👍: Chainlink/QuickNode docs | Polygon/Thirdweb
+            SPECIAL THANKS 👍: Chainlink docs | QuickNode RPC/docs | Polygon and Thirdweb
             Support Teams
           </Typography>
           <Typography

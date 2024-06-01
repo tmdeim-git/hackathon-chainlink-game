@@ -9,7 +9,6 @@ import {
 
 export const store = createStore();
 export const currentOwnerAtom = atom<string>("");
-
 export async function refreshNfts() {
   console.log("Updating NFTs...");
   store.set(landsNftsAtom, await getAllLandNFTs());
@@ -19,6 +18,5 @@ export async function refreshNfts() {
     "Updated",
     landsNftsAtom,
     allPlayersNftsAtom,
-    allActiveListedLandNftsAtom
-  );
+    allActiveListedLandNftsAtom)
 }

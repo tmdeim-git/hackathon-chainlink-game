@@ -23,6 +23,7 @@ import {
 import { mintTo } from "thirdweb/extensions/erc20";
 import { useActiveAccount } from "thirdweb/react";
 import { adminAccount } from "./backend/admin";
+import { Account } from "thirdweb/wallets";
 
 // NOTE: This part should usually be protected in an API
 const allLandNfts = await getAllLandNFTs();
@@ -70,13 +71,16 @@ export function useGetLandIds(): number[] {
   return useAtomValue(gameTilesAtom);
 }
 
-export async function stakeLand(tokenId: bigint) {
+export async function stakeLand(tokenId: bigint, account: Account) {
   const stakeTx = stake({
     tokenId,
     contract: landContract,
   });
 
-  const batchResult = await sendAndConfirmMulticall([stakeTx], landContract);
+  const batchResult = await sendAndConfirmTransaction({
+    account: account,
+    transaction: stakeTx
+  });
   console.log(batchResult);
   store.set(landsNftsAtom, await getAllLandNFTs());
 }
@@ -84,7 +88,7 @@ export async function stakeLand(tokenId: bigint) {
 export async function unStakeLand(
   tokenId: bigint,
   time: number,
-  account: Address
+  account: Account
 ) {
   const unStakeTx = unstake({
     tokenId,
@@ -95,16 +99,18 @@ export async function unStakeLand(
   const land = nftLands.find((land) => land.id === tokenId);
 
   for (const resource of land.metadata.attributes[1].value) {
-    const productionTime = resource.productionTimeSeconds;
-    const amountProduce = Math.floor(Number(time) / productionTime);
+    const amountProduce = Number(time * 100)
     resource.Amount += amountProduce;
-    await mintWood(resource.Amount, account);
+    await mintWood(resource.Amount, account.address as Address);
     console.log("minted", resource.Amount, "wood");
   }
 
   await updateMetadata(land.metadata, nftLands, Number(tokenId), landContract);
 
-  const batchResult = await sendAndConfirmMulticall([unStakeTx], landContract);
+  const batchResult = await sendAndConfirmTransaction({
+    account: account,
+    transaction: unStakeTx
+  });
   console.log("unStake result for land", tokenId, batchResult);
   store.set(landsNftsAtom, await getAllLandNFTs());
 }

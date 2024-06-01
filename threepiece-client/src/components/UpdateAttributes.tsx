@@ -14,7 +14,7 @@ import {
   thirdwebClient,
 } from "../providers/web3-provider";
 
-const UpdateAttributes = ({ setError, account, loading, setLoading }) => {
+const UpdateAttributes = ({ setError, account, loading, setLoading, nftList }) => {
   const [updateContractAddress, setUpdateContractAddress] = useState("");
   const [updateAttributeName, setUpdateAttributeName] = useState("");
   const [updateNewValue, setUpdateNewValue] = useState("");
@@ -39,17 +39,17 @@ const UpdateAttributes = ({ setError, account, loading, setLoading }) => {
     setLoading(true);
     const contract = updateContractAddress
       ? getContract({
-          client: thirdwebClient,
-          chain: testChain,
-          address: updateContractAddress,
-        })
+        client: thirdwebClient,
+        chain: testChain,
+        address: updateContractAddress,
+      })
       : landContract;
 
     const newAttributes = {
       trait_type: updateAttributeName,
       value: updateNewValue,
     };
-    await batchUpdateAttributeLand(account, contract, newAttributes);
+    await batchUpdateAttributeLand(nftList, account, contract, newAttributes);
     setLoading(false);
   };
 

@@ -14,7 +14,7 @@ import {
   thirdwebClient,
 } from "../providers/web3-provider";
 
-const DeleteAttributes = ({ setError, account, loading, setLoading }) => {
+const DeleteAttributes = ({ setError, account, loading, setLoading, nftList }) => {
   const [deleteContractAddress, setDeleteContractAddress] = useState("");
   const [deleteAttributeName, setDeleteAttributeName] = useState("");
   const [deleteInputError, setDeleteInputError] = useState(false);
@@ -31,13 +31,13 @@ const DeleteAttributes = ({ setError, account, loading, setLoading }) => {
     setLoading(true);
     const contract = deleteContractAddress
       ? getContract({
-          client: thirdwebClient,
-          chain: testChain,
-          address: deleteContractAddress,
-        })
+        client: thirdwebClient,
+        chain: testChain,
+        address: deleteContractAddress,
+      })
       : landContract;
 
-    await batchDeleteAttributes(deleteAttributeName, account, contract);
+    await batchDeleteAttributes(nftList, deleteAttributeName, account, contract);
     setLoading(false);
   };
 

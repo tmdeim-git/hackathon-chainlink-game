@@ -31,7 +31,17 @@ const GameTileInfo: React.FC<Props> = (props: Props) => {
   const [lootPopup, setLootPopup] = useState<boolean>(false);
   const [claimed, setClaimed] = useState(false); // TODO: use land contract to set claim
   const [isLootHovered, setIsLootHovered] = useState(false);
+  useEffect(() => {
+    const mapImage = new window.Image();
+    mapImage.src = rain;
+    mapImage.onload = () => {
+      setImage(mapImage);
+    };
+  }, []);
 
+  const [image, setImage] = useState<HTMLImageElement | null>(null);
+
+  if (!gameTile) return
   const openOptions = (e: any) => {
     setFightResult(null);
     const stage = e.target.getStage();
@@ -54,6 +64,8 @@ const GameTileInfo: React.FC<Props> = (props: Props) => {
       endRange: 1n,
       numberOfResultsWanted: 1,
     });
+    console.log("TEST", result);
+
     console.log("FIGHT RESULT:", result[0]);
     if (result[0] === 0n) setFightResult("won");
     else setFightResult("lost");
@@ -78,17 +90,8 @@ const GameTileInfo: React.FC<Props> = (props: Props) => {
     setIsOpeningLootBox(false);
   };
 
-  const [image, setImage] = useState<HTMLImageElement | null>(null);
 
   const isRaining = gameTile._land.event === GameEvent.Land.Raining;
-
-  useEffect(() => {
-    const mapImage = new window.Image();
-    mapImage.src = rain;
-    mapImage.onload = () => {
-      setImage(mapImage);
-    };
-  }, []);
 
   const unowned =
     gameTile?._isUnclaimedTile || gameTile?._land.ownerAddress !== userAddress;
