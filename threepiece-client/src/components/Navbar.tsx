@@ -70,7 +70,7 @@ export function Navbar() {
   } else if (pathname === "/game") {
     pageTitle = "Game Screen";
   } else if (pathname === "/marketplace") {
-    pageTitle = "Marketplace";
+    pageTitle = "Item Store";
   }
 
   return (

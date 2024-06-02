@@ -45,24 +45,26 @@ export function AdminPage() {
         loading={resetLoading}
         setLoading={setResetLoading}
       />
-      <ListAllNftsButton loading={resetLoading} setLoading={setResetLoading} />
 
       <Box
         sx={{ display: "flex", justifyContent: "space-between", width: "80%" }}
       >
         <UpdateAttributes
+          nftList={allLandNfts}
           setError={setError}
           account={account}
           loading={updateLoading}
           setLoading={setUpdateLoading}
         />
         <AddAttributes
+          nftList={allLandNfts}
           setError={setError}
           account={account}
           loading={addLoading}
           setLoading={setAddLoading}
         />
         <DeleteAttributes
+          nftList={allLandNfts}
           setError={setError}
           account={account}
           loading={deleteLoading}

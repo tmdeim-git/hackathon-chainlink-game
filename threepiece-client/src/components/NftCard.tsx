@@ -1,146 +1,238 @@
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
-import { Land } from "../thirdweb/types";
+import Typography from "@mui/material/Typography";
+import MetadataChip from "./MetadataChip";
+import { GameTile } from "../game/GameTile";
+import Stack from "@mui/material/Stack";
+import {
+  allPlayersNftsAtom,
+  useGetPlayerByAddress,
+} from "../providers/player-provider";
+import { store } from "../providers/store";
+import { DirectListing } from "thirdweb/extensions/marketplace";
+import TextField from "@mui/material/TextField";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import InputAdornment from "@mui/material/InputAdornment";
 import { useState } from "react";
-import ImageList from "@mui/material/ImageList";
-import ImageListItem from "@mui/material/ImageListItem";
-import ImageListItemBar from "@mui/material/ImageListItemBar";
+import { useActiveAccount } from "thirdweb/react";
 import {
-  cancelListing,
-  createLandTrade,
-  executeLandTrade,
+  cancelNft,
+  listNftById,
 } from "../providers/backend/scripts/marketplace/marketplace-scripts";
-import { Account } from "thirdweb/wallets";
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  TextField,
-  DialogActions,
-} from "@mui/material";
+
+const theme = createTheme({
+  components: {
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          // Override the text color for the input element
+          "& input": {
+            color: "white", // Set text color to white
+          },
+          // Optional: Change the label and border color if needed
+          "& label": {
+            color: "rgba(255, 255, 255, 0.7)", // Label color in white with some transparency
+          },
+          "& label.Mui-focused": {
+            color: "white", // Label color when focused
+          },
+          "& .MuiOutlinedInput-root": {
+            "& fieldset": {
+              borderColor: "white", // Border color
+            },
+            "&:hover fieldset": {
+              borderColor: "white", // Border color on hover
+            },
+            "&.Mui-focused fieldset": {
+              borderColor: "white", // Border color when focused
+            },
+            "& .MuiInputAdornment-root p": {
+              color: "white",
+            },
+          },
+        },
+      },
+    },
+  },
+});
+
+const bull = (
+  <Box
+    component="span"
+    sx={{
+      display: "inline-block",
+      mx: "2px",
+      transform: "scale(0.8)",
+    }}
+  >
+    •
+  </Box>
+);
 
 export default function NftCard({
-  lands,
-  account,
-  type,
+  selectedTile,
+  selectedListing,
+  state,
 }: {
-  lands: Land[];
-  account: Account;
-  type: string;
+  selectedTile: GameTile;
+  selectedListing: DirectListing;
+  state: string;
 }) {
-  const [open, setOpen] = useState(false);
+  const player = useGetPlayerByAddress(selectedTile._land.ownerAddress);
+  const account = useActiveAccount();
+  const [value, setValue] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
-  const [land, setLand] = useState<Land>(lands[2]);
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = event.target.value;
+    setValue(newValue);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
+    // Validate the input to ensure it is a number
+    if (newValue && !/^[\d.-]+$/g.test(newValue)) {
+      setError("Please enter a valid number");
+    } else {
+      setError(null);
+    }
   };
   return (
-    <div style={{ height: "50%", position: "relative" }}>
-      <ImageList
-        sx={{ width: "auto", height: "auto" }}
-        cols={4}
-        rowHeight={500}
+    <Card
+      sx={{
+        minWidth: 400,
+        borderRadius: "20px",
+        height: "60%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        backgroundColor: "rgba(27, 33, 41, 1)",
+        color: "white",
+      }}
+    >
+      <div
+        style={{
+          height: "90%",
+        }}
       >
-        {(lands.length != 0 &&
-          lands?.map((land) => (
-            <ImageListItem key={land.id}>
-              <img
-                srcSet="https://ipfs.io/ipfs/QmcJoG6Sgh3Mhv94tXANDrjom7JVv3adpW5igX9VbaHyYN"
-                src="https://ipfs.io/ipfs/QmcJoG6Sgh3Mhv94tXANDrjom7JVv3adpW5igX9VbaHyYN"
-                alt={land.nft.metadata.name}
-                loading="lazy"
-              />
-              <ImageListItemBar
-                title={land.nft.metadata.name}
-                subtitle={land.nft.metadata.description}
-                key={land.id}
-                actionIcon={
-                  <>
-                    <Button
-                      aria-label={`info about ${land.nft.metadata.name}`}
-                      variant="contained"
-                      onClick={async () =>
-                        type === "owned"
-                          ? await createLandTrade(account, land.nft, 1000n)
-                          : type === "listed"
-                          ? await cancelListing(account, land.nft.id)
-                          : await executeLandTrade(account, land.nft)
-                      }
-                      // onClick={
-                      //   type === "owned"
-                      //     ? () => {
-                      //       setLand(land);
-                      //       handleClickOpen();
-                      //     }
-                      //     : () => { }
-                      // }
-                      key={land.id}
-                    >
-                      {type === "owned"
-                        ? "List"
-                        : type === "listed"
-                        ? "Cancel Listing"
-                        : "Buy NFT"}
-                    </Button>
-                  </>
-                }
-              />
-            </ImageListItem>
-          ))) || (
-          <div style={{ height: "300px", width: "100vw", textAlign: "center" }}>
-            You don't have any NFTs.
-          </div>
-        )}
-        <Dialog
-          open={open}
-          onClose={handleClose}
-          PaperProps={{
-            component: "form",
-            onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
-              event.preventDefault();
-              const formData = new FormData(event.currentTarget);
-              const formJson = Object.fromEntries((formData as any).entries());
-              const price = formJson.price;
-              handleClose();
-            },
+        <CardContent
+          sx={{
+            height: "70%",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-end",
+            alignItems: "center",
           }}
         >
-          <DialogTitle>Buy NFT {land?.nft.metadata.name}</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              To List your NFT, you need to enter a price and confirm the
-              transaction in your wallet.
-            </DialogContentText>
-            <TextField
-              autoFocus
-              required
-              margin="dense"
-              id="name"
-              name="price"
-              label="Price (in LINK)"
-              type="price"
-              fullWidth
-              variant="standard"
+          <div style={{ height: "50%", marginBottom: "5%" }}>
+            <img
+              style={{
+                height: "100%",
+                objectFit: "cover",
+                borderRadius: "20px",
+              }}
+              alt={selectedTile._land.nft.metadata.name}
+              src={
+                "https://ipfs.io/ipfs/" +
+                selectedTile._land.nft.metadata.image.split("ipfs://")[1]
+              }
             />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
+          </div>
+          <Typography
+            sx={{ fontSize: 35, color: "white", fontWeight: "bold" }}
+            gutterBottom
+          >
+            {selectedTile._land.nft.metadata.name}
+          </Typography>
+          <Typography
+            sx={{
+              fontSize: 16,
+              color: "rgba(255,255,255,0.5)",
+              fontWeight: "",
+            }}
+            color={"text.secondary"}
+            gutterBottom
+          >
+            {selectedTile._land.nft.metadata.description}
+          </Typography>
+        </CardContent>
+        <CardActions
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "flex-start",
+            padding: "16px",
+            color: "white",
+          }}
+        >
+          <ThemeProvider theme={theme}>
+            {state === "list" && (
+              <TextField
+                id="outlined-basic"
+                label="Price"
+                variant="outlined"
+                onChange={handleChange}
+                error={!!error}
+                value={value}
+                helperText={error || "Only numeric values are allowed"}
+                FormHelperTextProps={{
+                  style: error
+                    ? { color: "red", fontSize: "14px", margin: "3px 0" }
+                    : { color: "white", fontSize: "14px", margin: "3px 0" }, // Custom style for the helper text
+                }}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment
+                      sx={{
+                        "& .MuiSvgIcon-root": {
+                          color: "white",
+                        },
+                      }}
+                      position="end"
+                    >
+                      LINK
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            )}
+          </ThemeProvider>
+          {state != "view" ? (
             <Button
-              type="submit"
+              size="large"
+              variant="contained"
+              sx={{
+                backgroundColor: "rgba(168, 85, 247, 1)",
+                color: "white",
+                padding: "15px 20px",
+                "&:hover": {
+                  backgroundColor: "rgba(168, 85, 247, 0.3)",
+                  color: "white",
+                },
+              }}
               onClick={async () => {
-                await createLandTrade(account, land.nft, 1000n);
+                if (state !== "cancel") {
+                  await listNftById({
+                    id: selectedTile._land.nft.id,
+                    account: account,
+                    price: Number(value),
+                    startTimestamp: BigInt(
+                      Math.floor(new Date().getTime() / 1000)
+                    ),
+                  });
+                } else {
+                  await cancelNft({
+                    id: selectedTile._land.nft.id,
+                    account: account,
+                  });
+                }
               }}
             >
-              Confirm
+              {state === "cancel" ? "Cancel" : "List"}
             </Button>
-          </DialogActions>
-        </Dialog>
-      </ImageList>
-    </div>
+          ) : null}
+        </CardActions>
+      </div>
+    </Card>
   );
 }

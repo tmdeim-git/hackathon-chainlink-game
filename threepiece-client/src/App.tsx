@@ -22,6 +22,7 @@ import AdminPage from "./pages/adminPage";
 import { findOrCreatePlayerNft } from "./providers/player-provider";
 import { store } from "./providers/store";
 import Footer from "./components/Footer";
+import ItemStore from "./pages/ItemStore";
 
 let shouldRedirect = false;
 let wasConnected = false;
@@ -84,7 +85,7 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/game" element={<GamePage />} />
             <Route path="/admin" element={<AdminPage />} />
-            <Route path="/marketplace" element={<Marketplace />} />
+            <Route path="/marketplace" element={<ItemStore />} />
             <Route path="/" element={<Navigate to="/login" />} />
           </Routes>
         </div>

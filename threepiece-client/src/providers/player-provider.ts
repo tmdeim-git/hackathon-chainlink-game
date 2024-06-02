@@ -72,7 +72,7 @@ export async function createNewPlayerNft(
   const attributes: PlayerNFTAttributes = [
     {
       trait_type: "level",
-      value,
+      value: value,
     },
   ];
 
@@ -96,7 +96,6 @@ export async function createNewPlayerNft(
     playerContract
   );
   console.log(batchResult);
-  store.set(allPlayersNftsAtom, await getAllPlayerNFTs());
 }
 
 export async function findOrCreatePlayerNft(playerAddress: string) {
@@ -124,7 +123,6 @@ export async function incrementePlayerLevelNft(playerAddress: string) {
     Number(nft.id),
     playerContract
   );
-  store.set(allPlayersNftsAtom, await getAllPlayerNFTs());
 }
 
 export async function changePlayerNameNft(
@@ -142,5 +140,4 @@ export async function changePlayerNameNft(
     Number(nft.id),
     playerContract
   );
-  store.set(allPlayersNftsAtom, await getAllPlayerNFTs());
 }

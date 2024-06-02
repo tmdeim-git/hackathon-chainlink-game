@@ -1,17 +1,19 @@
-import { PreparedTransaction, sendAndConfirmTransaction } from "thirdweb";
-import {
-  createListing,
-  multicall,
-} from "../../../../thirdweb/generated-contracts/marketplace";
+import { sendAndConfirmTransaction } from "thirdweb";
+import { createListing } from "../../../../thirdweb/generated-contracts/marketplace";
 import { allLandsAtom } from "../../../land-provider";
-import { marketplaceContract } from "../../../marketplace-provider";
+import {
+  allActiveListedLandNftsAtom,
+  marketplaceContract,
+} from "../../../marketplace-provider";
 import { store } from "../../../store";
 import { landContract, linkContract } from "../../../web3-provider";
-import { adminAccount } from "../../admin";
 import { sendAndConfirmMulticall } from "../erc721-scripts";
-
+import { Account } from "thirdweb/wallets";
+import { approve } from "../../../../thirdweb/generated-contracts/nft-drop";
+import { DirectListing, cancelListing } from "thirdweb/extensions/marketplace";
+const lands = store.get(allLandsAtom);
+const listings: DirectListing[] = store.get(allActiveListedLandNftsAtom);
 export async function initialListAllLands() {
-  const lands = store.get(allLandsAtom);
   console.log(lands);
 
   let listTx = [];
@@ -42,6 +44,82 @@ export async function initialListAllLands() {
   }
 }
 
+export async function listNftById({
+  id,
+  account,
+  price,
+  startTimestamp,
+}: {
+  id: bigint;
+  account: Account;
+  price: number;
+  startTimestamp: bigint;
+}) {
+  const approveNFT = approve({
+    contract: landContract,
+    to: marketplaceContract.address,
+    tokenId: id,
+  });
+
+  console.log("Approve NFT: ", approveNFT);
+
+  const approveTxResult = await sendAndConfirmTransaction({
+    transaction: approveNFT,
+    account: account,
+  });
+
+  console.log("Approve Tx Result: ", approveTxResult);
+
+  const listing = createListing({
+    contract: marketplaceContract,
+    params: {
+      assetContract: landContract.address,
+      tokenId: id,
+      currency: linkContract.address,
+      endTimestamp: BigInt(
+        Math.floor(
+          new Date(new Date().setDate(new Date().getDate() + 30)).getTime() /
+            1000
+        )
+      ),
+      pricePerToken: BigInt(price * 1e18),
+      quantity: 1n,
+      reserved: false,
+      startTimestamp: startTimestamp,
+    },
+  });
+
+  console.log("Listing: ", listing);
+
+  const txResult = await sendAndConfirmTransaction({
+    transaction: listing,
+    account: account,
+  });
+
+  console.log("Tx Result: ", txResult);
+}
+
+export async function cancelNft({
+  id,
+  account,
+}: {
+  id: bigint;
+  account: Account;
+}) {
+  listings.map(async (listing) => {
+    if (listing.tokenId === id) {
+      const tx = cancelListing({
+        contract: marketplaceContract,
+        listingId: listing.id,
+      });
+      const txResult = await sendAndConfirmTransaction({
+        transaction: tx,
+        account: account,
+      });
+      console.log("Tx Result: ", txResult);
+    }
+  });
+}
 // EXAMPLE OF INPUT PARAMS FOR LISTING LANDS
 //   {
 //     "assetContract": "0x0eC91918B843C99daE10b20873c0311eD048d7e3",

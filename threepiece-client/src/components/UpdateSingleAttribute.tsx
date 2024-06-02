@@ -8,16 +8,19 @@ import {
   Autocomplete,
 } from "@mui/material";
 import { landContract } from "../providers/web3-provider";
-import { LandNFT } from "../thirdweb/types";
+import { LandNFT, MetadataAttributes } from "../thirdweb/types";
 import { Account } from "thirdweb/wallets";
 import { updateAttributeLand } from "../providers/scripts-provider";
+import { NFT } from "thirdweb";
 
 const UpdateSingleAttribute = ({
   account,
   nft,
+  nftList,
 }: {
   account: Account;
   nft: LandNFT;
+  nftList: LandNFT[];
 }) => {
   const [updateLoading, setUpdateLoading] = useState(false);
   const [updateAttributeName, setUpdateAttributeName] = useState("");
@@ -38,14 +41,17 @@ const UpdateSingleAttribute = ({
       return;
     }
     setUpdateLoading(true);
-
-    nft.metadata.attributes.find(
+    const metadata: NFT['metadata'] = {
+      ...nft.metadata
+    };
+    (metadata.attributes as unknown as MetadataAttributes[]).find(
       (a) => a.trait_type === updateAttributeName
     ).value = JSON.parse(updateNewValue);
     await updateAttributeLand(
       account,
       landContract,
-      nft.metadata.attributes,
+      metadata,
+      nftList,
       nft.id
     );
     setUpdateLoading(false);

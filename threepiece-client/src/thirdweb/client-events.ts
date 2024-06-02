@@ -20,13 +20,14 @@ import {
   cancelledListingEvent,
   updatedListingEvent,
 } from "./generated-contracts/marketplace";
+import { marketplaceContract } from "../providers/marketplace-provider";
 
 type Listener = (message: string) => void;
 let started: boolean = false;
 const listeners: Listener[] = [];
 
 export function clientAddListener(
-  callback: (message: string) => void = () => {}
+  callback: (message: string) => void = () => { }
 ) {
   if (!started) {
     startTokenCreatedEvent();
@@ -36,6 +37,7 @@ export function clientAddListener(
     stakeLandEvent();
     unstakeLandEvent();
     startVrfRequestEvent(); // TODO: we shouldnt show the vrf requests usually
+    //startMarketplaceEvents();
     console.log("started events");
     started = true;
   }
@@ -61,7 +63,7 @@ const startVrfRequestEvent = () =>
 const startVrfChanceRequestEvent = () =>
   watchContractEvents({
     onEvents(events) {
-      refreshNfts();
+      // refreshNfts();
       const { args } = events[0];
       // callback && callback(`VRF Request sent`);
       console.log(`Event received:`, args);
@@ -78,7 +80,7 @@ const startVrfChanceRequestEvent = () =>
 const startTokenCreatedEvent = () =>
   watchContractEvents({
     onEvents(events) {
-      refreshNfts();
+      // refreshNfts();
       const event = events[0];
       const id = event.args.startTokenId;
       console.log(`Token lazy minted`, event);
@@ -111,7 +113,7 @@ const startMetadataUpdateEvent = () =>
 const startTransferEvent = () =>
   watchContractEvents({
     onEvents(events) {
-      refreshNfts();
+      // refreshNfts();
       const event = events[0];
       let message: string = `A tile has been transfered from ${event.args.from} to ${event.args.to}`;
       if (event.args.from == "0x0000000000000000000000000000000000000000") {
@@ -133,7 +135,7 @@ const startTransferEvent = () =>
 const stakeLandEvent = () =>
   watchContractEvents({
     onEvents(events) {
-      refreshNfts();
+      // refreshNfts();
       const test = events[0].args;
 
       console.log("Stake result for land", test);
@@ -149,7 +151,7 @@ const stakeLandEvent = () =>
 const unstakeLandEvent = () =>
   watchContractEvents({
     onEvents(events) {
-      refreshNfts();
+      // refreshNfts();
       const test = events[0].args;
 
       console.log("Stake result for land", test);
@@ -158,13 +160,7 @@ const unstakeLandEvent = () =>
 
       listeners.forEach((callback) => callback(message));
     },
-    events: [
-      newListingEvent(),
-      newSaleEvent(),
-      cancelledListingEvent(),
-      unstakedEvent(),
-      updatedListingEvent(),
-    ],
+    events: [unstakedEvent()],
     contract: landContract,
   });
 
@@ -174,9 +170,13 @@ const unstakeLandEvent = () =>
 //       refreshNfts();
 //       const event = events[0];
 //       let message: string = `Marketplace trade event!`;
-//       refreshNfts();
 //       listeners.forEach((callback) => callback(message));
 //     },
-//     events: [tradeStatusChangeEvent()],
-//     contract: landContract,
+//     events: [
+//       newListingEvent(),
+//       newSaleEvent(),
+//       cancelledListingEvent(),
+//       updatedListingEvent(),
+//     ],
+//     contract: marketplaceContract,
 //   });
