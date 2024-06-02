@@ -28,11 +28,11 @@ Welcome to ThreePiece, a world of lands full of mysteries in Web3! 🌍
 - 🎩 **Admin:** Special view for administrator to reset NFTs and update metadata (single or in batch).
 - 👍 **Special thanks:** Chainlink/QuickNode documentation | Polygon/Thirdweb Support Team
 ## Team 🧑‍💻
-🤖 [Mohamed Amine Elarabi](https://github.com/TheVortex8) 
-🎩 [Mohammed Larbi Turki](https://github.com/tmdeim-git) 
-🎮 [Raul Andrei Sima](https://github.com/RaulSima) 
-🗡️ [Jason Brutus](https://github.com/BlastChaos) 
-👶 [Abdul Rahman Zahid](https://github.com/LLAbdul) 
+- 🤖 [Mohamed Amine Elarabi](https://github.com/TheVortex8) 
+- 🎩 [Mohammed Larbi Turki](https://github.com/tmdeim-git) 
+- 🎮 [Raul Andrei Sima](https://github.com/RaulSima) 
+- 🗡️ [Jason Brutus](https://github.com/BlastChaos) 
+- 👶 [Abdul Rahman Zahid](https://github.com/LLAbdul) 
 
 ---
 # DevPost Submission
