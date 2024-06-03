@@ -16,7 +16,6 @@ Gaming application fully deployed on Polygon zkEVM Cardona Testnet (except for C
 
 ## Deploy marketplace
 1. `npm run deploy` (LINK on Cardona = 0x5576815a38A3706f37bf815b261cCc7cCA77e975, Token address = The address of tokens that will be traded)
-2. 
 
 ## Debug
 - If the VRF RNG instantly reverts, ensure the contract is correctly subscribed
